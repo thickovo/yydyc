@@ -1,15 +1,18 @@
 package com.gao.yydyc.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.FieldStrategy;
+import com.baomidou.mybatisplus.annotation.TableField;
 
+import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
-@TableName("skirt")
-
-public class Skirt {
+@TableName("wardrobe")
+public class Wardrobe {
     private Long id;
+
+    @NotBlank
     private String name;
     private String brand;
     private String type;
@@ -19,24 +22,39 @@ public class Skirt {
     private BigDecimal finalPayment;
     private BigDecimal accessoriesPrice;
     private LocalDate finalDate;
-    private LocalDateTime depositStart;
-    private LocalDateTime depositEnd;
-    private LocalDateTime finalStart;
-    private LocalDateTime finalEnd;
+    private LocalDate depositStart;
+    private LocalDate depositEnd;
+    private LocalDate finalStart;
+    private LocalDate finalEnd;
     private String purchaseLink;
     private String note;
     private Integer status;
-    private Integer isPaid;
-    private String userId;
-    private LocalDateTime createTime;
-    private LocalDateTime updateTime;
 
-    public String getBrand() {
-        return brand;
+    @TableField(updateStrategy = FieldStrategy.ALWAYS)
+    private Integer isPaid;
+    private Integer remindBefore;
+
+    @NotBlank
+    private String userId;
+    private String imageUrl;
+    private LocalDate saleStart;
+
+    private LocalDate createTime;
+    private LocalDate updateTime;
+
+    // 新增三个字段
+    private String category;
+    private String size;
+    private String accessories;
+
+    // ===== Getter / Setter =====
+
+    public Long getId() {
+        return id;
     }
 
-    public void setBrand(String brand) {
-        this.brand = brand;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -47,12 +65,12 @@ public class Skirt {
         this.name = name;
     }
 
-    public Long getId() {
-        return id;
+    public String getBrand() {
+        return brand;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setBrand(String brand) {
+        this.brand = brand;
     }
 
     public String getType() {
@@ -111,35 +129,35 @@ public class Skirt {
         this.finalDate = finalDate;
     }
 
-    public LocalDateTime getDepositStart() {
+    public LocalDate getDepositStart() {
         return depositStart;
     }
 
-    public void setDepositStart(LocalDateTime depositStart) {
+    public void setDepositStart(LocalDate depositStart) {
         this.depositStart = depositStart;
     }
 
-    public LocalDateTime getDepositEnd() {
+    public LocalDate getDepositEnd() {
         return depositEnd;
     }
 
-    public void setDepositEnd(LocalDateTime depositEnd) {
+    public void setDepositEnd(LocalDate depositEnd) {
         this.depositEnd = depositEnd;
     }
 
-    public LocalDateTime getFinalStart() {
+    public LocalDate getFinalStart() {
         return finalStart;
     }
 
-    public void setFinalStart(LocalDateTime finalStart) {
+    public void setFinalStart(LocalDate finalStart) {
         this.finalStart = finalStart;
     }
 
-    public LocalDateTime getFinalEnd() {
+    public LocalDate getFinalEnd() {
         return finalEnd;
     }
 
-    public void setFinalEnd(LocalDateTime finalEnd) {
+    public void setFinalEnd(LocalDate finalEnd) {
         this.finalEnd = finalEnd;
     }
 
@@ -175,20 +193,12 @@ public class Skirt {
         this.isPaid = isPaid;
     }
 
-    public LocalDateTime getCreateTime() {
-        return createTime;
+    public Integer getRemindBefore() {
+        return remindBefore;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
-
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
+    public void setRemindBefore(Integer remindBefore) {
+        this.remindBefore = remindBefore;
     }
 
     public String getUserId() {
@@ -197,5 +207,63 @@ public class Skirt {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public LocalDate getSaleStart() {
+        return saleStart;
+    }
+
+    public void setSaleStart(LocalDate saleStart) {
+        this.saleStart = saleStart;
+    }
+
+    public LocalDate getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(LocalDate createTime) {
+        this.createTime = createTime;
+    }
+
+    public LocalDate getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(LocalDate updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    // ===== 新增三个字段的 Getter/Setter =====
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getSize() {
+        return size;
+    }
+
+    public void setSize(String size) {
+        this.size = size;
+    }
+
+    public String getAccessories() {
+        return accessories;
+    }
+
+    public void setAccessories(String accessories) {
+        this.accessories = accessories;
     }
 }
