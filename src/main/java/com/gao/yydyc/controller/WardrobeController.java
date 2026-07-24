@@ -31,6 +31,7 @@ public class WardrobeController {
                                        @RequestParam(required = false) String type,
                                        @RequestParam(required = false) String color,
                                        @RequestParam(required = false) Integer status,
+                                       @RequestParam(required = false) Long cabinetId,
                                        @RequestParam(required = false) String keyword) {
         LambdaQueryWrapper<Wardrobe> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(Wardrobe::getUserId, userId);
@@ -50,7 +51,9 @@ public class WardrobeController {
         if (keyword != null){
             wrapper.like(Wardrobe::getName, keyword);
         }
-
+        if (cabinetId != null){
+            wrapper.eq(Wardrobe::getCabinetId, cabinetId);
+        }
         wrapper.orderByDesc(Wardrobe::getFinalStart);
 
         Page<Wardrobe> wardrobePage = wardrobeService.page(new Page<>(page, size), wrapper);

@@ -29,6 +29,15 @@ public class Wardrobe {
     private String purchaseLink;
     private String note;
     private Integer status;
+    private Long cabinetId;
+
+    public Long getCabinetId() {
+        return cabinetId;
+    }
+
+    public void setCabinetId(Long cabinetId) {
+        this.cabinetId = cabinetId;
+    }
 
     @TableField(updateStrategy = FieldStrategy.ALWAYS)
     private Integer isPaid;
