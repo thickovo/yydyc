@@ -127,4 +127,6 @@ http://localhost:8080/swagger-ui/index.html
 
 ## 作者
 
-> TODO: thickovo
+幼幼的小熊 🧸
+- GitHub：[https://github.com/thickovo](https://github.com/thickovo)
+- 项目由个人独立开发，包含前后端完整实现
