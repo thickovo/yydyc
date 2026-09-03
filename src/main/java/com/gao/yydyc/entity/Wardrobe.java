@@ -27,6 +27,9 @@ public class Wardrobe {
     private LocalDate finalDate;
     private LocalDate depositStart;
     private LocalDate depositEnd;
+    // 全款预售 / 定尾 切换时需要把对方字段写回 null，
+    // MyBatis-Plus 默认 FieldStrategy.NOT_NULL 会跳过 null → 必须显式 ALWAYS
+    @TableField(updateStrategy = FieldStrategy.ALWAYS)
     private LocalDate finalStart;
     private LocalDate finalEnd;
     private String purchaseLink;
@@ -50,6 +53,8 @@ public class Wardrobe {
     @NotBlank
     private String userId;
     private String imageUrl;
+    // 同 finalStart：购买模式切换时必须能写回 null
+    @TableField(updateStrategy = FieldStrategy.ALWAYS)
     private LocalDate saleStart;
 
     private LocalDate createTime;
@@ -60,7 +65,6 @@ public class Wardrobe {
     private String size;
     private String accessories;
 
-    // ===== Getter / Setter =====
 
     public Long getId() {
         return id;

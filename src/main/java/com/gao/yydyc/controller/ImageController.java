@@ -1,11 +1,9 @@
 package com.gao.yydyc.controller;
 
 import com.gao.yydyc.common.Result;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
@@ -14,13 +12,8 @@ import java.util.UUID;
 @RequestMapping("/api/image")
 public class ImageController {
 
-    @Value("${image.base-url}")
-    private String baseUrl;
-
     @PostMapping("/upload")
-    public Result<String> imageUpload
-            (@RequestParam("file") MultipartFile file,
-             HttpServletRequest request)
+    public Result<String> imageUpload(@RequestParam("file") MultipartFile file)
     throws IOException {
 
         if (file == null || file.isEmpty())  {
@@ -42,8 +35,6 @@ public class ImageController {
         }
         String newFileName = UUID.randomUUID()
                 .toString() + "." + suffix;
-        String firstFile = System.getProperty("user.dir");
-        fileName = newFileName;
         String imageFile = "D:/yydyc-images/" + newFileName;
         File localFile = new File(imageFile);
         if (!localFile.getParentFile().exists()) {
@@ -51,10 +42,12 @@ public class ImageController {
         }
         file.transferTo(localFile);
 
-        String baseUrl = request.getScheme() +
-                "://" + request.getServerName() +
-                ":" + request.getServerPort();
-        String imageUrl = baseUrl + "/images/" + newFileName;
+        // 返回相对路径（/images/{filename}），由前端拼上 baseUrl 再渲染。
+        // 这样：
+        //   1) 切换环境（dev/lan/tunnel）不需要改数据库；
+        //   2) 真机上图片 URL 始终是当前 baseUrl，避免反向代理拿到 localhost 之类的坑；
+        //   3) 老数据里如果是绝对 URL（http://...），前端 resolveImageUrl 会识别并直接使用。
+        String imageUrl = "/images/" + newFileName;
         return Result.success(imageUrl);
 
     }
