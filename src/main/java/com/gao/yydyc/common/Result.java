@@ -1,5 +1,8 @@
 package com.gao.yydyc.common;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.ALWAYS)
 public class Result<T> {
     private Integer code;
     private String msg;
@@ -29,5 +32,9 @@ public class Result<T> {
 
     public T getData() {
         return data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
     }
 }

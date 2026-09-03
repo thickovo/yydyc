@@ -13,6 +13,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public Result<Void> handleException(Exception e)
     {
+        e.printStackTrace();
         return Result.error("系统繁忙，请稍后在试");
 
     }

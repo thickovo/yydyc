@@ -3,6 +3,8 @@ package com.gao.yydyc.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
@@ -10,6 +12,7 @@ import java.time.LocalDate;
 
 @TableName("wardrobe")
 public class Wardrobe {
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long id;
 
     @NotBlank
@@ -29,6 +32,7 @@ public class Wardrobe {
     private String purchaseLink;
     private String note;
     private Integer status;
+    @JsonSerialize(using = ToStringSerializer.class)
     private Long cabinetId;
 
     public Long getCabinetId() {
