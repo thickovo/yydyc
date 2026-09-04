@@ -3,13 +3,16 @@ package com.gao.yydyc.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gao.yydyc.common.Result;
+import com.gao.yydyc.dto.MonthSummaryVO;
 import com.gao.yydyc.entity.Wardrobe;
 import com.gao.yydyc.service.WardrobeService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -79,5 +82,14 @@ public class WardrobeController {
     public Result<Void> delete(@PathVariable Long id) {
         wardrobeService.removeById(id);
         return Result.success(null);
+    }
+
+    @GetMapping("/calendar/summary")
+    public Result<List<MonthSummaryVO>> summarry(@RequestParam Integer year,
+                                           @RequestParam String userId) {
+        List<MonthSummaryVO> list =
+                wardrobeService.getMonthlySummary(year, userId);
+        return Result.success(list);
+
     }
 }

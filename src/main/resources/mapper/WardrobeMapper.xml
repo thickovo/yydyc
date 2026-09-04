@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gao.yydyc.mapper.WardrobeMapper">
+
+    <select id="getMonthlySummary" resultType="com.gao.yydyc.dto.MonthSummaryVO">
+        SELECT
+            MONTH(final_start) AS month,
+            SUM(final_payment) AS totalFinalPayment,
+            COUNT(*) AS count
+        FROM wardrobe
+        WHERE user_id = #{userId}
+          AND status = 0
+          AND final_start IS NOT NULL
+          AND YEAR(final_start) = #{year}
+        GROUP BY MONTH(final_start)
+        ORDER BY month ASC
+    </select>
+
+</mapper>
