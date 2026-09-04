@@ -1,0 +1,163 @@
+<view class="form">
+  <!-- 图片上传 -->
+  <view class="form-section">
+    <view class="form-item">
+      <text class="label">裙子图片</text>
+      <view class="image-upload {{displayImageUrl ? 'has-image' : ''}}" bindtap="onPickImage">
+        <block wx:if="{{displayImageUrl}}">
+          <image
+            class="upload-preview"
+            src="{{displayImageUrl}}"
+            mode="aspectFill"
+            binderror="onImageError"
+            style="width:100%;height:100%;background:#F5EEF0;"
+          ></image>
+          <view class="upload-mask">
+            <text class="upload-mask-text">{{uploading ? '上传中...' : '点击重新上传'}}</text>
+          </view>
+          <view class="image-remove" catchtap="onRemoveImage">
+            <text class="image-remove-text">×</text>
+          </view>
+        </block>
+        <block wx:else>
+          <view class="upload-placeholder">
+            <text class="upload-icon">📷</text>
+            <text class="upload-text">{{uploading ? '上传中...' : '点击上传图片'}}</text>
+            <text class="upload-hint">支持 jpg / png，不超过 5MB</text>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+
+  <!-- 购买模式 -->
+  <view class="form-section">
+    <view class="form-item">
+      <text class="label">购买模式</text>
+      <view class="mode-switch">
+        <text class="switch-option {{buyMode === 'deposit' ? 'active' : ''}}" bindtap="switchBuyMode" data-mode="deposit">定尾模式</text>
+        <text class="switch-option {{buyMode === 'presale' ? 'active' : ''}}" bindtap="switchBuyMode" data-mode="presale">全款预售</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 基本信息 -->
+  <view class="form-section">
+    <view class="form-item">
+      <text class="label">名称 *</text>
+      <input class="input" placeholder="请输入裙子名称" bindinput="handleInput" data-field="name" value="{{name}}" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">品牌</text>
+      <input class="input" placeholder="请输入品牌名" bindinput="handleInput" data-field="brand" value="{{brand}}" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">类别</text>
+      <picker mode="selector" range="{{categoryOptions}}" bindchange="handleCategoryChange">
+        <view class="picker-display">{{category || '请选择类别'}}</view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <text class="label">类型</text>
+      <picker mode="selector" range="{{typeOptions}}" bindchange="handleTypeChange">
+        <view class="picker-display">{{type || '请选择类型'}}</view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <text class="label">尺码</text>
+      <picker mode="selector" range="{{sizeOptions}}" bindchange="handleSizeChange">
+        <view class="picker-display">{{size || '请选择尺码'}}</view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <text class="label">颜色</text>
+      <view class="color-group">
+        <view class="color-dot {{selectedColor === '#FFB6C1' ? 'active' : ''}}" style="background: #FFB6C1;" bindtap="selectColor" data-color="#FFB6C1"></view>
+        <view class="color-dot {{selectedColor === '#FFFFFF' ? 'active' : ''}}" style="background: #FFFFFF; border: 2px solid #ddd;" bindtap="selectColor" data-color="#FFFFFF"></view>
+        <view class="color-dot {{selectedColor === '#2C2C2C' ? 'active' : ''}}" style="background: #2C2C2C;" bindtap="selectColor" data-color="#2C2C2C"></view>
+        <view class="color-dot {{selectedColor === '#E8455A' ? 'active' : ''}}" style="background: #E8455A;" bindtap="selectColor" data-color="#E8455A"></view>
+        <view class="color-dot {{selectedColor === '#3B4A5E' ? 'active' : ''}}" style="background: #3B4A5E;" bindtap="selectColor" data-color="#3B4A5E"></view>
+        <view class="color-dot {{selectedColor === '#9B59B6' ? 'active' : ''}}" style="background: #9B59B6;" bindtap="selectColor" data-color="#9B59B6"></view>
+        <view class="color-dot {{selectedColor === '#2ECC71' ? 'active' : ''}}" style="background: #2ECC71;" bindtap="selectColor" data-color="#2ECC71"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 小物 -->
+  <view class="form-section">
+    <view class="form-item">
+      <text class="label">小物（可多选）</text>
+      <view class="accessories-group">
+        <view class="accessory-tag {{item.selected ? 'active' : ''}}" wx:for="{{accessoryList}}" wx:key="name" bindtap="toggleAccessory" data-accessory="{{item.name}}">
+          {{item.name}}
+        </view>
+      </view>
+      <view class="custom-accessory">
+        <input class="input" placeholder="输入自定义小物" bindinput="handleCustomAccessoryInput" value="{{customAccessory}}" />
+        <view class="add-custom-btn" bindtap="addCustomAccessory">
+          <text class="add-custom-text">添加</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 价格信息 -->
+  <view class="form-section">
+    <block wx:if="{{buyMode === 'deposit'}}">
+      <view class="form-item">
+        <text class="label">定金</text>
+        <input class="input" type="digit" placeholder="请输入定金" bindinput="handleInput" data-field="deposit" value="{{deposit}}" />
+      </view>
+      <view class="form-item">
+        <text class="label">尾款</text>
+        <input class="input" type="digit" placeholder="请输入尾款" bindinput="handleInput" data-field="finalPayment" value="{{finalPayment}}" />
+      </view>
+      <view class="form-item">
+        <text class="label">尾款开始时间</text>
+        <picker mode="date" bindchange="handleFinalStartChange">
+          <view class="picker-display">{{finalStart || '请选择日期'}}</view>
+        </picker>
+      </view>
+    </block>
+
+    <block wx:else>
+      <view class="form-item">
+        <text class="label">总价</text>
+        <input class="input" type="digit" placeholder="请输入总价" bindinput="handleInput" data-field="totalPrice" value="{{totalPrice}}" />
+      </view>
+      <view class="form-item">
+        <text class="label">开售时间</text>
+        <picker mode="date" bindchange="handleSaleStartChange">
+          <view class="picker-display">{{saleStart || '请选择日期'}}</view>
+        </picker>
+      </view>
+    </block>
+  </view>
+
+  <!-- 提醒 & 备注 -->
+  <view class="form-section">
+    <view class="form-item">
+      <text class="label">提醒设置</text>
+      <view class="remind-group">
+        <text class="switch-option {{remindBefore === 1 ? 'active' : ''}}" bindtap="selectRemindBefore" data-days="1">提前1天</text>
+        <text class="switch-option {{remindBefore === 3 ? 'active' : ''}}" bindtap="selectRemindBefore" data-days="3">提前3天</text>
+        <text class="switch-option {{remindBefore === 7 ? 'active' : ''}}" bindtap="selectRemindBefore" data-days="7">提前7天</text>
+      </view>
+    </view>
+
+    <view class="form-item">
+      <text class="label">备注</text>
+      <textarea class="textarea" placeholder="记录一些备注信息~" bindinput="handleInput" data-field="note" value="{{note}}" />
+    </view>
+  </view>
+
+  <!-- 保存按钮 -->
+  <view class="btn-wrap">
+    <button class="save-btn" bindtap="handleSubmit">保存修改</button>
+  </view>
+</view>

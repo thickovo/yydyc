@@ -1,0 +1,288 @@
+page {
+  background: #FFF5F5;
+  padding: 24rpx;
+  overflow-x: hidden;
+}
+
+/* ===== 搜索栏 ===== */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+.search-input-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 16rpx 22rpx;
+  box-shadow: 0 4rpx 12rpx rgba(255, 182, 193, 0.1);
+}
+
+.search-icon {
+  font-size: 28rpx;
+  margin-right: 12rpx;
+  opacity: 0.5;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 26rpx;
+  color: #4A2A2A;
+}
+
+.filter-toggle {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 16rpx 24rpx;
+  box-shadow: 0 4rpx 12rpx rgba(255, 182, 193, 0.1);
+  flex-shrink: 0;
+}
+
+.filter-toggle-text {
+  font-size: 26rpx;
+  color: #FF6B8A;
+  font-weight: 500;
+}
+
+/* ===== 筛选栏 ===== */
+.filter-bar {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 22rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(255, 182, 193, 0.1);
+}
+
+.filter-row {
+  display: flex;
+  gap: 12rpx;
+}
+
+.filter-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6rpx;
+  min-width: 0;
+}
+
+.filter-label {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.filter-value {
+  font-size: 24rpx;
+  color: #4A2A2A;
+  font-weight: 500;
+  background: #FFF5F5;
+  padding: 8rpx 12rpx;
+  border-radius: 16rpx;
+  text-align: center;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.filter-clear {
+  text-align: center;
+  margin-top: 16rpx;
+  padding-top: 16rpx;
+  border-top: 2rpx solid #F5F0F2;
+}
+
+.filter-clear-text {
+  font-size: 24rpx;
+  color: #FF6B8A;
+}
+
+/* ===== 添加按钮 ===== */
+.add-btn {
+  background: linear-gradient(135deg, #FFB6C1, #FF6B8A);
+  border-radius: 32rpx;
+  padding: 20rpx 0;
+  text-align: center;
+  margin-bottom: 24rpx;
+  box-shadow: 0 6rpx 18rpx rgba(255, 107, 138, 0.25);
+}
+
+.add-btn:active {
+  transform: scale(0.97);
+}
+
+.add-btn-text {
+  font-size: 30rpx;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+/* ===== 列表 ===== */
+.list {
+  min-height: 200rpx;
+}
+
+.card {
+  display: flex;
+  background: #FFFFFF;
+  border-radius: 32rpx;
+  padding: 22rpx;
+  margin-bottom: 22rpx;
+  box-shadow: 0 6rpx 18rpx rgba(255, 182, 193, 0.15);
+}
+
+.card:active {
+  transform: scale(0.98);
+  transition: transform 0.1s ease;
+}
+
+.card-image {
+  width: 150rpx;
+  height: 180rpx;
+  border-radius: 22rpx;
+  background: #F5EEF0;
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-image image {
+  width: 100%;
+  height: 100%;
+}
+
+.image-placeholder {
+  font-size: 60rpx;
+}
+
+.card-content {
+  flex: 1;
+  padding-left: 22rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12rpx;
+}
+
+.name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #4A2A2A;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.brand {
+  font-size: 22rpx;
+  color: #BBB;
+  flex-shrink: 0;
+}
+
+.card-body {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  flex-wrap: wrap;
+  margin: 8rpx 0;
+}
+
+.color-tag {
+  width: 28rpx;
+  height: 28rpx;
+  border-radius: 50%;
+  border: 3rpx solid #F0E0E4;
+  flex-shrink: 0;
+}
+
+.price {
+  font-size: 28rpx;
+  color: #E85A7A;
+  font-weight: bold;
+}
+
+.type-tag {
+  font-size: 20rpx;
+  color: #999;
+  background: #F5F0F2;
+  padding: 4rpx 14rpx;
+  border-radius: 12rpx;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+/* ===== 状态标签 ===== */
+.status-tag {
+  display: inline-block;
+  font-size: 22rpx;
+  font-weight: 500;
+  padding: 6rpx 22rpx;
+  border-radius: 32rpx;
+  letter-spacing: 0.5rpx;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.status-tag.today {
+  background: #FF6B8A;
+  color: #FFFFFF;
+  font-weight: 600;
+  box-shadow: 0 4rpx 12rpx rgba(255, 107, 138, 0.25);
+  animation: breathe 1.8s ease-in-out infinite;
+}
+
+.status-tag.pending {
+  color: #E85A7A;
+  background: #FFE4E8;
+  animation: breathe 1.8s ease-in-out infinite;
+}
+
+.status-tag.paid {
+  color: #999;
+  background: #F0F0F0;
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.96); }
+}
+
+/* ===== 空状态 ===== */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 0;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 24rpx;
+  opacity: 0.6;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #BBB;
+}

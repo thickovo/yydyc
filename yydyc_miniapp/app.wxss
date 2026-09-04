@@ -1,0 +1,42 @@
+/**app.wxss**/
+
+page {
+  font-family: 'youyou', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #4A2A2A;
+  background: #FFF5F5;
+  overflow-x: hidden;
+  max-width: 100vw;
+  box-sizing: border-box;
+}
+
+page {
+  --pink-primary: #FF6B8A;
+  --pink-light: #FFB6C1;
+  --pink-bg: #FFF5F5;
+  --pink-border: #F0E0E4;
+  --pink-deep: #E85A7A;
+  --text-primary: #4A2A2A;
+  --text-secondary: #999;
+}
+
+button {
+  font-family: 'youyou', sans-serif;
+  margin: 0;
+  padding: 0;
+  line-height: inherit;
+  font-size: inherit;
+}
+
+button::after {
+  border: none;
+}
+
+text, view, input, textarea {
+  font-family: 'youyou', sans-serif;
+  box-sizing: border-box;
+}
+
+view, text {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}

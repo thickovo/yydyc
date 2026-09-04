@@ -1,0 +1,306 @@
+page {
+  background: #FFF5F5;
+  padding: 24rpx;
+  padding-bottom: 160rpx;
+  overflow-x: hidden;
+}
+
+/* ===== 加载中 ===== */
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 0;
+}
+
+.loading-text {
+  font-size: 28rpx;
+  color: #BBB;
+}
+
+/* ===== 英雄卡 ===== */
+.hero-card {
+  background: linear-gradient(135deg, #FFB6C1 0%, #FF9BB5 50%, #FF6B8A 100%);
+  border-radius: 32rpx;
+  padding: 36rpx 32rpx;
+  margin-bottom: 22rpx;
+  box-shadow: 0 8rpx 32rpx rgba(255, 107, 138, 0.25);
+  color: #FFFFFF;
+  overflow: hidden;
+}
+
+.hero-top {
+  margin-bottom: 18rpx;
+}
+
+.detail-name {
+  font-size: 38rpx;
+  font-weight: bold;
+  color: #FFFFFF;
+  display: block;
+  text-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.detail-brand {
+  font-size: 26rpx;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 6rpx;
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-bottom: 18rpx;
+}
+
+.status-row .status-tag {
+  display: inline-block;
+  font-size: 22rpx;
+  font-weight: 600;
+  padding: 6rpx 22rpx;
+  border-radius: 32rpx;
+}
+
+.status-row .status-tag.today {
+  background: #FFFFFF;
+  color: #FF6B8A;
+  animation: breathe 1.8s ease-in-out infinite;
+}
+
+.status-row .status-tag.pending {
+  background: rgba(255, 255, 255, 0.3);
+  color: #FFFFFF;
+  animation: breathe 1.8s ease-in-out infinite;
+}
+
+.status-row .status-tag.paid {
+  background: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(0.96); }
+}
+
+.type-badge {
+  font-size: 22rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 18rpx;
+  background: rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+}
+
+.price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 14rpx;
+}
+
+.price-big {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #FFFFFF;
+}
+
+.price-sub {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ===== 信息卡片 ===== */
+.info-card {
+  background: #FFFFFF;
+  border-radius: 32rpx;
+  padding: 28rpx 32rpx;
+  margin-bottom: 22rpx;
+  box-shadow: 0 4rpx 16rpx rgba(255, 182, 193, 0.08);
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16rpx 0;
+  border-bottom: 2rpx solid #F8F0F4;
+}
+
+.info-row:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  font-size: 26rpx;
+  color: #999;
+  flex-shrink: 0;
+}
+
+.info-value {
+  font-size: 26rpx;
+  color: #4A2A2A;
+  text-align: right;
+  flex: 1;
+  margin-left: 24rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.note-value {
+  line-height: 1.5;
+  word-break: break-all;
+}
+
+.link-value {
+  color: #FF6B8A;
+  text-decoration: underline;
+}
+
+.info-color {
+  display: flex;
+  align-items: center;
+  margin-left: 24rpx;
+}
+
+.color-dot {
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 50%;
+  border: 3rpx solid #F0E0E4;
+}
+
+/* ===== 小物标签 ===== */
+.accessories-row {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12rpx;
+}
+
+.accessories-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10rpx;
+  margin-left: 0;
+  width: 100%;
+}
+
+.accessory-item {
+  font-size: 22rpx;
+  color: #FF6B8A;
+  background: #FFF0F3;
+  padding: 6rpx 18rpx;
+  border-radius: 20rpx;
+  border: 1rpx solid #FFD0DC;
+}
+
+/* ===== 操作卡片（全款预售已买/未买） ===== */
+.action-card {
+  background: #FFFFFF;
+  border-radius: 32rpx;
+  padding: 28rpx 32rpx;
+  margin-bottom: 22rpx;
+  box-shadow: 0 4rpx 16rpx rgba(255, 182, 193, 0.08);
+}
+
+.action-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #4A2A2A;
+  margin-bottom: 18rpx;
+}
+
+.action-btns {
+  display: flex;
+  gap: 20rpx;
+}
+
+.action-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10rpx;
+  padding: 20rpx 0;
+  border-radius: 24rpx;
+  transition: all 0.2s;
+}
+
+.action-btn:active {
+  transform: scale(0.96);
+}
+
+.bought-btn {
+  background: #FFF0F3;
+  border: 2rpx solid #FFD0DC;
+}
+
+.unbought-btn {
+  background: #F5F5F5;
+  border: 2rpx solid #E8E8E8;
+}
+
+.action-btn-icon {
+  font-size: 32rpx;
+}
+
+.action-btn-text {
+  font-size: 26rpx;
+  font-weight: 500;
+}
+
+.bought-btn .action-btn-text {
+  color: #FF6B8A;
+}
+
+.unbought-btn .action-btn-text {
+  color: #999;
+}
+
+/* ===== 底部操作 ===== */
+.bottom-actions {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  gap: 20rpx;
+  padding: 24rpx 32rpx;
+  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
+  background: #FFFFFF;
+  box-shadow: 0 -4rpx 16rpx rgba(255, 182, 193, 0.12);
+  z-index: 100;
+}
+
+.bottom-btn {
+  flex: 1;
+  padding: 22rpx 0;
+  text-align: center;
+  border-radius: 36rpx;
+}
+
+.bottom-btn:active {
+  transform: scale(0.97);
+  transition: transform 0.1s;
+}
+
+.edit-btn {
+  background: linear-gradient(135deg, #FFB6C1, #FF6B8A);
+  box-shadow: 0 6rpx 18rpx rgba(255, 107, 138, 0.25);
+}
+
+.delete-btn {
+  background: #F5F0F2;
+}
+
+.bottom-btn-text {
+  font-size: 30rpx;
+  font-weight: 600;
+}
+
+.edit-btn .bottom-btn-text {
+  color: #FFFFFF;
+}
+
+.delete-btn .bottom-btn-text {
+  color: #999;
+}

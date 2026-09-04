@@ -1,0 +1,84 @@
+<!-- 顶部 -->
+<view class="top-bar">
+  <view class="top-left">
+    <text class="title">✨ 云裳记</text>
+  </view>
+  <view class="bell" bindtap="goToCalendar">
+    <text class="bell-icon">🔔</text>
+    <view wx:if="{{hasPending}}" class="badge"></view>
+  </view>
+</view>
+
+<!-- 横幅 -->
+<view class="banner">
+  <view class="banner-left">
+    <text class="banner-text">细数衣衫</text>
+    <text class="banner-text">记取人间细碎美好 🎀</text>
+  </view>
+  <image class="banner-img" src="/images/shouye.jpg" mode="aspectFill"></image>
+</view>
+
+<!-- 统计卡片 -->
+<view class="stats">
+  <view class="stat-item">
+    <text class="stat-number">{{totalCount}}</text>
+    <text class="stat-label">全部裙子</text>
+    <view class="stat-icon-bg">👗</view>
+  </view>
+  <view class="stat-item">
+    <text class="stat-number pending">{{pendingCount}}</text>
+    <text class="stat-label">待补尾款</text>
+    <view class="stat-icon-bg">⏰</view>
+  </view>
+  <view class="stat-item">
+    <text class="stat-number paid">{{paidCount}}</text>
+    <text class="stat-label">已结清</text>
+    <view class="stat-icon-bg">✅</view>
+  </view>
+</view>
+
+<!-- 滚动提示条 -->
+<view wx:if="{{pendingList.length > 0}}" class="scroll-bar">
+  <view class="scroll-inner">
+    <text class="scroll-text">{{scrollText}}</text>
+  </view>
+</view>
+
+<!-- 功能入口 -->
+<view class="section-title">
+  <text class="section-title-text">小功能</text>
+</view>
+
+<view class="grid">
+  <view class="grid-item" bindtap="goToCloset">
+    <view class="grid-icon-wrap grid-icon-closet">
+      <text class="grid-icon">🧺</text>
+    </view>
+    <text class="grid-label">我的衣橱</text>
+    <text class="grid-desc">管理所有裙子</text>
+  </view>
+  <view class="grid-item" bindtap="goToWish">
+    <view class="grid-icon-wrap grid-icon-wish">
+      <text class="grid-icon">📝</text>
+    </view>
+    <text class="grid-label">心愿单</text>
+    <text class="grid-desc">想入手的裙子</text>
+  </view>
+  <view class="grid-item" bindtap="goToCalendar">
+    <view class="grid-icon-wrap grid-icon-calendar">
+      <text class="grid-icon">📅</text>
+    </view>
+    <text class="grid-label">尾款日历</text>
+    <text class="grid-desc">重要日期不遗漏</text>
+  </view>
+  <view class="grid-item" bindtap="goToAccount">
+    <view class="grid-icon-wrap grid-icon-account">
+      <text class="grid-icon">💰</text>
+    </view>
+    <text class="grid-label">裙子小账本</text>
+    <text class="grid-desc">花销一目了然</text>
+  </view>
+
+  <button bindtap="requestSubscribe" type="primary">开启消息提醒</button>
+  
+</view>

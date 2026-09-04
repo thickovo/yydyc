@@ -1,0 +1,87 @@
+<view wx:if="{{skirt}}" class="detail-page">
+  <!-- 顶部信息卡 -->
+  <view class="hero-card">
+    <view class="hero-top">
+      <text class="detail-name">{{skirt.name}}</text>
+      <text class="detail-brand" wx:if="{{skirt.brand}}">{{skirt.brand}}</text>
+    </view>
+    <view class="status-row">
+      <text class="status-tag {{skirt.statusClass}}">{{skirt.statusText}}</text>
+      <text class="type-badge" wx:if="{{skirt.type}}">{{skirt.type}}</text>
+    </view>
+    <view class="price-row">
+      <text class="price-big">¥{{skirt.totalPrice}}</text>
+      <text class="price-sub" wx:if="{{skirt.isPresale}}">全款预售</text>
+      <text class="price-sub" wx:else>定 ¥{{skirt.deposit}} + 尾 ¥{{skirt.finalPayment}}</text>
+    </view>
+  </view>
+
+  <!-- 信息列表 -->
+  <view class="info-card">
+    <view class="info-row" wx:if="{{skirt.category}}">
+      <text class="info-label">类别</text>
+      <text class="info-value">{{skirt.category}}</text>
+    </view>
+    <view class="info-row" wx:if="{{skirt.size}}">
+      <text class="info-label">尺码</text>
+      <text class="info-value">{{skirt.size}}</text>
+    </view>
+    <view class="info-row" wx:if="{{skirt.color}}">
+      <text class="info-label">颜色</text>
+      <view class="info-color">
+        <view class="color-dot" style="background: {{skirt.color}};"></view>
+      </view>
+    </view>
+    <view class="info-row accessories-row" wx:if="{{skirt.accessories}}">
+      <text class="info-label">小物</text>
+      <view class="accessories-tags">
+        <text class="accessory-item" wx:for="{{skirt.accessoriesArray}}" wx:key="*this">{{item}}</text>
+      </view>
+    </view>
+    <view class="info-row" wx:if="{{skirt.saleStart}}">
+      <text class="info-label">开售时间</text>
+      <text class="info-value">{{skirt.saleStart}}</text>
+    </view>
+    <view class="info-row" wx:if="{{skirt.finalStart}}">
+      <text class="info-label">尾款时间</text>
+      <text class="info-value">{{skirt.finalStart}}</text>
+    </view>
+    <view class="info-row" wx:if="{{skirt.note}}">
+      <text class="info-label">备注</text>
+      <text class="info-value note-value">{{skirt.note}}</text>
+    </view>
+    <view class="info-row" wx:if="{{skirt.purchaseLink}}">
+      <text class="info-label">链接</text>
+      <text class="info-value link-value" bindtap="copyLink">复制购买链接</text>
+    </view>
+  </view>
+
+  <!-- 全款预售模式：标记已买/未买 -->
+  <view class="action-card" wx:if="{{skirt.isPresale}}">
+    <view class="action-title">购买状态</view>
+    <view class="action-btns">
+      <view class="action-btn bought-btn" bindtap="markAsBought">
+        <text class="action-btn-icon">✅</text>
+        <text class="action-btn-text">标记为已买</text>
+      </view>
+      <view class="action-btn unbought-btn" bindtap="markAsNotBought">
+        <text class="action-btn-icon">❌</text>
+        <text class="action-btn-text">标记为未买</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部操作 -->
+  <view class="bottom-actions">
+    <view class="bottom-btn edit-btn" bindtap="goToEdit">
+      <text class="bottom-btn-text">编辑</text>
+    </view>
+    <view class="bottom-btn delete-btn" bindtap="deleteSkirt">
+      <text class="bottom-btn-text">删除</text>
+    </view>
+  </view>
+</view>
+
+<view wx:else class="loading">
+  <text class="loading-text">加载中...</text>
+</view>

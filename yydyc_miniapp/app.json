@@ -1,0 +1,20 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/home/home",
+    "pages/list/list",
+    "pages/add/add",
+    "pages/detail/detail",
+    "pages/edit/edit"
+  ],
+  "window": {
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "云裳记",
+    "navigationBarBackgroundColor": "#FF6B8A",
+    "backgroundColor": "#FFF5F5"
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}
