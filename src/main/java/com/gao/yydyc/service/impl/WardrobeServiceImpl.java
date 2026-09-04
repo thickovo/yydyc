@@ -2,6 +2,7 @@ package com.gao.yydyc.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.gao.yydyc.dto.CategoryStatisticsVO;
 import com.gao.yydyc.dto.MonthSummaryVO;
 import com.gao.yydyc.dto.OverviewStatisticsVO;
 import com.gao.yydyc.entity.Wardrobe;
@@ -51,5 +52,10 @@ public class WardrobeServiceImpl extends ServiceImpl<WardrobeMapper, Wardrobe> i
     @Override
     public List<MonthlyTrendVO> getMonthlyTrend(String userId) {
         return wardrobeMapper.getMonthlyTrend(userId);
+    }
+
+    @Override
+    public List<CategoryStatisticsVO> getCategoryStatistics(String userId) {
+        return wardrobeMapper.getCategoryStatistics(userId);
     }
 }

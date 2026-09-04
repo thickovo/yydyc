@@ -1,6 +1,7 @@
 package com.gao.yydyc.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.gao.yydyc.dto.CategoryStatisticsVO;
 import com.gao.yydyc.dto.MonthSummaryVO;
 import com.gao.yydyc.dto.MonthlyTrendVO;
 import com.gao.yydyc.dto.OverviewStatisticsVO;
@@ -22,4 +23,6 @@ public interface WardrobeMapper extends BaseMapper<Wardrobe> {
     OverviewStatisticsVO getOverviewStatistics(@Param("userId") String userId);
 
     List<MonthlyTrendVO> getMonthlyTrend(@Param("userId") String userId);
+
+    List<CategoryStatisticsVO> getCategoryStatistics(@Param("userId") String userId);
 }

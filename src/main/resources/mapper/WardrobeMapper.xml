@@ -49,4 +49,16 @@
         ORDER BY month ASC
     </select>
 
+    <select id="getCategoryStatistics" resultType="com.gao.yydyc.dto.CategoryStatisticsVO">
+        SELECT
+            brand,
+            COALESCE(SUM(total_price), 0) AS total
+        FROM wardrobe
+        WHERE user_id = #{userId}
+          AND brand IS NOT NULL
+          AND brand != ''
+        GROUP BY brand
+        ORDER BY total DESC
+    </select>
+
 </mapper>

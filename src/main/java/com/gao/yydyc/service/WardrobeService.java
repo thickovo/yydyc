@@ -1,6 +1,7 @@
 package com.gao.yydyc.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.gao.yydyc.dto.CategoryStatisticsVO;
 import com.gao.yydyc.dto.MonthSummaryVO;
 import com.gao.yydyc.dto.MonthlyTrendVO;
 import com.gao.yydyc.dto.OverviewStatisticsVO;
@@ -15,4 +16,7 @@ public interface WardrobeService extends IService<Wardrobe> {
 
     OverviewStatisticsVO getOverviewStatistics(String userId);
 
-    List<MonthlyTrendVO> getMonthlyTrend(String userId);}
+    List<MonthlyTrendVO> getMonthlyTrend(String userId);
+
+    List<CategoryStatisticsVO> getCategoryStatistics(String userId);
+}
