@@ -10,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @TableName("wardrobe")
 public class Wardrobe {
@@ -38,6 +39,16 @@ public class Wardrobe {
     private Integer status;
     @JsonSerialize(using = ToStringSerializer.class)
     private Long cabinetId;
+    @TableField(exist = false)
+    private List<SkirtImage> images;
+
+    public List<SkirtImage> getImages() {
+        return images;
+    }
+
+    public void setImages(List<SkirtImage> images) {
+        this.images = images;
+    }
 
     public Long getCabinetId() {
         return cabinetId;
