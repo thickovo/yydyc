@@ -16,4 +16,14 @@
         ORDER BY month ASC
     </select>
 
+    <select id="listByMonth" resultType="com.gao.yydyc.entity.Wardrobe">
+        SELECT *
+        FROM wardrobe
+        WHERE user_id = #{userId}
+          AND YEAR(final_start) = #{year}
+          AND MONTH(final_start) = #{month}
+          AND status = 0
+        ORDER BY final_start ASC
+    </select>
+
 </mapper>

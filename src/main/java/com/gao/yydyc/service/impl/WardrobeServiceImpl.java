@@ -35,4 +35,9 @@ public class WardrobeServiceImpl extends ServiceImpl<WardrobeMapper, Wardrobe> i
         //3.返回
         return wardrobeMapper.getMonthlySummary(year, userId);
     }
+
+    @Override
+    public List<Wardrobe> listByMonth(Integer year, Integer month, String userId) {
+        return wardrobeMapper.listByMonth(year,month,userId);
+    }
 }

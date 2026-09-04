@@ -90,6 +90,13 @@ public class WardrobeController {
         List<MonthSummaryVO> list =
                 wardrobeService.getMonthlySummary(year, userId);
         return Result.success(list);
+    }
 
+    @GetMapping("/calendar/detail")
+    public Result<List<Wardrobe>> listByMonth(@RequestParam Integer year,
+                                              @RequestParam Integer month,
+                                              @RequestParam String userId) {
+        List<Wardrobe> list = wardrobeService.listByMonth(year,month,userId);
+        return Result.success(list);
     }
 }

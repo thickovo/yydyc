@@ -9,4 +9,5 @@ public interface WardrobeService extends IService<Wardrobe> {
 
     List<MonthSummaryVO> getMonthlySummary (Integer year, String userId);
 
+    List<Wardrobe> listByMonth(Integer year, Integer month, String userId);
 }
