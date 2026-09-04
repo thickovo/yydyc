@@ -4,6 +4,7 @@ import com.gao.yydyc.common.Result;
 import com.gao.yydyc.entity.CalendarItem;
 import com.gao.yydyc.entity.Wardrobe;
 import com.gao.yydyc.service.WardrobeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigDecimal;
 import java.util.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/statistics")
 public class StatisticsController {

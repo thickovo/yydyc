@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @TableName("wardrobe")
 public class Wardrobe {
@@ -24,14 +25,14 @@ public class Wardrobe {
     private BigDecimal deposit;
     private BigDecimal finalPayment;
     private BigDecimal accessoriesPrice;
-    private LocalDate finalDate;
-    private LocalDate depositStart;
-    private LocalDate depositEnd;
+    private LocalDateTime finalDate;
+    private LocalDateTime depositStart;
+    private LocalDateTime depositEnd;
     // 全款预售 / 定尾 切换时需要把对方字段写回 null，
     // MyBatis-Plus 默认 FieldStrategy.NOT_NULL 会跳过 null → 必须显式 ALWAYS
     @TableField(updateStrategy = FieldStrategy.ALWAYS)
-    private LocalDate finalStart;
-    private LocalDate finalEnd;
+    private LocalDateTime finalStart;
+    private LocalDateTime finalEnd;
     private String purchaseLink;
     private String note;
     private Integer status;
@@ -55,10 +56,10 @@ public class Wardrobe {
     private String imageUrl;
     // 同 finalStart：购买模式切换时必须能写回 null
     @TableField(updateStrategy = FieldStrategy.ALWAYS)
-    private LocalDate saleStart;
+    private LocalDateTime saleStart;
 
-    private LocalDate createTime;
-    private LocalDate updateTime;
+    private LocalDateTime createTime;
+    private LocalDateTime updateTime;
 
     // 新增三个字段
     private String category;
@@ -138,43 +139,43 @@ public class Wardrobe {
         this.accessoriesPrice = accessoriesPrice;
     }
 
-    public LocalDate getFinalDate() {
+    public LocalDateTime getFinalDate() {
         return finalDate;
     }
 
-    public void setFinalDate(LocalDate finalDate) {
+    public void setFinalDate(LocalDateTime finalDate) {
         this.finalDate = finalDate;
     }
 
-    public LocalDate getDepositStart() {
+    public LocalDateTime getDepositStart() {
         return depositStart;
     }
 
-    public void setDepositStart(LocalDate depositStart) {
+    public void setDepositStart(LocalDateTime depositStart) {
         this.depositStart = depositStart;
     }
 
-    public LocalDate getDepositEnd() {
+    public LocalDateTime getDepositEnd() {
         return depositEnd;
     }
 
-    public void setDepositEnd(LocalDate depositEnd) {
+    public void setDepositEnd(LocalDateTime depositEnd) {
         this.depositEnd = depositEnd;
     }
 
-    public LocalDate getFinalStart() {
+    public LocalDateTime getFinalStart() {
         return finalStart;
     }
 
-    public void setFinalStart(LocalDate finalStart) {
+    public void setFinalStart(LocalDateTime finalStart) {
         this.finalStart = finalStart;
     }
 
-    public LocalDate getFinalEnd() {
+    public LocalDateTime getFinalEnd() {
         return finalEnd;
     }
 
-    public void setFinalEnd(LocalDate finalEnd) {
+    public void setFinalEnd(LocalDateTime finalEnd) {
         this.finalEnd = finalEnd;
     }
 
@@ -234,27 +235,27 @@ public class Wardrobe {
         this.imageUrl = imageUrl;
     }
 
-    public LocalDate getSaleStart() {
+    public LocalDateTime getSaleStart() {
         return saleStart;
     }
 
-    public void setSaleStart(LocalDate saleStart) {
+    public void setSaleStart(LocalDateTime saleStart) {
         this.saleStart = saleStart;
     }
 
-    public LocalDate getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDate createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 
-    public LocalDate getUpdateTime() {
+    public LocalDateTime getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(LocalDate updateTime) {
+    public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
     }
 

@@ -1,6 +1,7 @@
 package com.gao.yydyc.controller;
 
 import com.gao.yydyc.common.Result;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -8,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/image")
 public class ImageController {

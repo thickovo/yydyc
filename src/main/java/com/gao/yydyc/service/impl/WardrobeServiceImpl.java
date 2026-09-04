@@ -4,9 +4,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gao.yydyc.entity.Wardrobe;
 import com.gao.yydyc.mapper.WardrobeMapper;
 import com.gao.yydyc.service.WardrobeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-
+@Slf4j
 @Service
 public class WardrobeServiceImpl extends ServiceImpl<WardrobeMapper, Wardrobe> implements WardrobeService {
 

@@ -6,11 +6,13 @@ import com.gao.yydyc.entity.Cabinet;
 import com.gao.yydyc.entity.Wardrobe;
 import com.gao.yydyc.service.CabinetService;
 import com.gao.yydyc.service.WardrobeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/cabinet")
 public class CabinetController {

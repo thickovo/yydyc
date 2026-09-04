@@ -1,0 +1,30 @@
+package com.gao.yydyc.controller;
+
+
+import com.gao.yydyc.common.Result;
+import com.gao.yydyc.service.LoginService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@Slf4j
+@RestController
+@RequestMapping("/api")
+public class LoginController {
+
+    @Autowired
+    private LoginService loginService;
+
+    @GetMapping("/login")
+    public Result<String> wxLogin(@RequestParam("code") String code) {
+        String loginCode = loginService.wxLogin(code);
+        if (loginCode != null) {
+            return Result.success(loginCode);
+        } else {
+            return Result.error("微信登录失败");
+        }
+    }
+}

@@ -5,11 +5,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gao.yydyc.common.Result;
 import com.gao.yydyc.entity.Wardrobe;
 import com.gao.yydyc.service.WardrobeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/wardrobe")
 public class WardrobeController {
