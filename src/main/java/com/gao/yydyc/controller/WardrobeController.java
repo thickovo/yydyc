@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gao.yydyc.common.Result;
 import com.gao.yydyc.dto.MonthSummaryVO;
+import com.gao.yydyc.dto.MonthlyTrendVO;
+import com.gao.yydyc.dto.OverviewStatisticsVO;
 import com.gao.yydyc.entity.Wardrobe;
 import com.gao.yydyc.service.WardrobeService;
 import lombok.extern.slf4j.Slf4j;
@@ -98,5 +100,17 @@ public class WardrobeController {
                                               @RequestParam String userId) {
         List<Wardrobe> list = wardrobeService.listByMonth(year,month,userId);
         return Result.success(list);
+    }
+
+    @GetMapping("/statistics/overview")
+    public Result<OverviewStatisticsVO> getOverviewStatistics(@RequestParam String userId){
+        OverviewStatisticsVO data = wardrobeService.getOverviewStatistics(userId);
+        return Result.success(data);
+    }
+
+    @GetMapping("/statistics/trend")
+    public Result<List<MonthlyTrendVO>> getMonthlyTrend(@RequestParam String userId){
+        List<MonthlyTrendVO> data = wardrobeService.getMonthlyTrend(userId);
+        return Result.success(data);
     }
 }

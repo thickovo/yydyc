@@ -3,10 +3,12 @@ package com.gao.yydyc.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.gao.yydyc.dto.MonthSummaryVO;
+import com.gao.yydyc.dto.OverviewStatisticsVO;
 import com.gao.yydyc.entity.Wardrobe;
 import com.gao.yydyc.mapper.WardrobeMapper;
 import com.gao.yydyc.service.WardrobeService;
 import java.util.List;
+import com.gao.yydyc.dto.MonthlyTrendVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,5 +41,15 @@ public class WardrobeServiceImpl extends ServiceImpl<WardrobeMapper, Wardrobe> i
     @Override
     public List<Wardrobe> listByMonth(Integer year, Integer month, String userId) {
         return wardrobeMapper.listByMonth(year,month,userId);
+    }
+
+    @Override
+    public OverviewStatisticsVO getOverviewStatistics(String userId) {
+        return wardrobeMapper.getOverviewStatistics(userId);
+    }
+
+    @Override
+    public List<MonthlyTrendVO> getMonthlyTrend(String userId) {
+        return wardrobeMapper.getMonthlyTrend(userId);
     }
 }

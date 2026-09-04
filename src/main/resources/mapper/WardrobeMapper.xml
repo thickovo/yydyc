@@ -26,4 +26,27 @@
         ORDER BY final_start ASC
     </select>
 
+    <select id="getOverviewStatistics" resultType="com.gao.yydyc.dto.OverviewStatisticsVO">
+        SELECT
+            COALESCE(SUM(total_price), 0) AS totalSpent,
+            COALESCE(SUM(CASE WHEN status = 0 THEN final_payment ELSE 0 END), 0) AS pendingTotal,
+            COALESCE(SUM(CASE WHEN status IN (1, 2) THEN final_payment ELSE 0 END), 0) AS paidTotal,
+            COUNT(*) AS totalCount,
+            COUNT(CASE WHEN status = 0 THEN 1 END) AS pendingCount,
+            COUNT(CASE WHEN status IN (1, 2) THEN 1 END) AS paidCount
+        FROM wardrobe
+        WHERE user_id = #{userId}
+    </select>
+
+    <select id="getMonthlyTrend" resultType="com.gao.yydyc.dto.MonthlyTrendVO">
+        SELECT
+            MONTH(create_time) AS month,
+            COALESCE(SUM(total_price), 0) AS total
+        FROM wardrobe
+        WHERE user_id = #{userId}
+          AND create_time IS NOT NULL
+        GROUP BY MONTH(create_time)
+        ORDER BY month ASC
+    </select>
+
 </mapper>
