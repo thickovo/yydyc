@@ -19,4 +19,8 @@ public interface WardrobeService extends IService<Wardrobe> {
     List<MonthlyTrendVO> getMonthlyTrend(String userId);
 
     List<CategoryStatisticsVO> getCategoryStatistics(String userId);
+
+    void markSold(Long id);
+
+    void unmarkSold(Long id);
 }

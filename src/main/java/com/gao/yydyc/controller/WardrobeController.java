@@ -214,4 +214,32 @@ public class WardrobeController {
         return Result.success(null);
     }
 
+    @PutMapping("/mark-sold/{id}")
+    public Result<Void> markSold(@PathVariable Long id) {
+        // 1. 查裙子存不存在
+        Wardrobe skirt = wardrobeService.getById(id);
+        if (skirt == null){
+            return Result.error("裙子不存在");
+        }
+        // 2. 把 status 改为 3
+        skirt.setStatus(3);
+        wardrobeService.updateById(skirt);
+        // 3. 返回成功
+        return Result.success(null);
+    }
+
+    @PutMapping("/unmark-sold/{id}")
+    public Result<Void> unmarkSold(@PathVariable Long id) {
+        // 1. 查裙子存不存在
+        Wardrobe skirt = wardrobeService.getById(id);
+        if (skirt == null){
+            return Result.error("裙子不存在");
+        }
+        // 2. 把 status 改回 0
+        skirt.setStatus(0);
+        wardrobeService.updateById(skirt);
+        // 3. 返回成功
+        return Result.success(null);
+    }
+
 }

@@ -58,4 +58,24 @@ public class WardrobeServiceImpl extends ServiceImpl<WardrobeMapper, Wardrobe> i
     public List<CategoryStatisticsVO> getCategoryStatistics(String userId) {
         return wardrobeMapper.getCategoryStatistics(userId);
     }
+
+    @Override
+    public void  markSold(Long id) {
+        Wardrobe skirt = getById(id);
+        if (skirt == null) {
+            throw new RuntimeException("裙子不存在");
+        }
+        skirt.setStatus(3);
+        updateById(skirt);
+    }
+
+    @Override
+    public void unmarkSold(Long id) {
+        Wardrobe skirt = getById(id);
+        if (skirt == null) {
+            throw new RuntimeException("裙子不存在");
+        }
+        skirt.setStatus(0);
+        updateById(skirt);
+    }
 }
