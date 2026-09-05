@@ -49,4 +49,17 @@ public class WishController {
         wishService.removeById(id);
         return Result.success(null);
     }
+
+    @PutMapping("/done/{id}")
+    public Result<Void> done(@PathVariable Long id) {
+        // 1. 查心愿存不存在
+        Wish wish = wishService.getById(id);
+        if (wish == null) {
+            return Result.error("心愿不存在");
+        }
+        // 2. 设置为已完成
+        wish.setIsDone(1);
+        wishService.updateById(wish);
+        return Result.success(null);
+    }
 }

@@ -1,6 +1,7 @@
 page {
   background: #FFF5F5;
   padding: 24rpx;
+  padding-bottom: 140rpx;
   overflow-x: hidden;
 }
 
@@ -260,6 +261,13 @@ page {
 .status-tag.paid {
   color: #999;
   background: #F0F0F0;
+}
+
+.status-tag.stock {
+  color: #52C41A;
+  background: #F6FFED;
+  border: 2rpx solid #B7EB8F;
+  font-weight: 600;
 }
 
 @keyframes breathe {

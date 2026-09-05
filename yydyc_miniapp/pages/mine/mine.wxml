@@ -1,0 +1,113 @@
+<view class="page">
+  <!-- 用户卡片 -->
+  <view class="user-card" bindtap="onTapProfile">
+    <view class="avatar">
+      <image wx:if="{{avatarUrl}}" class="avatar-img" src="{{avatarUrl}}" mode="aspectFill"></image>
+      <text wx:else class="avatar-emoji">👤</text>
+    </view>
+    <view class="user-info">
+      <view class="nickname">{{nickname || '点击登录微信'}}</view>
+      <view class="user-id">ID: {{userId}}</view>
+    </view>
+    <view class="user-card-arrow">
+      <text>›</text>
+    </view>
+  </view>
+
+  <!-- 消息提醒 -->
+  <view class="settings-card">
+    <view class="setting-row" catchtap="noop">
+      <view class="setting-left">
+        <view class="setting-icon icon-bell"></view>
+        <text class="setting-label">消息提醒</text>
+      </view>
+      <switch checked="{{notifyEnabled}}" bindchange="onNotifyChange" color="#FF6B8A"/>
+    </view>
+  </view>
+
+  <view class="settings-card">
+    <view class="setting-row" bindtap="onExport">
+      <view class="setting-left">
+        <view class="setting-icon icon-export"></view>
+        <text class="setting-label">导出数据</text>
+      </view>
+      <text class="setting-arrow">›</text>
+    </view>
+    <view class="setting-row" bindtap="onImport">
+      <view class="setting-left">
+        <view class="setting-icon icon-import"></view>
+        <text class="setting-label">导入数据</text>
+      </view>
+      <text class="setting-arrow">›</text>
+    </view>
+  </view>
+
+  <view class="settings-card">
+    <view class="setting-row" bindtap="onFeedback">
+      <view class="setting-left">
+        <view class="setting-icon icon-feedback"></view>
+        <text class="setting-label">意见反馈</text>
+      </view>
+      <text class="setting-arrow">›</text>
+    </view>
+    <view class="setting-row" bindtap="onAbout">
+      <view class="setting-left">
+        <view class="setting-icon icon-about"></view>
+        <text class="setting-label">关于云裳记</text>
+      </view>
+      <text class="setting-arrow">›</text>
+    </view>
+    <view class="setting-row" bindtap="onContact">
+      <view class="setting-left">
+        <view class="setting-icon icon-contact"></view>
+        <text class="setting-label">联系作者</text>
+      </view>
+      <text class="setting-arrow">›</text>
+    </view>
+  </view>
+
+  <view class="footer-watermark">作者：Th1ckovo</view>
+</view>
+
+<!-- 关于弹窗 -->
+<view class="modal-mask" wx:if="{{showAbout}}" catchtap="onCloseAbout">
+  <view class="modal-box" catchtap="noop">
+    <view class="modal-title">关于云裳记</view>
+    <view class="modal-content">
+      云裳寄岁月，衣藏世间欢喜。
+      {{'\n\n'}}
+      云裳记是一个记录裙子与心意的轻量工具。
+      {{'\n\n'}}
+      这里没有复杂的表单，只有简单温柔的记录方式 —— 把每一件心爱的衣裳、每一份小小心愿都好好收藏。
+      {{'\n\n'}}
+      愿你穿喜欢的衣裳，做喜欢的事。
+    </view>
+    <view class="modal-watermark">作者：Th1ckovo</view>
+    <view class="modal-btn" bindtap="onCloseAbout">知道了</view>
+  </view>
+</view>
+
+<!-- 联系作者弹窗 -->
+<view class="modal-mask" wx:if="{{showContact}}" catchtap="onCloseContact">
+  <view class="modal-box" catchtap="noop">
+    <view class="modal-title">联系作者</view>
+    <view class="modal-content">欢迎交流，一起把云裳记变得更好 ✨</view>
+
+    <view class="contact-card">
+      <view class="contact-row" bindtap="onCopyWechat">
+        <view class="contact-label">微信号</view>
+        <view class="contact-value">{{wechat}}</view>
+        <view class="contact-action">复制</view>
+      </view>
+      <view class="contact-divider"></view>
+      <view class="contact-row" bindtap="onCopyEmail">
+        <view class="contact-label">邮箱</view>
+        <view class="contact-value">{{email}}</view>
+        <view class="contact-action">复制</view>
+      </view>
+    </view>
+
+    <view class="modal-watermark">作者：Th1ckovo</view>
+    <view class="modal-btn modal-btn-text" bindtap="onCloseContact">关闭</view>
+  </view>
+</view>

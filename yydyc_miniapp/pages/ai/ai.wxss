@@ -1,0 +1,214 @@
+page {
+  background: linear-gradient(180deg, #FFF5F7 0%, #FFE4EC 100%);
+  display: flex;
+  flex-direction: column;
+  /* tabBar 高约 110rpx，减去后让 input-bar 显示在 tabBar 上方不被遮挡 */
+  height: calc(100vh - 110rpx);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* ============ 聊天列表 ============ */
+.chat-list {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 24rpx;
+}
+
+.chat-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+  padding-bottom: 24rpx;
+}
+
+/* ============ 欢迎语 ============ */
+.welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 200rpx 0;
+  gap: 20rpx;
+}
+
+.welcome-icon {
+  font-size: 120rpx;
+  line-height: 1;
+  filter: drop-shadow(0 8rpx 24rpx rgba(255, 107, 138, 0.25));
+}
+
+.welcome-text {
+  font-size: 28rpx;
+  color: #999;
+  text-align: center;
+  white-space: pre-line;
+  line-height: 1.6;
+}
+
+/* ============ 消息气泡 ============ */
+.msg {
+  display: flex;
+  align-items: flex-start;
+  gap: 16rpx;
+}
+
+.msg-ai { justify-content: flex-start; }
+.msg-user { justify-content: flex-end; }
+
+.avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  flex-shrink: 0;
+  box-shadow: 0 4rpx 16rpx rgba(255, 107, 138, 0.15);
+}
+
+.avatar-ai {
+  background: linear-gradient(135deg, #FFB6C1, #FF6B8A);
+  color: #FFFFFF;
+  font-size: 40rpx;
+}
+
+.avatar-user {
+  background: #FFFFFF;
+  border: 2rpx solid rgba(255, 182, 193, 0.4);
+}
+
+.msg-bubble {
+  max-width: 70%;
+  padding: 22rpx 28rpx;
+  border-radius: 28rpx;
+  font-size: 28rpx;
+  line-height: 1.6;
+  word-break: break-word;
+  white-space: pre-wrap;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+}
+
+.msg-ai .msg-bubble {
+  background: #FFFFFF;
+  color: #4A2A2A;
+  border-top-left-radius: 8rpx;
+  box-shadow: 0 4rpx 16rpx rgba(255, 107, 138, 0.12);
+}
+
+.msg-user .msg-bubble {
+  background: linear-gradient(135deg, #FFB6C1, #FF6B8A);
+  color: #FFFFFF;
+  border-top-right-radius: 8rpx;
+  box-shadow: 0 4rpx 16rpx rgba(255, 107, 138, 0.3);
+}
+
+/* ============ Loading 三点 ============ */
+.msg-loading {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  padding: 28rpx 32rpx;
+}
+
+.dot {
+  width: 12rpx;
+  height: 12rpx;
+  border-radius: 50%;
+  background: #FFB6C1;
+  animation: dotBounce 1.2s infinite ease-in-out;
+}
+
+.dot:nth-child(2) { animation-delay: 0.15s; }
+.dot:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes dotBounce {
+  0%, 80%, 100% { transform: translateY(0); opacity: 0.6; }
+  40% { transform: translateY(-8rpx); opacity: 1; }
+}
+
+/* ============ 提示条 ============ */
+.hint-bar {
+  flex-shrink: 0;
+  background: linear-gradient(90deg, rgba(255, 228, 232, 0.6), rgba(255, 192, 203, 0.6));
+  backdrop-filter: blur(20rpx);
+  padding: 14rpx 24rpx;
+  text-align: center;
+}
+
+.hint-text {
+  font-size: 22rpx;
+  color: #E85A7A;
+  line-height: 1.5;
+  letter-spacing: 1rpx;
+}
+
+/* ============ 输入栏 ============ */
+.input-bar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  padding: 18rpx 24rpx;
+  padding-bottom: calc(18rpx + env(safe-area-inset-bottom));
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20rpx);
+  border-top: 2rpx solid rgba(255, 182, 193, 0.2);
+  box-shadow: 0 -4rpx 20rpx rgba(255, 182, 193, 0.08);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  height: 72rpx;
+  line-height: 72rpx;
+  padding: 0 28rpx;
+  background: #FFF5F7;
+  border-radius: 36rpx;
+  font-size: 28rpx;
+  color: #4A2A2A;
+  border: 2rpx solid transparent;
+  transition: border-color 0.2s;
+}
+
+.input:focus {
+  border-color: #FFB6C1;
+  background: #FFFFFF;
+}
+
+/* ============ 发送按钮 ============ */
+.send-btn {
+  width: 80rpx;
+  height: 72rpx;
+  border-radius: 36rpx;
+  background: linear-gradient(135deg, #FFB6C1, #FF6B8A);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 6rpx 18rpx rgba(255, 107, 138, 0.35);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.send-btn:active {
+  transform: scale(0.92);
+  box-shadow: 0 3rpx 10rpx rgba(255, 107, 138, 0.4);
+}
+
+.send-btn.disabled {
+  opacity: 0.5;
+  box-shadow: none;
+}
+
+.send-arrow {
+  width: 0;
+  height: 0;
+  border-top: 12rpx solid transparent;
+  border-bottom: 12rpx solid transparent;
+  border-left: 22rpx solid #FFFFFF;
+  margin-left: 8rpx;
+}

@@ -1,14 +1,12 @@
-<view class="page">
-  <image class="bg-image" src="/images/shouye.jpg" mode="aspectFill"></image>
-  
-  <!-- 顶部区域 -->
-  <view class="top-section">
-    <text class="brand">云裳记</text>
-    <text class="days">云裳寄岁月，衣藏世间欢喜</text>
+<view class="splash">
+  <view class="brand-block">
+    <view class="brand-logo">🎀</view>
+    <view class="brand-name">云裳记</view>
+    <view class="brand-slogan">细数衣衫</view>
+    <view class="brand-slogan">记取人间细碎美好</view>
   </view>
 
-  <!-- 底部区域 -->
-  <view class="bottom-section">
-    <text class="quote">{{quote}}</text>
+  <view class="loader">
+    <view class="loader-spinner"></view>
   </view>
 </view>

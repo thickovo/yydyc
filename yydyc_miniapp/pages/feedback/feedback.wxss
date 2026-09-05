@@ -1,0 +1,77 @@
+page {
+  background: #FFF5F5;
+  min-height: 100vh;
+}
+
+.page {
+  padding: 32rpx 28rpx;
+}
+
+.header {
+  margin-bottom: 32rpx;
+}
+
+.header-title {
+  display: block;
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #4A2A2A;
+  margin-bottom: 8rpx;
+}
+
+.header-desc {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.form-card {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 28rpx 32rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 4rpx 12rpx rgba(255, 182, 193, 0.1);
+}
+
+.field-label {
+  font-size: 28rpx;
+  color: #4A2A2A;
+  font-weight: 500;
+  margin-bottom: 16rpx;
+}
+
+.field-textarea {
+  width: 100%;
+  min-height: 240rpx;
+  font-size: 28rpx;
+  color: #4A2A2A;
+  line-height: 1.6;
+}
+
+.field-counter {
+  text-align: right;
+  font-size: 22rpx;
+  color: #BBB;
+  margin-top: 8rpx;
+}
+
+.field-input {
+  width: 100%;
+  font-size: 28rpx;
+  color: #4A2A2A;
+  padding: 8rpx 0;
+}
+
+.submit-btn {
+  margin-top: 60rpx;
+  background: linear-gradient(135deg, #FFB6C1, #FF6B8A);
+  color: #FFFFFF;
+  font-size: 30rpx;
+  font-weight: 600;
+  border-radius: 40rpx;
+  padding: 24rpx 0;
+  box-shadow: 0 6rpx 18rpx rgba(255, 107, 138, 0.3);
+}
+
+.submit-btn[disabled] {
+  opacity: 0.6;
+}

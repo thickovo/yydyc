@@ -2,7 +2,7 @@
   <!-- 图片上传 -->
   <view class="form-section">
     <view class="form-item">
-      <text class="label">裙子图片</text>
+      <text class="label">商品图片</text>
       <view class="image-upload {{displayImageUrl ? 'has-image' : ''}}" bindtap="onPickImage">
         <block wx:if="{{displayImageUrl}}">
           <image
@@ -10,7 +10,6 @@
             src="{{displayImageUrl}}"
             mode="aspectFill"
             binderror="onImageError"
-            style="width:100%;height:100%;background:#F5EEF0;"
           ></image>
           <view class="upload-mask">
             <text class="upload-mask-text">{{uploading ? '上传中...' : '点击重新上传'}}</text>
@@ -21,7 +20,7 @@
         </block>
         <block wx:else>
           <view class="upload-placeholder">
-            <text class="upload-icon">📷</text>
+            <text class="upload-icon">+</text>
             <text class="upload-text">{{uploading ? '上传中...' : '点击上传图片'}}</text>
             <text class="upload-hint">支持 jpg / png，不超过 5MB</text>
           </view>
@@ -37,6 +36,7 @@
       <view class="mode-switch">
         <text class="switch-option {{buyMode === 'deposit' ? 'active' : ''}}" bindtap="switchBuyMode" data-mode="deposit">定尾模式</text>
         <text class="switch-option {{buyMode === 'presale' ? 'active' : ''}}" bindtap="switchBuyMode" data-mode="presale">全款预售</text>
+        <text class="switch-option {{buyMode === 'stock' ? 'active' : ''}}" bindtap="switchBuyMode" data-mode="stock">全款现货</text>
       </view>
     </view>
   </view>
@@ -45,7 +45,7 @@
   <view class="form-section">
     <view class="form-item">
       <text class="label">名称 *</text>
-      <input class="input" placeholder="请输入裙子名称" bindinput="handleInput" data-field="name" value="{{name}}" />
+      <input class="input" placeholder="请输入商品名称" bindinput="handleInput" data-field="name" value="{{name}}" />
     </view>
 
     <view class="form-item">
@@ -111,16 +111,29 @@
     <block wx:if="{{buyMode === 'deposit'}}">
       <view class="form-item">
         <text class="label">定金</text>
-        <input class="input" type="digit" placeholder="请输入定金" bindinput="handleInput" data-field="deposit" value="{{deposit}}" />
+        <input class="input input-price" type="digit" placeholder="请输入定金" bindinput="handleInput" data-field="deposit" value="{{deposit}}" />
       </view>
       <view class="form-item">
         <text class="label">尾款</text>
-        <input class="input" type="digit" placeholder="请输入尾款" bindinput="handleInput" data-field="finalPayment" value="{{finalPayment}}" />
+        <input class="input input-price" type="digit" placeholder="请输入尾款" bindinput="handleInput" data-field="finalPayment" value="{{finalPayment}}" />
       </view>
       <view class="form-item">
         <text class="label">尾款开始时间</text>
         <picker mode="date" bindchange="handleFinalStartChange">
-          <view class="picker-display">{{finalStart || '请选择日期'}}</view>
+          <view class="picker-display {{finalStart ? '' : 'placeholder'}}">{{finalStart || '请选择日期'}}</view>
+        </picker>
+      </view>
+    </block>
+
+    <block wx:elif="{{buyMode === 'presale'}}">
+      <view class="form-item">
+        <text class="label">总价</text>
+        <input class="input input-price" type="digit" placeholder="请输入总价" bindinput="handleInput" data-field="totalPrice" value="{{totalPrice}}" />
+      </view>
+      <view class="form-item">
+        <text class="label">开售时间</text>
+        <picker mode="date" bindchange="handleSaleStartChange">
+          <view class="picker-display {{saleStart ? '' : 'placeholder'}}">{{saleStart || '请选择日期'}}</view>
         </picker>
       </view>
     </block>
@@ -128,19 +141,16 @@
     <block wx:else>
       <view class="form-item">
         <text class="label">总价</text>
-        <input class="input" type="digit" placeholder="请输入总价" bindinput="handleInput" data-field="totalPrice" value="{{totalPrice}}" />
+        <input class="input input-price" type="digit" placeholder="请输入总价" bindinput="handleInput" data-field="totalPrice" value="{{totalPrice}}" />
       </view>
       <view class="form-item">
-        <text class="label">开售时间</text>
-        <picker mode="date" bindchange="handleSaleStartChange">
-          <view class="picker-display">{{saleStart || '请选择日期'}}</view>
-        </picker>
+        <view class="stock-tip">现货商品无需开售时间与提醒设置，状态默认显示「现货」</view>
       </view>
     </block>
   </view>
 
   <!-- 提醒 & 备注 -->
-  <view class="form-section">
+  <view class="form-section" wx:if="{{buyMode !== 'stock'}}">
     <view class="form-item">
       <text class="label">提醒设置</text>
       <view class="remind-group">
@@ -149,7 +159,9 @@
         <text class="switch-option {{remindBefore === 7 ? 'active' : ''}}" bindtap="selectRemindBefore" data-days="7">提前7天</text>
       </view>
     </view>
+  </view>
 
+  <view class="form-section">
     <view class="form-item">
       <text class="label">备注</text>
       <textarea class="textarea" placeholder="记录一些备注信息~" bindinput="handleInput" data-field="note" value="{{note}}" />

@@ -1,0 +1,59 @@
+<view class="page">
+  <!-- 头部 -->
+  <view class="header">
+    <text class="header-title">📝 心愿单</text>
+    <text class="header-desc">想入手的裙子，都放在这里</text>
+  </view>
+
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input-wrap">
+      <text class="search-icon">🔍</text>
+      <input class="search-input" placeholder="搜索心愿商品名称或品牌" value="{{keyword}}" bindinput="onKeywordInput" />
+    </view>
+  </view>
+
+  <!-- 骨架屏 -->
+  <view wx:if="{{loading}}">
+    <view class="card" wx:for="{{[1,2,3]}}" wx:key="*this">
+      <view class="skeleton" style="width: 150rpx; height: 180rpx; border-radius: 22rpx;"></view>
+      <view class="card-content">
+        <view class="skeleton skeleton-line" style="width: 60%; height: 32rpx;"></view>
+        <view class="skeleton skeleton-line" style="width: 40%; height: 24rpx; margin-top: 12rpx;"></view>
+        <view class="skeleton skeleton-line" style="width: 80%; height: 24rpx; margin-top: 12rpx;"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 列表 -->
+  <view wx:elif="{{wishList.length > 0}}">
+    <view class="card {{item.isDone ? 'card-done' : ''}}" wx:for="{{wishList}}" wx:key="id">
+      <view class="card-check {{item.isDone ? 'checked' : ''}}" data-id="{{item.id}}" bindtap="onToggleDone">
+        <view wx:if="{{item.isDone}}" class="check-tick">✓</view>
+      </view>
+      <view class="card-image" bindtap="onTapItem" data-id="{{item.id}}">
+        <image wx:if="{{item.displayImageUrl}}" src="{{item.displayImageUrl}}" mode="aspectFill"></image>
+        <view wx:else class="image-placeholder">📝</view>
+      </view>
+      <view class="card-content" bindtap="onTapItem" data-id="{{item.id}}">
+        <view class="name">{{item.name}}</view>
+        <view class="brand" wx:if="{{item.brand}}">{{item.brand}}</view>
+        <view class="price-row">
+          <text class="price" wx:if="{{item.price != null}}">¥{{item.price}}</text>
+          <text class="link" wx:if="{{item.purchaseLink}}" catchtap="onCopyLink" data-link="{{item.purchaseLink}}">🔗 链接</text>
+        </view>
+        <view class="meta-row" wx:if="{{item.doneTimeText}}">
+          <text class="meta-text">{{item.isDone ? '✓ 已收入 · ' : ''}}{{item.doneTimeText}}</text>
+        </view>
+        <view class="note" wx:if="{{item.note}}">{{item.note}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:else class="empty-state">
+    <view class="empty-text">还没有心愿哦 ✨{{'\n'}}去记录想入手的裙子吧</view>
+  </view>
+
+  <view class="add-fab" bindtap="onAdd">+</view>
+</view>

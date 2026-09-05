@@ -1,0 +1,172 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue',
+               Helvetica, 'Segoe UI', Roboto, 'Microsoft Yahei', sans-serif;
+  background: #F5F7FA;
+  color: #303133;
+  height: 100vh;
+}
+
+#app {
+  height: 100vh;
+}
+
+/* ============ 登录页 ============ */
+.login-page {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #FFE4EC 0%, #FFB6C1 50%, #FF8FA9 100%);
+}
+
+.login-card {
+  width: 400px;
+  padding: 48px 40px;
+  background: #FFFFFF;
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(255, 107, 138, 0.25);
+}
+
+.login-brand {
+  font-size: 24px;
+  font-weight: bold;
+  color: #303133;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.login-sub {
+  font-size: 13px;
+  color: #909399;
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.login-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #FFB6C1, #FF6B8A);
+  border: none;
+  font-size: 16px;
+  letter-spacing: 4px;
+}
+
+.login-btn:hover {
+  opacity: 0.92;
+}
+
+.login-tip {
+  margin-top: 16px;
+  font-size: 12px;
+  color: #C0C4CC;
+  text-align: center;
+}
+
+/* ============ 管理布局 ============ */
+.admin-layout {
+  height: 100vh;
+}
+
+.aside {
+  background: #304156;
+  color: #FFFFFF;
+}
+
+.aside-brand {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 20px;
+  font-size: 16px;
+  font-weight: bold;
+  border-bottom: 1px solid #3a4a63;
+}
+
+.brand-icon {
+  font-size: 22px;
+}
+
+.aside-menu {
+  border: none;
+  background: transparent;
+}
+
+.aside-menu.el-menu {
+  background: #304156;
+}
+
+.aside-menu .el-menu-item {
+  color: #BFCBD9;
+}
+
+.aside-menu .el-menu-item:hover {
+  background: #263445;
+}
+
+.aside-menu .el-menu-item.is-active {
+  background: #FF6B8A !important;
+  color: #FFFFFF !important;
+}
+
+.menu-icon {
+  margin-right: 8px;
+}
+
+.header {
+  background: #FFFFFF;
+  border-bottom: 1px solid #EBEEF5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 24px;
+  height: 60px !important;
+}
+
+.header-title {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.api-base {
+  font-size: 12px;
+  color: #909399;
+  font-family: 'SFMono-Regular', Consolas, monospace;
+}
+
+.main {
+  background: #F5F7FA;
+  padding: 24px;
+}
+
+.toolbar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.btn-icon {
+  margin-right: 4px;
+}
+
+.pagination {
+  margin-top: 20px;
+  justify-content: flex-end;
+  display: flex;
+}
+
+.config-card {
+  max-width: 720px;
+}

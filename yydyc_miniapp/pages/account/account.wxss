@@ -1,0 +1,320 @@
+page {
+  background: #FFF5F5;
+  min-height: 100vh;
+  padding-bottom: 160rpx;
+}
+
+.page {
+  padding: 24rpx 24rpx 0;
+}
+
+/* ============ 总支出卡片 ============ */
+.total-card {
+  background: linear-gradient(135deg, #FF8FA9 0%, #FF6B8A 100%);
+  border-radius: 28rpx;
+  padding: 32rpx 32rpx 28rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 8rpx 24rpx rgba(255, 107, 138, 0.25);
+  color: #FFFFFF;
+}
+
+.total-label {
+  font-size: 26rpx;
+  opacity: 0.9;
+  margin-bottom: 8rpx;
+}
+
+.total-amount {
+  font-size: 64rpx;
+  font-weight: bold;
+  letter-spacing: 2rpx;
+  margin-bottom: 24rpx;
+}
+
+.total-stats {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.18);
+  border-radius: 16rpx;
+  padding: 18rpx 0;
+}
+
+.stat-block {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4rpx;
+}
+
+.stat-num {
+  font-size: 30rpx;
+  font-weight: 600;
+}
+
+.stat-label {
+  font-size: 22rpx;
+  opacity: 0.9;
+}
+
+.stat-divider {
+  width: 2rpx;
+  height: 48rpx;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ============ 通用卡片 ============ */
+.card {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 28rpx 28rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 14rpx rgba(255, 182, 193, 0.1);
+}
+
+.card-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #4A2A2A;
+  margin-bottom: 24rpx;
+}
+
+/* ============ 月度趋势 ============ */
+.trend-chart {
+  height: 240rpx;
+  padding: 0 8rpx;
+}
+
+.trend-bars {
+  display: flex;
+  align-items: flex-end;
+  height: 200rpx;
+  gap: 12rpx;
+  border-bottom: 2rpx solid #FBF5F7;
+  padding-bottom: 4rpx;
+}
+
+.trend-bar-col {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.trend-bar-fill {
+  width: 70%;
+  background: linear-gradient(180deg, #FFB6C1, #FF6B8A);
+  border-radius: 8rpx 8rpx 0 0;
+  min-height: 4rpx;
+  box-shadow: 0 -2rpx 8rpx rgba(255, 107, 138, 0.3);
+}
+
+.trend-bar-label {
+  font-size: 18rpx;
+  color: #999;
+  margin-top: 8rpx;
+}
+
+/* ============ 品牌占比饼图 ============ */
+.pie-row {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+}
+
+.pie-chart {
+  width: 220rpx;
+  height: 220rpx;
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
+  box-shadow: 0 4rpx 14rpx rgba(255, 182, 193, 0.2);
+}
+
+.pie-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 130rpx;
+  height: 130rpx;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.05);
+}
+
+.pie-total {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #FF6B8A;
+}
+
+.pie-total-label {
+  font-size: 20rpx;
+  color: #999;
+  margin-top: 2rpx;
+}
+
+.pie-legend {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+  max-height: 220rpx;
+  overflow-y: auto;
+}
+
+.pie-legend-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 24rpx;
+}
+
+.legend-name {
+  color: #4A2A2A;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: 1;
+}
+
+.legend-percent {
+  color: #FF6B8A;
+  font-weight: 600;
+  margin-left: 12rpx;
+}
+
+/* ============ 搜索栏 ============ */
+.search-bar {
+  margin-bottom: 16rpx;
+}
+
+.search-input-wrap {
+  display: flex;
+  align-items: center;
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 16rpx 22rpx;
+  box-shadow: 0 4rpx 12rpx rgba(255, 182, 193, 0.1);
+}
+
+.search-icon {
+  font-size: 28rpx;
+  margin-right: 12rpx;
+  opacity: 0.5;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 26rpx;
+  color: #4A2A2A;
+  height: 40rpx;
+}
+
+/* ============ 账单列表 ============ */
+.bill-section {
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 24rpx 24rpx 16rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 14rpx rgba(255, 182, 193, 0.1);
+}
+
+.section-title {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #4A2A2A;
+  margin-bottom: 20rpx;
+  padding-left: 4rpx;
+}
+
+.loading-tip, .empty-tip {
+  text-align: center;
+  color: #BBB;
+  font-size: 26rpx;
+  padding: 60rpx 0;
+}
+
+.bill-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.bill-item {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  padding: 20rpx 4rpx;
+  border-bottom: 2rpx solid #FBF5F7;
+}
+
+.bill-item:last-child {
+  border-bottom: none;
+}
+
+.bill-item:active {
+  background: #FFF5F7;
+}
+
+.bill-image {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 16rpx;
+  background: #F5EEF0;
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bill-image image {
+  width: 100%;
+  height: 100%;
+}
+
+.image-placeholder {
+  font-size: 40rpx;
+}
+
+.bill-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.bill-name {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #4A2A2A;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: 6rpx;
+}
+
+.bill-meta {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  font-size: 22rpx;
+  color: #999;
+}
+
+.bill-brand::after {
+  content: ' · ';
+  margin: 0 4rpx;
+}
+
+.bill-amount {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #E85A7A;
+  flex-shrink: 0;
+}

@@ -2,6 +2,7 @@ page {
   background: #FFF5F5;
   padding: 32rpx;
   padding-top: 80rpx;
+  padding-bottom: 140rpx;
   overflow-x: hidden;
 }
 

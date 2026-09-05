@@ -2,7 +2,7 @@
 <view class="search-bar">
   <view class="search-input-wrap">
     <text class="search-icon">🔍</text>
-    <input class="search-input" placeholder="搜索裙子名称或品牌" value="{{keyword}}" bindinput="onKeywordInput" />
+    <input class="search-input" placeholder="搜索商品名称或品牌" value="{{keyword}}" bindinput="onKeywordInput" />
   </view>
   <view class="filter-toggle" bindtap="toggleFilter">
     <text class="filter-toggle-text">筛选</text>
@@ -47,8 +47,20 @@
   <text class="add-btn-text">+ 添加裙子</text>
 </view>
 
+<!-- 骨架屏 -->
+<view class="list" wx:if="{{loading}}">
+  <view class="card" wx:for="{{[1,2,3,4]}}" wx:key="*this">
+    <view class="skeleton" style="width: 150rpx; height: 180rpx; border-radius: 22rpx;"></view>
+    <view class="card-content">
+      <view class="skeleton skeleton-line" style="width: 60%; height: 32rpx;"></view>
+      <view class="skeleton skeleton-line" style="width: 80%; height: 24rpx; margin-top: 12rpx;"></view>
+      <view class="skeleton skeleton-line" style="width: 40%; height: 28rpx; margin-top: 12rpx;"></view>
+    </view>
+  </view>
+</view>
+
 <!-- 列表 -->
-<view class="list" wx:if="{{filteredSkirts.length > 0}}">
+<view class="list" wx:elif="{{filteredSkirts.length > 0}}">
   <view class="card" wx:for="{{filteredSkirts}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
     <view class="card-image">
       <image wx:if="{{item.displayImageUrl}}" src="{{item.displayImageUrl}}" mode="aspectFill"></image>
@@ -71,13 +83,13 @@
   </view>
 </view>
 
-<!-- 空状态 -->
-<view class="empty" wx:if="{{allSkirts.length > 0 && filteredSkirts.length === 0}}">
-  <text class="empty-icon">🎀</text>
-  <text class="empty-text">没有找到匹配的裙子</text>
+<!-- 空状态：搜索/筛选无结果 -->
+<view class="empty-state" wx:if="{{allSkirts.length > 0 && filteredSkirts.length === 0}}">
+  <view class="empty-text">没有找到匹配的裙子</view>
 </view>
 
-<view class="empty" wx:if="{{allSkirts.length === 0}}">
-  <text class="empty-icon">👗</text>
-  <text class="empty-text">衣橱还是空的，快去添加吧～</text>
+<!-- 空状态：完全空 -->
+<view class="empty-state" wx:if="{{allSkirts.length === 0}}">
+  <view class="empty-text">还没有裙子哦 ✨{{'\n'}}点击下方按钮，记录你的第一条裙子吧</view>
+  <view class="empty-btn" bindtap="goToAdd">去添加</view>
 </view>

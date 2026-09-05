@@ -1,7 +1,10 @@
 /**app.wxss**/
 
 page {
-  font-family: 'youyou', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* 字体降级：youyou 加载失败时自动降级到系统默认字体 */
+  font-family: 'youyou', -apple-system, BlinkMacSystemFont, 'PingFang SC',
+               'Helvetica Neue', Helvetica, 'Segoe UI', Roboto, 'Microsoft Yahei',
+               sans-serif;
   color: #4A2A2A;
   background: #FFF5F5;
   overflow-x: hidden;
@@ -20,7 +23,7 @@ page {
 }
 
 button {
-  font-family: 'youyou', sans-serif;
+  font-family: 'youyou', -apple-system, BlinkMacSystemFont, sans-serif;
   margin: 0;
   padding: 0;
   line-height: inherit;
@@ -32,11 +35,105 @@ button::after {
 }
 
 text, view, input, textarea {
-  font-family: 'youyou', sans-serif;
+  font-family: 'youyou', -apple-system, BlinkMacSystemFont, sans-serif;
   box-sizing: border-box;
 }
 
 view, text {
   overflow-wrap: break-word;
   word-wrap: break-word;
+}
+
+/* ============= 通用 loading ============= */
+.loading-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 245, 245, 0.6);
+  z-index: 1000;
+}
+
+.loading-spinner {
+  width: 60rpx;
+  height: 60rpx;
+  border: 6rpx solid #FFE4E8;
+  border-top-color: #FF6B8A;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ============= 骨架屏 ============= */
+.skeleton {
+  background: linear-gradient(90deg, #F5EEF0 25%, #FBF5F7 50%, #F5EEF0 75%);
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.4s infinite;
+  border-radius: 16rpx;
+}
+
+@keyframes skeletonShimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton-block {
+  margin-bottom: 20rpx;
+}
+
+.skeleton-line {
+  height: 28rpx;
+  margin-bottom: 16rpx;
+}
+
+.skeleton-circle {
+  border-radius: 50%;
+}
+
+/* ============= 空状态 ============= */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 0;
+  gap: 24rpx;
+}
+
+.empty-illust {
+  width: 280rpx;
+  height: 280rpx;
+  font-size: 200rpx;
+  line-height: 280rpx;
+  text-align: center;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #BBB;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.empty-btn {
+  margin-top: 16rpx;
+  background: linear-gradient(135deg, #FFB6C1, #FF6B8A);
+  color: #FFFFFF;
+  font-size: 28rpx;
+  font-weight: 600;
+  padding: 18rpx 60rpx;
+  border-radius: 40rpx;
+  box-shadow: 0 6rpx 18rpx rgba(255, 107, 138, 0.3);
+}
+
+.empty-btn:active {
+  transform: scale(0.96);
 }

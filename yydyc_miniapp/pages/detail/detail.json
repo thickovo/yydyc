@@ -1,4 +1,6 @@
 {
   "usingComponents": {},
-  "navigationBarTitleText": "裙子详情"
+  "navigationBarTitleText": "商品详情",
+  "navigationBarBackgroundColor": "#FF6B8A",
+  "navigationBarTextStyle": "white"
 }

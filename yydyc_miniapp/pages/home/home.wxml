@@ -18,8 +18,24 @@
   <image class="banner-img" src="/images/shouye.jpg" mode="aspectFill"></image>
 </view>
 
+<!-- 骨架屏 -->
+<view class="stats stats-skeleton" wx:if="{{loading}}">
+  <view class="stat-item">
+    <view class="skeleton skeleton-line skeleton-block" style="width: 80rpx; height: 60rpx;"></view>
+    <view class="skeleton skeleton-line" style="width: 90rpx; height: 24rpx;"></view>
+  </view>
+  <view class="stat-item">
+    <view class="skeleton skeleton-line skeleton-block" style="width: 80rpx; height: 60rpx;"></view>
+    <view class="skeleton skeleton-line" style="width: 90rpx; height: 24rpx;"></view>
+  </view>
+  <view class="stat-item">
+    <view class="skeleton skeleton-line skeleton-block" style="width: 80rpx; height: 60rpx;"></view>
+    <view class="skeleton skeleton-line" style="width: 90rpx; height: 24rpx;"></view>
+  </view>
+</view>
+
 <!-- 统计卡片 -->
-<view class="stats">
+<view class="stats" wx:else>
   <view class="stat-item">
     <text class="stat-number">{{totalCount}}</text>
     <text class="stat-label">全部裙子</text>
@@ -68,17 +84,14 @@
     <view class="grid-icon-wrap grid-icon-calendar">
       <text class="grid-icon">📅</text>
     </view>
-    <text class="grid-label">尾款日历</text>
+    <text class="grid-label">记账日历</text>
     <text class="grid-desc">重要日期不遗漏</text>
   </view>
   <view class="grid-item" bindtap="goToAccount">
     <view class="grid-icon-wrap grid-icon-account">
       <text class="grid-icon">💰</text>
     </view>
-    <text class="grid-label">裙子小账本</text>
+    <text class="grid-label">小账本</text>
     <text class="grid-desc">花销一目了然</text>
   </view>
-
-  <button bindtap="requestSubscribe" type="primary">开启消息提醒</button>
-  
 </view>

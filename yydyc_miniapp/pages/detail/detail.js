@@ -86,7 +86,7 @@ Page({
             url: app.globalData.baseUrl + '/api/wardrobe/delete/' + this.data.skirt.id,
             method: 'DELETE',
             success: () => {
-              wx.showToast({ title: '删除成功', icon: 'success' });
+              wx.showToast({ title: '已删除', icon: 'success' });
               setTimeout(() => wx.navigateBack(), 1000);
             },
             fail: () => {

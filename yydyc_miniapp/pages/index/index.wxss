@@ -6,66 +6,71 @@ page {
   overflow: hidden;
 }
 
-.page {
+.splash {
   position: relative;
   width: 100%;
-  height: 100%;
-}
-
-.bg-image {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* ===== 顶部区域 ===== */
-.top-section {
-  position: absolute;
-  top: 60px;
-  left: 0;
-  width: 100%;
-  z-index: 10;
+  height: 100vh;
+  background: linear-gradient(135deg, #FFE4EC 0%, #FFB6C1 45%, #FF8FA9 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  gap: 80rpx;
 }
 
-.brand {
-  font-size: 18px;
-  color: #FFFFFF;
-  font-family: 'youyou', sans-serif;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
-  margin-bottom: 8px;
-  letter-spacing: 4px;
-}
-
-.days {
-  font-size: 24px;
-  color: #FFFFFF;
-  font-weight: bold;
-  font-family: 'youyou', sans-serif;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
-  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.15);
-}
-
-/* ===== 底部区域 ===== */
-.bottom-section {
-  position: absolute;
-  bottom: 80px;
-  left: 0;
-  width: 100%;
-  z-index: 10;
+.brand-block {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18rpx;
+  animation: fadeIn 1.2s ease-out both;
+}
+
+.brand-logo {
+  font-size: 140rpx;
+  line-height: 1;
+  margin-bottom: 12rpx;
+  filter: drop-shadow(0 8rpx 24rpx rgba(255, 107, 138, 0.3));
+}
+
+.brand-name {
+  font-size: 64rpx;
+  font-weight: bold;
+  color: #FFFFFF;
+  letter-spacing: 12rpx;
+  text-shadow: 0 6rpx 24rpx rgba(232, 90, 122, 0.4);
+}
+
+.brand-slogan {
+  font-size: 28rpx;
+  color: #FFFFFF;
+  letter-spacing: 4rpx;
+  opacity: 0.92;
+}
+
+.loader {
+  position: absolute;
+  bottom: 160rpx;
+  display: flex;
+  align-items: center;
   justify-content: center;
 }
 
-.quote {
-  font-size: 20px;
-  color: #FFFFFF;
-  font-family: 'youyou', sans-serif;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.8);
-  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.15);
+.loader-spinner {
+  width: 60rpx;
+  height: 60rpx;
+  border: 6rpx solid rgba(255, 255, 255, 0.4);
+  border-top-color: #FFFFFF;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  0%   { opacity: 0; transform: translateY(20rpx); }
+  100% { opacity: 1; transform: translateY(0); }
 }

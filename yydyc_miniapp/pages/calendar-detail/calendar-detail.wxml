@@ -1,0 +1,33 @@
+<view class="page">
+  <!-- 顶部汇总卡 -->
+  <view class="summary-card">
+    <view class="date-text">{{dateText}}</view>
+    <view class="amount-row">
+      <text class="amount-label">总支出</text>
+      <text class="amount-num">¥{{totalAmount}}</text>
+    </view>
+    <view class="count-row">共 {{count}} 笔记录</view>
+  </view>
+
+  <!-- 列表 -->
+  <view class="section-title">购买记录</view>
+
+  <view wx:if="{{loading}}" class="loading-tip">加载中...</view>
+
+  <view wx:elif="{{items.length === 0}}" class="empty-tip">当日暂无支出记录</view>
+
+  <view wx:else class="list">
+    <view class="item-card" wx:for="{{items}}" wx:key="id" data-id="{{item.id}}" bindtap="onTapItem">
+      <view class="item-image">
+        <image wx:if="{{item.displayImageUrl}}" src="{{item.displayImageUrl}}" mode="aspectFill"></image>
+        <view wx:else class="image-placeholder">👗</view>
+      </view>
+      <view class="item-content">
+        <view class="item-name">{{item.name}}</view>
+        <view class="item-brand" wx:if="{{item.brand}}">{{item.brand}}</view>
+        <view class="item-tag" wx:if="{{item.type}}">{{item.type}}</view>
+      </view>
+      <view class="item-amount">¥{{item.amount}}</view>
+    </view>
+  </view>
+</view>

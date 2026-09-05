@@ -5,13 +5,42 @@
     "pages/list/list",
     "pages/add/add",
     "pages/detail/detail",
-    "pages/edit/edit"
+    "pages/edit/edit",
+    "pages/mine/mine",
+    "pages/ai/ai",
+    "pages/feedback/feedback",
+    "pages/wish/wish",
+    "pages/wish-edit/wish-edit",
+    "pages/account/account",
+    "pages/calendar/calendar",
+    "pages/calendar-detail/calendar-detail"
   ],
   "window": {
     "navigationBarTextStyle": "white",
     "navigationBarTitleText": "云裳记",
     "navigationBarBackgroundColor": "#FF6B8A",
     "backgroundColor": "#FFF5F5"
+  },
+  "tabBar": {
+    "custom": true,
+    "color": "#999999",
+    "selectedColor": "#FF6B8A",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/ai/ai",
+        "text": "AI"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的"
+      }
+    ]
   },
   "style": "v2",
   "componentFramework": "glass-easel",

@@ -22,11 +22,10 @@ public class BackupController {
 
     @GetMapping("/export")
     public Result<String> export(@RequestParam String userId) {
-        //  根据userId查询数据库 将所有信息 打包成json返回前端
         String json = backupService.exportData(userId);
         if (json != null) {
             return Result.success(json);
-        }else {
+        } else {
             return Result.error("导出失败");
         }
     }
@@ -34,7 +33,6 @@ public class BackupController {
     @PostMapping("/import")
     public Result<Void> importData(@RequestParam String userId,
                                    @RequestParam("file") MultipartFile file) {
-        // 接收拆分前端传来的json格式 根据userId导入数据库
         backupService.importData(userId, file);
         return Result.success(null);
     }

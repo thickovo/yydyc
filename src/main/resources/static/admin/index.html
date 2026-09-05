@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>云裳记 · 管理后台</title>
+  <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- 登录页 -->
+    <div v-if="!loggedIn" class="login-page">
+      <div class="login-card">
+        <div class="login-brand">🎀 云裳记 · 管理后台</div>
+        <div class="login-sub">细数衣衫，记取人间细碎美好</div>
+        <el-form @submit.prevent="onLogin">
+          <el-form-item>
+            <el-input
+              v-model="loginForm.password"
+              type="password"
+              placeholder="请输入管理密码"
+              show-password
+              size="large"
+              @keyup.enter="onLogin"
+            />
+          </el-form-item>
+          <el-button
+            type="primary"
+            size="large"
+            class="login-btn"
+            :loading="loggingIn"
+            @click="onLogin"
+          >登 录</el-button>
+        </el-form>
+        <div class="login-tip">默认密码：admin123</div>
+      </div>
+    </div>
+
+    <!-- 管理页 -->
+    <el-container v-else class="admin-layout">
+      <el-aside width="220px" class="aside">
+        <div class="aside-brand">
+          <span class="brand-icon">🎀</span>
+          <span class="brand-text">云裳记后台</span>
+        </div>
+        <el-menu
+          :default-active="activeMenu"
+          class="aside-menu"
+          @select="onSelectMenu"
+        >
+          <el-menu-item index="feedback">
+            <span class="menu-icon">💌</span>
+            <span>反馈管理</span>
+          </el-menu-item>
+          <el-menu-item index="config">
+            <span class="menu-icon">⚙️</span>
+            <span>配置管理</span>
+          </el-menu-item>
+        </el-menu>
+      </el-aside>
+
+      <el-container>
+        <el-header class="header">
+          <div class="header-title">{{ headerTitle }}</div>
+          <div class="header-right">
+            <span class="api-base">API: {{ apiBase }}</span>
+            <el-button text @click="onLogout">退出登录</el-button>
+          </div>
+        </el-header>
+
+        <el-main class="main">
+          <!-- 反馈管理 -->
+          <div v-if="activeMenu === 'feedback'" class="page-feedback">
+            <div class="toolbar">
+              <el-input
+                v-model="feedbackFilters.status"
+                placeholder="状态 (0=待处理 / 1=已处理)"
+                clearable
+                style="width: 220px;"
+              />
+              <el-button type="primary" @click="fetchFeedbacks">
+                <span class="btn-icon">🔍</span>查询
+              </el-button>
+              <el-button @click="resetFeedbackFilters">重置</el-button>
+            </div>
+
+            <el-table :data="feedbacks" v-loading="feedbackLoading" stripe>
+              <el-table-column prop="id" label="ID" width="80" />
+              <el-table-column prop="userId" label="用户" width="180" />
+              <el-table-column prop="content" label="反馈内容" min-width="260" />
+              <el-table-column prop="contact" label="联系方式" width="160" />
+              <el-table-column label="状态" width="100">
+                <template #default="{ row }">
+                  <el-tag v-if="row.status === 0" type="warning" size="small">待处理</el-tag>
+                  <el-tag v-else type="success" size="small">已处理</el-tag>
+                </template>
+              </el-table-column>
+              <el-table-column prop="createTime" label="创建时间" width="180" />
+              <el-table-column prop="handleTime" label="处理时间" width="180">
+                <template #default="{ row }">
+                  {{ row.handleTime || '-' }}
+                </template>
+              </el-table-column>
+              <el-table-column label="操作" width="180" fixed="right">
+                <template #default="{ row }">
+                  <el-button
+                    v-if="row.status === 0"
+                    size="small"
+                    type="primary"
+                    @click="handleFeedback(row)"
+                  >标记已处理</el-button>
+                  <el-button
+                    size="small"
+                    type="danger"
+                    @click="deleteFeedback(row)"
+                  >删除</el-button>
+                </template>
+              </el-table-column>
+            </el-table>
+
+            <el-pagination
+              v-model:current-page="feedbackPage.current"
+              v-model:page-size="feedbackPage.size"
+              :total="feedbackPage.total"
+              :page-sizes="[10, 20, 50]"
+              layout="total, sizes, prev, pager, next, jumper"
+              class="pagination"
+              @size-change="fetchFeedbacks"
+              @current-change="fetchFeedbacks"
+            />
+          </div>
+
+          <!-- 配置管理 -->
+          <div v-else-if="activeMenu === 'config'" class="page-config">
+            <div class="toolbar">
+              <el-input
+                v-model="configKey"
+                placeholder="请输入配置 key"
+                clearable
+                style="width: 320px;"
+              />
+              <el-button type="primary" @click="fetchConfig">
+                <span class="btn-icon">🔍</span>查询
+              </el-button>
+            </div>
+
+            <el-card v-if="config" class="config-card">
+              <el-form label-width="120px">
+                <el-form-item label="配置 Key">
+                  <el-input v-model="config.configKey" disabled />
+                </el-form-item>
+                <el-form-item label="配置描述">
+                  <el-input v-model="config.description" disabled />
+                </el-form-item>
+                <el-form-item label="配置 Value">
+                  <el-input
+                    v-model="config.configValue"
+                    type="textarea"
+                    :rows="4"
+                    placeholder="请输入配置内容"
+                  />
+                </el-form-item>
+                <el-form-item>
+                  <el-button type="primary" :loading="configSaving" @click="saveConfig">
+                    保存修改
+                  </el-button>
+                </el-form-item>
+              </el-form>
+            </el-card>
+
+            <el-empty v-else description="请输入配置 key 查询" :image-size="120" />
+          </div>
+        </el-main>
+      </el-container>
+    </el-container>
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script src="https://unpkg.com/element-plus"></script>
+  <script src="https://unpkg.com/@element-plus/icons-vue"></script>
+  <script src="./app.js"></script>
+</body>
+</html>

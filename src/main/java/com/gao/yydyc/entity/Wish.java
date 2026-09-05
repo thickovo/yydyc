@@ -36,6 +36,8 @@ public class Wish {
 
     private String userId;
 
+    private Integer isDone;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

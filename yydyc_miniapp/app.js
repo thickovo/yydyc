@@ -8,22 +8,19 @@ App({
     wx.login({
       success: (res) => {
         console.log("code:", res.code);
-        // 如果有后端登录接口，调登录接口
       }
     });
-
-    wx.login({
-      success: res => {}
-    })
 
     // 环境切换：把 env 改成下面的三个值之一即可
     //   'dev'    → 本机开发（localhost）
     //   'lan'    → 局域网调试（手机和电脑同 WiFi，扫开发者工具预览码）
     //   'tunnel' → 内网穿透（手机走 4G/任意网络扫码，用公网域名访问后端）
-    const ENV = 'tunnel'  // ← 改这里切换环境
+    const ENV = 'tunnel'
 
     this.globalData.env = ENV
     this.globalData.baseUrl = this.globalData.baseUrlMap[ENV]
+    // 测试阶段默认 userId
+    this.globalData.userId = this.globalData.userId || 'test_user_001'
 
     this.loadFont()
   },
@@ -38,22 +35,26 @@ App({
         console.log('字体加载成功', res)
       },
       fail: function(err) {
-        console.warn('字体加载失败，使用备用字体', err)
+        // 字体加载失败时，app.wxss 中已经配置了系统字体降级，无需任何额外操作
+        console.warn('字体加载失败，已降级为系统默认字体', err)
       }
     })
   },
 
+  // 全局 toast 工具
+  toast(title, icon = 'none') {
+    wx.showToast({ title, icon, duration: 1500 })
+  },
+
   globalData: {
     userInfo: null,
-    // 当前环境（onLaunch 会按这个值选 baseUrl）
     env: 'dev',
-    // 三种环境的 baseUrl 映射
     baseUrlMap: {
       'dev':    'http://localhost:8080',
       'lan':    'http://192.168.18.62:8080',
       'tunnel': 'http://bba929b3.natappfree.cc'
     },
-    // 当前生效的 baseUrl（默认值，onLaunch 会重算）
-    baseUrl: 'http://localhost:8080'
+    baseUrl: 'http://localhost:8080',
+    userId: 'test_user_001'
   }
 })

@@ -3,6 +3,7 @@ const { resolveImageUrl } = require('../../utils/upload.js')
 
 Page({
   data: {
+    loading: true,
     skirts: [],
     filteredSkirts: [],
     today: '',
@@ -37,18 +38,31 @@ Page({
   fetchSkirts() {
     const todayStr = this.data.today;
     const baseUrl = app.globalData.baseUrl;
+    const userId = app.globalData.userId || 'test_user_001';
+    this.setData({ loading: true });
     wx.request({
-      url: baseUrl + '/api/wardrobe/list?userId=test_user_001',
+      url: baseUrl + '/api/wardrobe/list?userId=' + userId,
       method: 'GET',
       success: (res) => {
-        const records = res.data.data.records || [];
+        const records = (res.data && res.data.data && res.data.data.records) || [];
         const formatted = records.map(item => {
-          const isPresale = !!item.saleStart && (item.deposit === 0 || !item.deposit) && (item.finalPayment === 0 || !item.finalPayment);
+          const deposit = Number(item.deposit) || 0
+          const finalPayment = Number(item.finalPayment) || 0
+          const totalPrice = Number(item.totalPrice) || 0
+          const hasSaleStart = !!item.saleStart
+          const hasFinalStart = !!item.finalStart
+          // 全款现货：有总价、定金/尾款都为 0、无 finalStart/saleStart
+          const isStock = !hasSaleStart && !hasFinalStart && totalPrice > 0 && deposit === 0 && finalPayment === 0
+          // 全款预售：有 saleStart，且定金/尾款都为 0
+          const isPresale = hasSaleStart && deposit === 0 && finalPayment === 0 && !isStock
           const statusDate = isPresale ? item.saleStart : item.finalStart;
           let statusText = '待补款';
           let statusClass = 'pending';
 
-          if (statusDate) {
+          if (isStock) {
+            statusText = '现货'
+            statusClass = 'stock'
+          } else if (statusDate) {
             if (statusDate < todayStr) {
               statusText = isPresale ? '已过预售' : '已补款';
               statusClass = 'paid';
@@ -68,17 +82,21 @@ Page({
             statusText: statusText,
             statusClass: statusClass,
             isPresale: isPresale,
+            isStock: isStock,
             // 兼容老数据（绝对 URL / localhost）和新数据（相对路径），
             // 统一归一成当前 baseUrl 下可加载的完整 URL
             displayImageUrl: resolveImageUrl(item.imageUrl, baseUrl)
           };
         });
 
-        this.setData({ allSkirts: formatted });
+        this.setData({ allSkirts: formatted, loading: false });
         this.applyFilter();
       },
       fail: (err) => {
         console.error('列表请求失败', err);
+        wx.showToast({ title: '网络异常，请稍后再试', icon: 'none' });
+        this.setData({ allSkirts: [], loading: false });
+        this.applyFilter();
       }
     });
   },

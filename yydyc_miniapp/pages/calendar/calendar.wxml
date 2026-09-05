@@ -1,0 +1,46 @@
+<view class="page">
+  <!-- 月份切换 -->
+  <view class="header">
+    <view class="month-switcher">
+      <view class="month-btn" data-delta="-1" bindtap="onChangeMonth">‹</view>
+      <view class="month-label">{{year}}年{{month}}月</view>
+      <view class="month-btn" data-delta="1" bindtap="onChangeMonth">›</view>
+    </view>
+    <view class="today-btn" bindtap="onTapToday">回到今天</view>
+  </view>
+
+  <!-- 日历卡片 -->
+  <view class="calendar-card">
+    <!-- 星期表头 -->
+    <view class="weekday-row">
+      <view class="weekday" wx:for="{{weekDays}}" wx:key="*this">{{item}}</view>
+    </view>
+
+    <!-- 日期网格 -->
+    <view class="day-grid">
+      <view
+        class="day-cell {{item.current ? '' : 'day-out'}} {{item.isToday ? 'day-today' : ''}} {{item.hasData ? 'day-has-data' : ''}}"
+        wx:for="{{days}}"
+        wx:key="dateKey"
+        data-key="{{item.dateKey}}"
+        bindtap="onTapDay"
+      >
+        <view class="day-num">{{item.day}}</view>
+        <view class="day-amount" wx:if="{{item.hasData}}">¥{{item.amount}}</view>
+        <view class="day-dot" wx:else></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 图例 -->
+  <view class="legend">
+    <view class="legend-item">
+      <view class="legend-dot legend-dot-data"></view>
+      <text>有支出</text>
+    </view>
+    <view class="legend-item">
+      <view class="legend-dot legend-dot-today"></view>
+      <text>今天</text>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,58 @@
+<view class="form">
+  <!-- 图片上传 -->
+  <view class="form-section">
+    <view class="form-item">
+      <text class="label">心愿图片</text>
+      <view class="image-upload {{displayImageUrl ? 'has-image' : ''}}" bindtap="onPickImage">
+        <block wx:if="{{displayImageUrl}}">
+          <image class="upload-preview" src="{{displayImageUrl}}" mode="aspectFill"></image>
+          <view class="upload-mask">
+            <text class="upload-mask-text">点击重新上传</text>
+          </view>
+          <view class="image-remove" catchtap="onRemoveImage">
+            <text class="image-remove-text">×</text>
+          </view>
+        </block>
+        <block wx:else>
+          <view class="upload-placeholder">
+            <text class="upload-icon">+</text>
+            <text class="upload-text">{{uploading ? '上传中...' : '点击上传图片'}}</text>
+            <text class="upload-hint">支持 jpg / png，不超过 5MB</text>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>
+
+  <!-- 基本信息 -->
+  <view class="form-section">
+    <view class="form-item">
+      <text class="label">商品名称 *</text>
+      <input class="input" placeholder="请输入商品名称" bindinput="handleInput" data-field="name" value="{{name}}" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">品牌</text>
+      <input class="input" placeholder="请输入品牌名" bindinput="handleInput" data-field="brand" value="{{brand}}" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">价格</text>
+      <input class="input input-price" type="digit" placeholder="请输入价格" bindinput="handleInput" data-field="price" value="{{price}}" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">购买链接</text>
+      <input class="input" placeholder="店铺 / 商品链接" bindinput="handleInput" data-field="purchaseLink" value="{{purchaseLink}}" />
+    </view>
+
+    <view class="form-item">
+      <text class="label">备注</text>
+      <textarea class="textarea" placeholder="想说点什么~" bindinput="handleInput" data-field="note" value="{{note}}" />
+    </view>
+  </view>
+
+  <view class="btn-wrap">
+    <button class="save-btn" bindtap="onSubmit">{{isEdit ? '保存修改' : '加入心愿单'}}</button>
+  </view>
+</view>

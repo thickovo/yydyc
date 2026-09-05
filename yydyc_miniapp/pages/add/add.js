@@ -49,6 +49,15 @@ Page({
         deposit: '',
         finalPayment: ''
       });
+    } else if (mode === 'stock') {
+      // 全款现货：清空所有时间/提醒相关字段
+      this.setData({
+        buyMode: mode,
+        saleStart: '',
+        finalStart: '',
+        deposit: 0,
+        finalPayment: 0
+      });
     } else {
       this.setData({
         buyMode: mode,
@@ -193,8 +202,8 @@ Page({
       type,
       color,
       note,
-      remindBefore,
-      userId: 'test_user_001',
+      remindBefore: buyMode === 'stock' ? 0 : remindBefore,
+      userId: app.globalData.userId || 'test_user_001',
       category: category || '裙子',
       size: size || '',
       accessories: accessories.join(','),
@@ -206,15 +215,20 @@ Page({
       data.finalPayment = parseFloat(finalPayment) || 0;
       data.finalStart = finalStart || null;
       data.totalPrice = (parseFloat(deposit) || 0) + (parseFloat(finalPayment) || 0);
-      // 切到定尾模式时把 saleStart 写回 null（后端字段策略已设为 ALWAYS），
-      // 不能用空串，否则 Jackson 反序列化为 LocalDate 会抛错
       data.saleStart = null;
-    } else {
+    } else if (buyMode === 'presale') {
       data.totalPrice = parseFloat(totalPrice) || 0;
       data.saleStart = saleStart || null;
       data.deposit = 0;
       data.finalPayment = 0;
       data.finalStart = null;
+    } else {
+      // stock 全款现货
+      data.totalPrice = parseFloat(totalPrice) || 0;
+      data.deposit = 0;
+      data.finalPayment = 0;
+      data.finalStart = null;
+      data.saleStart = null;
     }
 
     wx.request({
@@ -223,7 +237,7 @@ Page({
       header: { 'Content-Type': 'application/json' },
       data: data,
       success: () => {
-        wx.showToast({ title: '添加成功', icon: 'success' });
+        wx.showToast({ title: '添加成功 ✨', icon: 'success' });
         setTimeout(() => wx.navigateBack(), 1500);
       },
       fail: () => {

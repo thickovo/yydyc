@@ -1,0 +1,240 @@
+page {
+  background: #FFF5F5;
+  min-height: 100vh;
+  padding-bottom: 160rpx;
+}
+
+.page {
+  padding: 32rpx 28rpx;
+}
+
+/* ============ 头部 ============ */
+.header {
+  margin-bottom: 24rpx;
+}
+
+.header-title {
+  display: block;
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #4A2A2A;
+  margin-bottom: 8rpx;
+}
+
+.header-desc {
+  font-size: 26rpx;
+  color: #999;
+}
+
+/* ============ 搜索栏 ============ */
+.search-bar {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.search-input-wrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 16rpx 22rpx;
+  box-shadow: 0 4rpx 12rpx rgba(255, 182, 193, 0.1);
+}
+
+.search-icon {
+  font-size: 28rpx;
+  margin-right: 12rpx;
+  opacity: 0.5;
+}
+
+.search-input {
+  flex: 1;
+  font-size: 26rpx;
+  color: #4A2A2A;
+  height: 40rpx;
+}
+
+/* ============ 卡片 ============ */
+.card {
+  display: flex;
+  align-items: stretch;
+  gap: 20rpx;
+  background: #FFFFFF;
+  border-radius: 24rpx;
+  padding: 22rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 14rpx rgba(255, 182, 193, 0.12);
+  transition: opacity 0.3s;
+}
+
+.card-done {
+  opacity: 0.55;
+}
+
+.card-done .name {
+  text-decoration: line-through;
+  color: #999;
+}
+
+.card-check {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  border: 3rpx solid #FFB6C1;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 6rpx;
+  transition: all 0.2s;
+}
+
+.card-check.checked {
+  background: linear-gradient(135deg, #FFB6C1, #FF6B8A);
+  border-color: #FF6B8A;
+  box-shadow: 0 4rpx 12rpx rgba(255, 107, 138, 0.4);
+}
+
+.card-check:active {
+  transform: scale(0.9);
+}
+
+.check-tick {
+  color: #FFFFFF;
+  font-size: 26rpx;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.card-image {
+  width: 150rpx;
+  height: 180rpx;
+  border-radius: 22rpx;
+  background: #F5EEF0;
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card-image image {
+  width: 100%;
+  height: 100%;
+}
+
+.image-placeholder {
+  font-size: 50rpx;
+}
+
+.card-content {
+  flex: 1;
+  padding-left: 4rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8rpx;
+  min-width: 0;
+}
+
+.name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #4A2A2A;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.brand {
+  font-size: 24rpx;
+  color: #BBB;
+}
+
+.price-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.price {
+  font-size: 28rpx;
+  color: #E85A7A;
+  font-weight: bold;
+}
+
+.link {
+  font-size: 22rpx;
+  color: #FF6B8A;
+  background: #FFE4E8;
+  padding: 4rpx 14rpx;
+  border-radius: 12rpx;
+}
+
+.meta-row {
+  display: flex;
+  align-items: center;
+}
+
+.meta-text {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.note {
+  font-size: 24rpx;
+  color: #888;
+  background: #FFF5F7;
+  padding: 8rpx 14rpx;
+  border-radius: 12rpx;
+  line-height: 1.5;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* ============ 空状态 ============ */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 0;
+  gap: 24rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #BBB;
+  text-align: center;
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+/* ============ 添加按钮 ============ */
+.add-fab {
+  position: fixed;
+  right: 36rpx;
+  bottom: 160rpx;
+  width: 110rpx;
+  height: 110rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #FFB6C1, #FF6B8A);
+  color: #FFFFFF;
+  font-size: 60rpx;
+  font-weight: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 24rpx rgba(255, 107, 138, 0.35);
+  z-index: 100;
+}
+
+.add-fab:active {
+  transform: scale(0.95);
+}

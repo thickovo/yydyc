@@ -1,0 +1,89 @@
+<view class="page">
+  <!-- 总支出卡片 -->
+  <view class="total-card">
+    <view class="total-label">累计支出</view>
+    <view class="total-amount">¥{{totalSpent}}</view>
+    <view class="total-stats">
+      <view class="stat-block">
+        <view class="stat-num">{{totalCount}}</view>
+        <view class="stat-label">总笔数</view>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-block">
+        <view class="stat-num">¥{{paidTotal}}</view>
+        <view class="stat-label">已付款</view>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-block">
+        <view class="stat-num">¥{{pendingTotal}}</view>
+        <view class="stat-label">待付款</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 月度趋势 -->
+  <view class="card" wx:if="{{trend.length > 0}}">
+    <view class="card-title">月度趋势</view>
+    <view class="trend-chart">
+      <view class="trend-bars">
+        <view class="trend-bar-col" wx:for="{{trend}}" wx:key="month">
+          <view class="trend-bar-fill" style="height: {{trendWidth(item.amount)}}%;"></view>
+          <view class="trend-bar-label">{{item.month}}月</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 品牌占比 -->
+  <view class="card" wx:if="{{brandStat.length > 0}}">
+    <view class="card-title">品牌占比</view>
+    <view class="pie-row">
+      <view class="pie-chart" style="{{getPieStyle()}}">
+        <view class="pie-center">
+          <view class="pie-total">¥{{totalSpent}}</view>
+          <view class="pie-total-label">总支出</view>
+        </view>
+      </view>
+      <view class="pie-legend">
+        <view class="pie-legend-item" wx:for="{{brandStat}}" wx:key="brand">
+          <view class="legend-name">{{item.brand}}</view>
+          <view class="legend-percent">{{item.percent}}%</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 搜索 -->
+  <view class="search-bar">
+    <view class="search-input-wrap">
+      <text class="search-icon">🔍</text>
+      <input class="search-input" placeholder="搜索账单" value="{{keyword}}" bindinput="onKeywordInput" />
+    </view>
+  </view>
+
+  <!-- 账单列表 -->
+  <view class="bill-section">
+    <view class="section-title">账单明细</view>
+
+    <view wx:if="{{loading}}" class="loading-tip">加载中...</view>
+
+    <view wx:elif="{{bills.length === 0}}" class="empty-tip">暂无账单记录</view>
+
+    <view wx:else class="bill-list">
+      <view class="bill-item" wx:for="{{bills}}" wx:key="id" data-id="{{item.id}}" bindtap="onTapBill">
+        <view class="bill-image">
+          <image wx:if="{{item.displayImageUrl}}" src="{{item.displayImageUrl}}" mode="aspectFill"></image>
+          <view wx:else class="image-placeholder">👗</view>
+        </view>
+        <view class="bill-content">
+          <view class="bill-name">{{item.name}}</view>
+          <view class="bill-meta">
+            <text wx:if="{{item.brand}}" class="bill-brand">{{item.brand}}</text>
+            <text class="bill-date">{{item.date}}</text>
+          </view>
+        </view>
+        <view class="bill-amount">-¥{{item.amount}}</view>
+      </view>
+    </view>
+  </view>
+</view>

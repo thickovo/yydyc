@@ -2,6 +2,7 @@ const app = getApp()
 
 Page({
   data: {
+    loading: true,
     hasPending: false,
     totalCount: 0,
     pendingCount: 0,
@@ -10,71 +11,85 @@ Page({
     scrollText: ''
   },
 
-  // 在 data: {...} 后面，onShow 前面加这个方法
-requestSubscribe() {
-  const tmplIds = ['lcVuskPR6XMJg53UENc8_c1NATX0df9o6ZY69cWFz3s']
-  wx.requestSubscribeMessage({
-    tmplIds: tmplIds,
-    success(res) {
-      console.log('订阅结果：', res)
-      if (res[tmplIds[0]] === 'accept') {
-        wx.showToast({ title: '授权成功', icon: 'success' })
-      } else {
-        wx.showToast({ title: '你拒绝了授权', icon: 'none' })
-      }
-    },
-    fail(err) {
-      console.error('订阅失败：', err)
-      wx.showToast({ title: '授权失败', icon: 'none' })
-    }
-  })
-},
-
   onShow() {
-    this.fetchStats();
+    if (typeof this.getTabBar === 'function' && this.getTabBar()) {
+      this.getTabBar().setData({ selected: 0 })
+    }
+    this.fetchStats()
   },
 
   fetchStats() {
+    const userId = app.globalData.userId || 'test_user_001'
+    const today = new Date().toISOString().slice(0, 10)
+    this.setData({ loading: true })
+
+    // 1. 真实概览统计
     wx.request({
-      url: app.globalData.baseUrl + '/api/wardrobe/list?userId=test_user_001',
+      url: app.globalData.baseUrl + '/api/wardrobe/statistics/overview?userId=' + userId,
       method: 'GET',
       success: (res) => {
-        const records = res.data.data.records || [];
-        const total = records.length;
-        const pending = records.filter(item => item.status === 0);
-        const paid = records.filter(item => item.status === 1);
+        const data = res.data && res.data.data ? res.data.data : {}
+        this.setData({
+          totalCount: data.totalCount || 0,
+          pendingCount: data.pendingCount || 0,
+          paidCount: data.paidCount || 0,
+          hasPending: (data.pendingCount || 0) > 0
+        })
+      },
+      fail: () => {
+        this.setData({
+          totalCount: 0, pendingCount: 0, paidCount: 0, hasPending: false
+        })
+      }
+    })
 
-        let scrollText = '';
+    // 2. 待补款列表：只筛选"未过期"的待补款（finalStart/saleStart >= today）
+    wx.request({
+      url: app.globalData.baseUrl + '/api/wardrobe/list?userId=' + userId + '&size=50',
+      method: 'GET',
+      success: (res) => {
+        const records = (res.data && res.data.data && res.data.data.records) || []
+        // 只保留 status=0（待补款）的裙子，且 finalStart/saleStart 还没到今天
+        const pending = records.filter(item => {
+          if (item.status !== 0) return false
+          const dueDate = item.finalStart || item.saleStart
+          if (!dueDate) return false
+          // dueDate 形如 "2026-09-05T..." 或 "2026-09-05"，统一按字符串前 10 位比较
+          const dateStr = dueDate.substring(0, 10)
+          return dateStr >= today
+        })
+
+        let scrollText = ''
         if (pending.length > 0) {
-          const names = pending.map(item => item.name).join('、');
-          scrollText = `⏰ ${names} 距离尾款还有几天，记得补款哦～`;
+          const names = pending.slice(0, 6).map(item => item.name).join('、')
+          scrollText = `⏰ ${names} 距离尾款/预售还有几天，记得补款哦～`
         }
 
         this.setData({
-          totalCount: total,
-          pendingCount: pending.length,
-          paidCount: paid.length,
-          hasPending: pending.length > 0,
           pendingList: pending,
-          scrollText: scrollText
-        });
+          scrollText,
+          loading: false
+        })
+      },
+      fail: () => {
+        this.setData({ pendingList: [], scrollText: '', loading: false })
       }
-    });
+    })
   },
 
   goToCloset() {
-    wx.navigateTo({ url: '/pages/list/list' });
+    wx.navigateTo({ url: '/pages/list/list' })
   },
 
   goToWish() {
-    wx.showToast({ title: '心愿单开发中', icon: 'none' });
+    wx.navigateTo({ url: '/pages/wish/wish' })
   },
 
   goToCalendar() {
-    wx.showToast({ title: '尾款日历开发中', icon: 'none' });
+    wx.navigateTo({ url: '/pages/calendar/calendar' })
   },
 
   goToAccount() {
-    wx.showToast({ title: '裙子小账本开发中', icon: 'none' });
+    wx.navigateTo({ url: '/pages/account/account' })
   }
 })

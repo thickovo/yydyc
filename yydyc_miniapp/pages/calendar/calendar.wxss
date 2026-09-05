@@ -1,0 +1,184 @@
+page {
+  background: #FFF5F5;
+  min-height: 100vh;
+  padding-bottom: 160rpx;
+}
+
+.page {
+  padding: 28rpx 24rpx 0;
+}
+
+/* ============ 头部 ============ */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24rpx;
+}
+
+.month-switcher {
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+}
+
+.month-btn {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  font-weight: 300;
+  color: #FF6B8A;
+  box-shadow: 0 4rpx 12rpx rgba(255, 107, 138, 0.15);
+}
+
+.month-btn:active {
+  transform: scale(0.92);
+}
+
+.month-label {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #4A2A2A;
+  min-width: 200rpx;
+  text-align: center;
+}
+
+.today-btn {
+  background: linear-gradient(135deg, #FFB6C1, #FF6B8A);
+  color: #FFFFFF;
+  font-size: 24rpx;
+  padding: 12rpx 28rpx;
+  border-radius: 32rpx;
+  box-shadow: 0 4rpx 12rpx rgba(255, 107, 138, 0.25);
+}
+
+.today-btn:active {
+  transform: scale(0.96);
+}
+
+/* ============ 日历卡片 ============ */
+.calendar-card {
+  background: #FFFFFF;
+  border-radius: 28rpx;
+  padding: 24rpx 16rpx 16rpx;
+  box-shadow: 0 6rpx 20rpx rgba(255, 182, 193, 0.12);
+}
+
+.weekday-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0;
+  padding: 12rpx 0 16rpx;
+  border-bottom: 2rpx solid #FBF5F7;
+}
+
+.weekday {
+  text-align: center;
+  font-size: 24rpx;
+  color: #999;
+  font-weight: 500;
+}
+
+.day-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0;
+}
+
+.day-cell {
+  position: relative;
+  height: 100rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4rpx;
+  padding: 6rpx 4rpx;
+  transition: all 0.15s;
+}
+
+.day-cell:active {
+  background: #FFF5F7;
+  border-radius: 16rpx;
+}
+
+.day-out .day-num {
+  color: #DDD;
+}
+
+.day-today {
+  background: linear-gradient(135deg, #FFE4EC, #FFD0DC);
+  border-radius: 16rpx;
+}
+
+.day-today .day-num {
+  color: #FFFFFF;
+  font-weight: bold;
+  background: linear-gradient(135deg, #FFB6C1, #FF6B8A);
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 10rpx rgba(255, 107, 138, 0.35);
+}
+
+.day-num {
+  font-size: 28rpx;
+  color: #4A2A2A;
+  font-weight: 500;
+}
+
+.day-amount {
+  font-size: 18rpx;
+  color: #E85A7A;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.day-dot {
+  width: 6rpx;
+  height: 6rpx;
+  border-radius: 50%;
+}
+
+.day-has-data .day-num {
+  color: #4A2A2A;
+  font-weight: 600;
+}
+
+/* ============ 图例 ============ */
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 32rpx;
+  padding: 24rpx 0;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  font-size: 22rpx;
+  color: #999;
+}
+
+.legend-dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+}
+
+.legend-dot-data {
+  background: #E85A7A;
+}
+
+.legend-dot-today {
+  background: linear-gradient(135deg, #FFB6C1, #FF6B8A);
+}

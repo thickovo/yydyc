@@ -1,0 +1,33 @@
+<view class="page">
+  <view class="header">
+    <text class="header-title">💌 意见反馈</text>
+    <text class="header-desc">你的建议会让云裳记变得更好</text>
+  </view>
+
+  <view class="form-card">
+    <view class="field-label">反馈内容</view>
+    <textarea
+      class="field-textarea"
+      placeholder="想说点什么都可以，比如新功能建议、Bug 反馈、使用体验…"
+      maxlength="500"
+      value="{{content}}"
+      bindinput="onContentInput"
+      auto-height
+    ></textarea>
+    <view class="field-counter">{{content.length}}/500</view>
+  </view>
+
+  <view class="form-card">
+    <view class="field-label">联系方式（选填）</view>
+    <input
+      class="field-input"
+      placeholder="微信号 / 邮箱，便于回复你"
+      value="{{contact}}"
+      bindinput="onContactInput"
+    />
+  </view>
+
+  <button class="submit-btn" bindtap="onSubmit" disabled="{{submitting}}">
+    {{submitting ? '提交中…' : '提交反馈'}}
+  </button>
+</view>
