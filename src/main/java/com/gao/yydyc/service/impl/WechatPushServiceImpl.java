@@ -19,6 +19,10 @@ import java.util.Map;
 @Service
 public class WechatPushServiceImpl implements WechatPushService {
 
+    private static final DateTimeFormatter DATE_TIME_FORMATTER
+            = DateTimeFormatter
+            .ofPattern("yyyy-MM-dd HH:mm:ss");
+
     private final WechatConfig wechatConfig;
     private final WechatTokenService wechatTokenService;
     private final RestTemplate restTemplate;
@@ -41,9 +45,7 @@ public class WechatPushServiceImpl implements WechatPushService {
         data.put("thing1", thing1Value);
 
         Map<String, Object> time2Value = new HashMap<>();
-        time2Value.put("value", DateTimeFormatter
-                .ofPattern("yyyy-MM-dd HH:mm:ss")
-                .format(LocalDateTime.now()));
+        time2Value.put("value", DATE_TIME_FORMATTER.format(LocalDateTime.now()));
         data.put("time2", time2Value);
 
         Map<String, Object> amount6Value = new HashMap<>();
@@ -51,9 +53,7 @@ public class WechatPushServiceImpl implements WechatPushService {
         data.put("amount6", amount6Value);
 
         Map<String, Object> time4Value = new HashMap<>();
-        time4Value.put("value", DateTimeFormatter
-                .ofPattern("yyyy-MM-dd HH:mm:ss")
-                .format(skirt.getFinalStart()));
+        time4Value.put("value", DATE_TIME_FORMATTER.format(skirt.getFinalStart()));
         data.put("time4", time4Value);
 
         Map<String, Object> short_thing5 = new HashMap<>();
@@ -67,18 +67,11 @@ public class WechatPushServiceImpl implements WechatPushService {
 
         Map<String,Object> response = restTemplate.postForObject(tokenUrl, requestBody, Map.class);
         log.info("推送响应{}", response);
-        if (response != null) {
-            Object code = response.get("errcode");
-            if (code != null) {
-                if (String.valueOf(code).equals("0")) {
-                    return true;
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
-            }
+
+        if (response == null) {
+            return false;
         }
-        return false;
+        Object code = response.get("errcode");
+        return code != null && "0".equals(String.valueOf(code));
     }
 }

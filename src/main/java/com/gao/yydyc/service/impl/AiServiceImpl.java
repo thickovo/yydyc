@@ -1,17 +1,16 @@
 package com.gao.yydyc.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gao.yydyc.service.AiService;
-import com.gao.yydyc.service.WardrobeService;
-import com.gao.yydyc.service.WishService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -84,8 +83,11 @@ public class AiServiceImpl implements AiService {
             String content = (String) message.get("content");
             return content != null ? content : "抱歉，我没有理解你的问题";
 
-        } catch (Exception e) {
-            log.error("AI对话失败", e);
+        } catch (RestClientException e) {
+            log.error("AI请求网络异常", e);
+            return "抱歉，AI服务暂时不可用，请稍后再试";
+        } catch (JsonProcessingException e) {
+            log.error("AI请求解析异常", e);
             return "抱歉，AI服务暂时不可用，请稍后再试";
         }
     }

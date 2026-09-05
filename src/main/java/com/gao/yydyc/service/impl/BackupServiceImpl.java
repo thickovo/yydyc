@@ -3,12 +3,14 @@ package com.gao.yydyc.service.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gao.yydyc.entity.Wardrobe;
 import com.gao.yydyc.entity.Wish;
+import com.gao.yydyc.exception.BusinessException;
 import com.gao.yydyc.service.BackupService;
 import com.gao.yydyc.service.WardrobeService;
 import com.gao.yydyc.service.WishService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
@@ -18,6 +20,7 @@ import java.util.Map;
 
 @Slf4j
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class BackupServiceImpl implements BackupService {
 
     private final WardrobeService wardrobeService;
@@ -52,8 +55,8 @@ public class BackupServiceImpl implements BackupService {
             String json = objectMapper.writeValueAsString(data);
             return json;
         } catch (Exception e) {
-            log.error("导出数据转JSON失败",e);
-            return null;
+            log.error("导出数据转JSON失败", e);
+            throw new BusinessException("导出数据失败：" + e.getMessage());
         }
     }
 
@@ -86,6 +89,7 @@ public class BackupServiceImpl implements BackupService {
                     , wardrobeList.size(), wishList.size());
         } catch (Exception e) {
             log.error("导入数据失败",e);
+            throw new BusinessException("导入失败：" + e.getMessage());
         }
     }
 }
