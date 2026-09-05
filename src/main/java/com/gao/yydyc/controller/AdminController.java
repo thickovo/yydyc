@@ -8,7 +8,6 @@ import com.gao.yydyc.entity.AdminConfig;
 import com.gao.yydyc.service.FeedbackService;
 import com.gao.yydyc.service.AdminConfigService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -18,11 +17,13 @@ import java.time.LocalDateTime;
 @RequestMapping("/api/admin")
 public class AdminController {
 
-    @Autowired
-    private FeedbackService feedbackService;
+    private final FeedbackService feedbackService;
+    private final AdminConfigService adminConfigService;
 
-    @Autowired
-    private AdminConfigService adminConfigService;
+    public AdminController(FeedbackService feedbackService, AdminConfigService adminConfigService) {
+        this.feedbackService = feedbackService;
+        this.adminConfigService = adminConfigService;
+    }
 
     @GetMapping("/feedback/list")
     public Result<Page<Feedback>> listFeedback(@RequestParam(defaultValue = "1")Integer page,

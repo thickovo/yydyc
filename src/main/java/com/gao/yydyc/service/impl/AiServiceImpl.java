@@ -2,6 +2,8 @@ package com.gao.yydyc.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gao.yydyc.service.AiService;
+import com.gao.yydyc.service.WardrobeService;
+import com.gao.yydyc.service.WishService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,11 +32,13 @@ public class AiServiceImpl implements AiService {
     @Value("${ai.model.base-url}")
     private String baseUrl;
 
-    @Autowired
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
+    private final ObjectMapper objectMapper;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    public AiServiceImpl(RestTemplate restTemplate, ObjectMapper objectMapper) {
+        this.restTemplate = restTemplate;
+        this.objectMapper = objectMapper;
+    }
 
     @Override
     public String chat(String question, String userId) {

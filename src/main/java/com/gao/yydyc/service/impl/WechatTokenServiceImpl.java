@@ -13,11 +13,13 @@ import java.util.Map;
 @Service
 public class WechatTokenServiceImpl implements WechatTokenService {
 
-    @Autowired
-    private WechatConfig wechatConfig;
+    private final WechatConfig wechatConfig;
+    private final RestTemplate restTemplate;
 
-    @Autowired
-    private RestTemplate restTemplate;
+    public WechatTokenServiceImpl(WechatConfig wechatConfig, RestTemplate restTemplate) {
+        this.wechatConfig = wechatConfig;
+        this.restTemplate = restTemplate;
+    }
 
     @Override
     public String getAccessToken(){

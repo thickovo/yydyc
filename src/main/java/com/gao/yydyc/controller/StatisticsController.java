@@ -19,8 +19,11 @@ import java.util.*;
 @RequestMapping("/api/statistics")
 public class StatisticsController {
 
-    @Autowired
-    private WardrobeService wardrobeService;
+    private final WardrobeService wardrobeService;
+
+    public StatisticsController(WardrobeService wardrobeService) {
+        this.wardrobeService = wardrobeService;
+    }
 
     @GetMapping("/calendar")
     public Result<Map<String, List<CalendarItem>>> statistics(

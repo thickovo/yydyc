@@ -3,6 +3,8 @@ package com.gao.yydyc.controller;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.gao.yydyc.common.Result;
+import com.gao.yydyc.constant.CoverStatusConstant;
+import com.gao.yydyc.constant.SkirtStatusEnum;
 import com.gao.yydyc.dto.CategoryStatisticsVO;
 import com.gao.yydyc.dto.MonthSummaryVO;
 import com.gao.yydyc.dto.MonthlyTrendVO;
@@ -15,7 +17,6 @@ import com.gao.yydyc.service.SkirtImageService;
 import com.gao.yydyc.service.WardrobeService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,13 +27,16 @@ import java.util.List;
 @RequestMapping("/api/wardrobe")
 public class WardrobeController {
 
-    @Autowired
-    private WardrobeService wardrobeService;
+    private final WardrobeService wardrobeService;
+    private final SkirtImageMapper skirtImageMapper;
+    private final SkirtImageService skirtImageService;
 
-    @Autowired
-    private SkirtImageMapper skirtImageMapper;
-    @Autowired
-    private SkirtImageService skirtImageService;
+    public WardrobeController(WardrobeService wardrobeService, SkirtImageMapper skirtImageMapper,
+                              SkirtImageService skirtImageService) {
+        this.wardrobeService = wardrobeService;
+        this.skirtImageMapper = skirtImageMapper;
+        this.skirtImageService = skirtImageService;
+    }
 
     @PostMapping("/add")
     public Result<Long> add(@RequestBody @Valid Wardrobe wardrobe) {
@@ -152,7 +156,7 @@ public class WardrobeController {
                     .eq(SkirtImage::getSkirtId, skirtId)
                     .count();
         // 3. 如果这是第一张图片，设为封面
-        int isCover = (count == 0) ? 1 : 0;
+        int isCover = (count == 0) ? CoverStatusConstant.IS_COVER : CoverStatusConstant.NOT_COVER;
         // 4. 插入 skirt_image 表
         SkirtImage image = new SkirtImage();
         image.setSkirtId(skirtId);
@@ -173,7 +177,7 @@ public class WardrobeController {
         }
         // 3. 查出这条裙子还有哪些图片
         long skirtId = image.getSkirtId();
-        boolean isCover = image.getIsCover() == 1;
+        boolean isCover = image.getIsCover() == CoverStatusConstant.IS_COVER;
 
         // 4. 删除这张图
         skirtImageService.removeById(imageId);
@@ -186,7 +190,7 @@ public class WardrobeController {
                     .list();
             if (!remaining.isEmpty()){
                 SkirtImage first = remaining.get(0);
-                first.setIsCover(1);
+                first.setIsCover(CoverStatusConstant.IS_COVER);
                 skirtImageService.updateById(first);
             }
         }
@@ -205,10 +209,10 @@ public class WardrobeController {
         // 3. 把该裙子所有图片的 isCover 设为 0
         skirtImageService.lambdaUpdate()
                 .eq(SkirtImage::getSkirtId,skirtId)
-                .set(SkirtImage::getIsCover,0)
+                .set(SkirtImage::getIsCover, CoverStatusConstant.NOT_COVER)
                 .update();
         // 4. 把当前图片的 isCover 设为 1
-        image.setIsCover(1);
+        image.setIsCover(CoverStatusConstant.IS_COVER);
         skirtImageService.updateById(image);
 
         return Result.success(null);
@@ -222,7 +226,7 @@ public class WardrobeController {
             return Result.error("裙子不存在");
         }
         // 2. 把 status 改为 3
-        skirt.setStatus(3);
+        skirt.setStatus(SkirtStatusEnum.SOLD.getCode());
         wardrobeService.updateById(skirt);
         // 3. 返回成功
         return Result.success(null);
@@ -236,7 +240,7 @@ public class WardrobeController {
             return Result.error("裙子不存在");
         }
         // 2. 把 status 改回 0
-        skirt.setStatus(0);
+        skirt.setStatus(SkirtStatusEnum.PENDING.getCode());
         wardrobeService.updateById(skirt);
         // 3. 返回成功
         return Result.success(null);

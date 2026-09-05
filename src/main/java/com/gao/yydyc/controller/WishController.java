@@ -17,8 +17,11 @@ import java.util.List;
 @RequestMapping("/api/wish")
 public class WishController {
 
-    @Autowired
-    private WishService wishService;
+    private final WishService wishService;
+
+    public WishController(WishService wishService) {
+        this.wishService = wishService;
+    }
 
     @PostMapping("/add")
     public Result<Long> add(@RequestBody @Valid Wish wish) {

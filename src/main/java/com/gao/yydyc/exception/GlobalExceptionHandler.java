@@ -1,5 +1,6 @@
 package com.gao.yydyc.exception;
 import com.gao.yydyc.common.Result;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -8,18 +9,20 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ValidationException;
 
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(value = Exception.class)
-    public Result<Void> handleException(Exception e)
-    {
-        e.printStackTrace();
-        return Result.error("系统繁忙，请稍后在试");
 
+    @ExceptionHandler(value = RuntimeException.class)
+    public Result<Void> handleRuntimeException(RuntimeException e)
+    {
+        log.error("系统运行时异常", e);
+        return Result.error("系统繁忙，请稍后再试");
     }
 
     @ExceptionHandler(value = BusinessException.class)
     public Result<Void> handleBusinessException(BusinessException e){
+        log.warn("业务异常：{}", e.getMessage());
         return Result.error(e.getMessage());
     }
 

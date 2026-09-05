@@ -15,14 +15,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/test")
 public class TestController {
 
-    @Autowired
-    private WechatConfig wechatConfig;
-    @Autowired
-    private WechatTokenService wechatTokenService;
-    @Autowired
-    private WechatPushService wechatPushService;
-    @Autowired
-    private WardrobeService wardrobeService;
+    private final WechatConfig wechatConfig;
+    private final WechatTokenService wechatTokenService;
+    private final WechatPushService wechatPushService;
+    private final WardrobeService wardrobeService;
+
+    public TestController(WechatConfig wechatConfig, WechatTokenService wechatTokenService,
+                          WechatPushService wechatPushService, WardrobeService wardrobeService) {
+        this.wechatConfig = wechatConfig;
+        this.wechatTokenService = wechatTokenService;
+        this.wechatPushService = wechatPushService;
+        this.wardrobeService = wardrobeService;
+    }
 
     @GetMapping("/token")
     public Result<String> getToken(){

@@ -19,12 +19,15 @@ import java.util.Map;
 @Service
 public class WechatPushServiceImpl implements WechatPushService {
 
-    @Autowired
-    private WechatConfig wechatConfig;
-    @Autowired
-    private WechatTokenService wechatTokenService;
-    @Autowired
-    private RestTemplate restTemplate;
+    private final WechatConfig wechatConfig;
+    private final WechatTokenService wechatTokenService;
+    private final RestTemplate restTemplate;
+
+    public WechatPushServiceImpl(WechatConfig wechatConfig, WechatTokenService wechatTokenService, RestTemplate restTemplate) {
+        this.wechatConfig = wechatConfig;
+        this.wechatTokenService = wechatTokenService;
+        this.restTemplate = restTemplate;
+    }
 
     @Override
     public boolean sendFinalRemind(Wardrobe skirt) {

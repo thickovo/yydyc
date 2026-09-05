@@ -20,14 +20,15 @@ import java.util.Map;
 @Service
 public class BackupServiceImpl implements BackupService {
 
-    @Autowired
-    private WardrobeService wardrobeService;
+    private final WardrobeService wardrobeService;
+    private final WishService wishService;
+    private final ObjectMapper objectMapper;
 
-    @Autowired
-    private WishService wishService;
-
-    @Autowired
-    private ObjectMapper objectMapper;
+    public BackupServiceImpl(WardrobeService wardrobeService, WishService wishService, ObjectMapper objectMapper) {
+        this.wardrobeService = wardrobeService;
+        this.wishService = wishService;
+        this.objectMapper = objectMapper;
+    }
 
     @Override
     public String exportData(String userId) {

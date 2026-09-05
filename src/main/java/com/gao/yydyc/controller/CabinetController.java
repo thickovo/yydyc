@@ -16,10 +16,14 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/cabinet")
 public class CabinetController {
-    @Autowired
-    private CabinetService cabinetService;
-    @Autowired
-    private WardrobeService wardrobeService;
+
+    private final CabinetService cabinetService;
+    private final WardrobeService wardrobeService;
+
+    public CabinetController(CabinetService cabinetService, WardrobeService wardrobeService) {
+        this.cabinetService = cabinetService;
+        this.wardrobeService = wardrobeService;
+    }
 
     @GetMapping("/list")
     public Result<List<Cabinet>> list(@RequestParam String userId) {

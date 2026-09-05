@@ -13,8 +13,11 @@ import java.util.Map;
 @RequestMapping("/api/ai")
 public class AiController {
 
-    @Autowired
-    private AiService aiService;
+    private final AiService aiService;
+
+    public AiController(AiService aiService) {
+        this.aiService = aiService;
+    }
 
     @PostMapping("/chat")
     public Result<String> chat(@RequestBody Map<String, String> request) {

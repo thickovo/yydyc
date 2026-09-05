@@ -14,8 +14,11 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/api/backup")
 public class BackupController {
 
-    @Autowired
-    private BackupService backupService;
+    private final BackupService backupService;
+
+    public BackupController(BackupService backupService) {
+        this.backupService = backupService;
+    }
 
     @GetMapping("/export")
     public Result<String> export(@RequestParam String userId) {

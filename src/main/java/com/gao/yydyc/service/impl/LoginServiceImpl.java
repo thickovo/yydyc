@@ -14,10 +14,13 @@ import java.util.Map;
 @Service
 public class LoginServiceImpl implements LoginService {
 
-    @Autowired
-    private WechatConfig wechatConfig;
-    @Autowired
-    private RestTemplate restTemplate;
+    private final WechatConfig wechatConfig;
+    private final RestTemplate restTemplate;
+
+    public LoginServiceImpl(WechatConfig wechatConfig, RestTemplate restTemplate) {
+        this.wechatConfig = wechatConfig;
+        this.restTemplate = restTemplate;
+    }
 
     @Override
     public String wxLogin(String code) {

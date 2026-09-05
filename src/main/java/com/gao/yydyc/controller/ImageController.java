@@ -1,9 +1,12 @@
 package com.gao.yydyc.controller;
 
 import com.gao.yydyc.common.Result;
+import com.gao.yydyc.config.ImageConfig;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import com.gao.yydyc.constant.ImageConstant;
 
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +17,9 @@ import java.util.UUID;
 @RequestMapping("/api/image")
 public class ImageController {
 
+    @Autowired
+    private ImageConfig imageConfig;
+
     @PostMapping("/upload")
     public Result<String> imageUpload(@RequestParam("file") MultipartFile file)
     throws IOException {
@@ -21,7 +27,7 @@ public class ImageController {
         if (file == null || file.isEmpty())  {
             return Result.error("请选择图片");
         }
-        if (file.getSize() > 5 * 1024 *1024) {
+        if (file.getSize() > ImageConstant.MAX_FILE_SIZE) {
             return Result.error("图片大小不能超过5MB");
         }
 
@@ -30,14 +36,12 @@ public class ImageController {
                 .substring(fileName
                         .lastIndexOf(".")+1)
                 .toLowerCase();
-        if (!suffix.equals("jpg")
-                && !suffix.equals("jpeg")
-                && !suffix.equals("png")) {
-            return Result.error("只支持jpgg/png/webp格式");
+        if (!ImageConstant.ALLOWED_SUFFIXES.contains(suffix)) {
+            return Result.error("只支持jpg/jpeg/png格式");
         }
         String newFileName = UUID.randomUUID()
                 .toString() + "." + suffix;
-        String imageFile = "D:/yydyc-images/" + newFileName;
+        String imageFile = imageConfig.getStoragePath() + newFileName;
         File localFile = new File(imageFile);
         if (!localFile.getParentFile().exists()) {
             localFile.mkdirs();
