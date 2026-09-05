@@ -3,6 +3,7 @@ package com.gao.yydyc.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.FieldStrategy;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
@@ -26,13 +27,19 @@ public class Wardrobe {
     private BigDecimal deposit;
     private BigDecimal finalPayment;
     private BigDecimal accessoriesPrice;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime finalDate;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime depositStart;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime depositEnd;
     // 全款预售 / 定尾 切换时需要把对方字段写回 null，
     // MyBatis-Plus 默认 FieldStrategy.NOT_NULL 会跳过 null → 必须显式 ALWAYS
     @TableField(updateStrategy = FieldStrategy.ALWAYS)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime finalStart;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime finalEnd;
     private String purchaseLink;
     private String note;
@@ -67,9 +74,12 @@ public class Wardrobe {
     private String imageUrl;
     // 同 finalStart：购买模式切换时必须能写回 null
     @TableField(updateStrategy = FieldStrategy.ALWAYS)
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime saleStart;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime updateTime;
 
     // 新增三个字段
