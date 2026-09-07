@@ -2,15 +2,14 @@ Component({
   data: {
     selected: 0,
     color: '#999999',
-    selectedColor: '#FF6B8A',
+    selectedColor: '#E05A86',
     list: [
-      { pagePath: '/pages/home/home', text: '首页', icon: '🏠' },
-      { pagePath: '/pages/ai/ai', text: 'AI', icon: '💬' },
-      { pagePath: '/pages/mine/mine', text: '我的', icon: '👤' }
+      { pagePath: '/pages/home/home',   text: '首页', glyph: '⌂', rotations: [0, 72, 144, 216, 288] },
+      { pagePath: '/pages/ai/ai',       text: 'AI',   glyph: '✦', rotations: [0, 72, 144, 216, 288] },
+      { pagePath: '/pages/mine/mine',   text: '我的', glyph: '♥', rotations: [0, 72, 144, 216, 288] }
     ]
   },
   attached() {
-    // 首次进入时根据当前页面设置 selected
     const pages = getCurrentPages();
     if (pages.length > 0) {
       const cur = '/' + pages[pages.length - 1].route;
@@ -23,13 +22,8 @@ Component({
   methods: {
     onSwitch(e) {
       const index = e.currentTarget.dataset.index;
-      const item = this.data.list[index];
-      if (index === this.data.selected) {
-        return;
-      }
-      const url = item.pagePath;
-      // tabBar 页面用 switchTab，其它用 navigateTo
-      wx.switchTab({ url });
+      if (index === this.data.selected) return;
+      wx.switchTab({ url: this.data.list[index].pagePath });
     }
   }
 });

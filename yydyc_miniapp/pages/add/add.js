@@ -26,6 +26,11 @@ Page({
     size: '',
     accessories: [],
     customAccessory: '',
+    // 柜子分类
+    cabinetOptions: ['未分类'],
+    cabinetIds: [''],
+    cabinetIndex: 0,
+    cabinetId: '',
     // 图片上传相关
     imageUrl: '',
     uploading: false
@@ -38,6 +43,35 @@ Page({
       selected: false
     }))
     this.setData({ accessoryList })
+    app.getUserId().then(() => this.fetchCabinets())
+  },
+
+  fetchCabinets() {
+    const userId = app.globalData.userId || 'test_user_001'
+    wx.request({
+      url: app.globalData.baseUrl + '/api/cabinet/list?userId=' + userId,
+      method: 'GET',
+      success: (res) => {
+        const list = (res.data && res.data.data) || []
+        const cabinets = list.map(c => ({ id: String(c.id), name: c.name || '未命名' }))
+        this.setData({
+          cabinets,
+          cabinetOptions: ['未分类'].concat(cabinets.map(c => c.name)),
+          cabinetIds: [''].concat(cabinets.map(c => c.id))
+        })
+      },
+      fail: () => {
+        this.setData({ cabinetOptions: ['未分类'], cabinetIds: [''] })
+      }
+    })
+  },
+
+  handleCabinetChange(e) {
+    const idx = parseInt(e.detail.value)
+    this.setData({
+      cabinetIndex: idx,
+      cabinetId: this.data.cabinetIds[idx] || ''
+    })
   },
 
   switchBuyMode(e) {
@@ -168,9 +202,22 @@ Page({
       .catch((err) => {
         console.error('[onPickImage] 上传失败:', err);
         wx.hideLoading();
+        // 区分错误类型给用户更明确的提示
+        const msg = (err && err.message) || ''
+        let tip = '上传失败，请重试'
+        if (msg.startsWith('upload_http_error')) {
+          tip = '图片上传接口异常（HTTP），请检查后端是否启动'
+        } else if (msg.startsWith('upload_network_error')) {
+          tip = '网络异常，请检查网络后重试'
+        } else if (msg.startsWith('upload_empty_response') || msg.startsWith('upload_invalid_json')) {
+          tip = '后端返回异常，请确认 /api/image/upload 接口已实现'
+        } else if (msg.startsWith('upload_failed')) {
+          tip = '上传失败：' + (msg.split('msg=')[1] || '请稍后再试')
+        }
         wx.showToast({
-          title: '上传失败，请重试',
-          icon: 'none'
+          title: tip,
+          icon: 'none',
+          duration: 2500
         });
       })
       .finally(() => {
@@ -189,7 +236,7 @@ Page({
   },
 
   handleSubmit() {
-    const { name, brand, type, color, totalPrice, deposit, finalPayment, finalStart, saleStart, remindBefore, note, buyMode, category, size, accessories, imageUrl } = this.data;
+    const { name, brand, type, color, totalPrice, deposit, finalPayment, finalStart, saleStart, remindBefore, note, buyMode, category, size, accessories, imageUrl, cabinetId } = this.data;
 
     if (!name) {
       wx.showToast({ title: '请输入名称', icon: 'none' });
@@ -207,7 +254,8 @@ Page({
       category: category || '裙子',
       size: size || '',
       accessories: accessories.join(','),
-      imageUrl: imageUrl || ''
+      imageUrl: imageUrl || '',
+      cabinetId: cabinetId || null
     };
 
     if (buyMode === 'deposit') {

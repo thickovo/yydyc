@@ -1,3 +1,6 @@
+<image class="page-bg" src="/images/bg/calendar-bg.jpg" mode="aspectFill"></image>
+<view class="page-bg-overlay"></view>
+
 <view class="page">
   <!-- 顶部汇总卡 -->
   <view class="summary-card">
@@ -14,7 +17,41 @@
 
   <view wx:if="{{loading}}" class="loading-tip">加载中...</view>
 
-  <view wx:elif="{{items.length === 0}}" class="empty-tip">当日暂无支出记录</view>
+  <view wx:elif="{{items.length === 0}}" class="sakura-empty-block">
+    <view class="sakura-empty-illust">
+      <view class="sub-sakura sub-1">
+        <view class="sakura size-sm">
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(0deg) translateY(-15rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(72deg) translateY(-15rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(144deg) translateY(-15rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(216deg) translateY(-15rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(288deg) translateY(-15rpx);"></view>
+          <view class="sakura-center"></view>
+        </view>
+      </view>
+      <view class="main-sakura">
+        <view class="sakura size-md">
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(0deg) translateY(-30rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(72deg) translateY(-30rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(144deg) translateY(-30rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(216deg) translateY(-30rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(288deg) translateY(-30rpx);"></view>
+          <view class="sakura-center"></view>
+        </view>
+      </view>
+      <view class="sub-sakura sub-2">
+        <view class="sakura size-sm">
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(0deg) translateY(-15rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(72deg) translateY(-15rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(144deg) translateY(-15rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(216deg) translateY(-15rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(288deg) translateY(-15rpx);"></view>
+          <view class="sakura-center"></view>
+        </view>
+      </view>
+    </view>
+    <view class="sakura-empty-text">当日暂无支出记录{{'\n'}}这里安安静静的~</view>
+  </view>
 
   <view wx:else class="list">
     <view class="item-card" wx:for="{{items}}" wx:key="id" data-id="{{item.id}}" bindtap="onTapItem">

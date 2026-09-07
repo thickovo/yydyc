@@ -30,6 +30,11 @@ Page({
     originalFinalStart: '',
     originalSaleStart: '',
     originalFinalDate: '',
+    // 柜子分类
+    cabinetOptions: ['未分类'],
+    cabinetIds: [''],
+    cabinetIndex: 0,
+    cabinetId: '',
     // 图片
     imageUrl: '',
     uploading: false
@@ -38,7 +43,7 @@ Page({
   onLoad(options) {
     const id = options.id;
     this.setData({ id: id });
-    this.fetchDetail(id);
+    app.getUserId().then(() => this.fetchDetail(id));
   },
 
   fetchDetail(id) {
@@ -47,7 +52,12 @@ Page({
       url: baseUrl + '/api/wardrobe/detail/' + id,
       method: 'GET',
       success: (res) => {
-        const data = res.data.data;
+        // 响应解析加防护：后端错误时 res.data 可能没有 data 字段
+        const data = (res && res.data && res.data.data) || null;
+        if (!data) {
+          wx.showToast({ title: '数据加载失败', icon: 'none' });
+          return;
+        }
         const buyMode = data.saleStart ? 'presale' : 'deposit';
         const selectedAccessories = data.accessories ? data.accessories.split(',').filter(s => s.trim()) : [];
 
@@ -90,6 +100,7 @@ Page({
           imageUrl: data.imageUrl || '',
           displayImageUrl: resolveImageUrl(data.imageUrl, baseUrl)
         });
+        this.fetchCabinets(data.cabinetId);
       },
       fail: (err) => {
         console.error('请求失败', err);
@@ -136,6 +147,40 @@ Page({
   handleSizeChange(e) {
     const index = e.detail.value;
     this.setData({ size: this.data.sizeOptions[index] });
+  },
+
+  fetchCabinets(selectedId) {
+    const userId = app.globalData.userId || 'test_user_001';
+    wx.request({
+      url: app.globalData.baseUrl + '/api/cabinet/list?userId=' + userId,
+      method: 'GET',
+      success: (res) => {
+        const list = (res.data && res.data.data) || [];
+        const cabinets = list.map(c => ({ id: String(c.id), name: c.name || '未命名' }));
+        const options = ['未分类'].concat(cabinets.map(c => c.name));
+        const ids = [''].concat(cabinets.map(c => c.id));
+        let index = selectedId ? ids.indexOf(String(selectedId)) : 0;
+        if (index < 0) index = 0;
+        this.setData({
+          cabinets,
+          cabinetOptions: options,
+          cabinetIds: ids,
+          cabinetIndex: index,
+          cabinetId: ids[index] || ''
+        });
+      },
+      fail: () => {
+        this.setData({ cabinetOptions: ['未分类'], cabinetIds: [''] });
+      }
+    });
+  },
+
+  handleCabinetChange(e) {
+    const idx = parseInt(e.detail.value);
+    this.setData({
+      cabinetIndex: idx,
+      cabinetId: this.data.cabinetIds[idx] || ''
+    });
   },
 
   handleInput(e) {
@@ -246,7 +291,7 @@ Page({
       id, name, brand, type, color, totalPrice, deposit, finalPayment,
       finalStart, finalDate, saleStart, remindBefore, note, buyMode,
       originalFinalStart, originalSaleStart, originalFinalDate,
-      category, size, accessories, imageUrl
+      category, size, accessories, imageUrl, cabinetId
     } = this.data;
 
     if (!name) {
@@ -266,7 +311,8 @@ Page({
       category: category || '裙子',
       size: size || '',
       accessories: accessories.join(','),
-      imageUrl: imageUrl || ''
+      imageUrl: imageUrl || '',
+      cabinetId: cabinetId || null
     };
 
     if (buyMode === 'deposit') {

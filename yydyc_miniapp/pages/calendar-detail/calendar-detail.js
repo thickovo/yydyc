@@ -14,7 +14,7 @@ Page({
   onLoad(options) {
     const date = options.date || ''
     this.setData({ date })
-    this.fetchDayDetail(date)
+    app.getUserId().then(() => this.fetchDayDetail(date))
   },
 
   fetchDayDetail(date) {

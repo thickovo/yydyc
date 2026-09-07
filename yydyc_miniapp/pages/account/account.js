@@ -15,17 +15,21 @@ Page({
     trend: [],
     // 品牌占比 [ { brand, amount, percent } ]
     brandStat: [],
+    // 饼图样式（JS 预计算，WXML 数据绑定不支持函数调用）
+    pieStyle: 'background: #F5F0F2;',
     // 账单列表（按 finalStart/saleStart 倒序）
     bills: []
   },
 
   onShow() {
-    this.fetchAll()
+    app.getUserId().then(() => this.fetchAll())
   },
 
   onPullDownRefresh() {
-    this.fetchAll()
-    setTimeout(() => wx.stopPullDownRefresh(), 500)
+    app.getUserId().then(() => {
+      this.fetchAll()
+      setTimeout(() => wx.stopPullDownRefresh(), 500)
+    })
   },
 
   onKeywordInput(e) {
@@ -63,6 +67,11 @@ Page({
         const list = (res.data && res.data.data) || []
         // 已经是月度趋势数据（按月份）
         const trend = list.map(t => ({ month: t.month, amount: Number(t.total || 0) }))
+        // 预计算每格高度百分比（WXML 数据绑定不支持函数调用）
+        const max = Math.max(...trend.map(t => t.amount || 0))
+        trend.forEach(t => {
+          t.heightPct = max > 0 ? Math.round((t.amount / max) * 100) : 0
+        })
         this.setData({ trend })
       }
     })
@@ -81,7 +90,7 @@ Page({
             percent: total > 0 ? Math.round((Number(b.total) / total) * 100) : 0
           }))
           .sort((a, b) => b.amount - a.amount)
-        this.setData({ brandStat })
+        this.setData({ brandStat, pieStyle: this.buildPieStyle(brandStat) })
       }
     })
 
@@ -133,23 +142,15 @@ Page({
     wx.navigateTo({ url: '/pages/detail/detail?id=' + id })
   },
 
-  // 趋势条宽度（百分比）
-  trendWidth(amount) {
-    if (!this.data.trend || this.data.trend.length === 0) return 0
-    const max = Math.max(...this.data.trend.map(t => t.amount || 0))
-    if (max === 0) return 0
-    return Math.round((amount / max) * 100)
-  },
-
-  // 饼图扇区（CSS conic-gradient）
-  getPieStyle() {
-    const list = this.data.brandStat.slice(0, 6) // 最多显示 6 个
-    if (!list || list.length === 0) return 'background: #F5F0F2;'
-    const colors = ['#FF6B8A', '#FFB6C1', '#F8BBD0', '#CE93D8', '#9FA8DA', '#80DEEA', '#A5D6A7']
-    let total = list.reduce((s, b) => s + b.amount, 0)
+  // 饼图渐变样式（纯函数，JS 里算好再绑定到 view style）
+  buildPieStyle(list) {
+    const top = list.slice(0, 6) // 最多显示 6 个
+    if (!top || top.length === 0) return 'background: #F5F0F2;'
+    const colors = ['#E05A86', '#FFB6C1', '#F8BBD0', '#CE93D8', '#9FA8DA', '#80DEEA', '#A5D6A7']
+    const total = top.reduce((s, b) => s + b.amount, 0)
     if (total === 0) return 'background: #F5F0F2;'
     let acc = 0
-    const stops = list.map((b, i) => {
+    const stops = top.map((b, i) => {
       const start = (acc / total) * 360
       acc += b.amount
       const end = (acc / total) * 360

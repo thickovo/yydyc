@@ -5,16 +5,19 @@ Page({
   data: {
     loading: true,
     wishList: [],
+    filteredWishList: [],
     keyword: ''
   },
 
   onShow() {
-    this.fetchWishes()
+    app.getUserId().then(() => this.fetchWishes())
   },
 
   onPullDownRefresh() {
-    this.fetchWishes()
-    setTimeout(() => wx.stopPullDownRefresh(), 500)
+    app.getUserId().then(() => {
+      this.fetchWishes()
+      setTimeout(() => wx.stopPullDownRefresh(), 500)
+    })
   },
 
   onKeywordInput(e) {
@@ -38,48 +41,42 @@ Page({
           isDone: Number(item.isDone || 0) === 1,
           doneTimeText: this.formatTime(item.updateTime || item.createTime)
         }))
-        this.setData({ wishList: formatted, loading: false })
+        this.setData({ wishList: formatted, filteredWishList: formatted, loading: false })
         this.applyFilter()
       },
       fail: () => {
         wx.showToast({ title: '网络异常', icon: 'none' })
-        this.setData({ wishList: [], loading: false })
+        this.setData({ wishList: [], filteredWishList: [], loading: false })
       }
     })
   },
 
   applyFilter() {
-    // 仅用于 keyword 过滤（数据已在 fetchWishes 时格式化）
-    const keyword = (this.data.keyword || '').toLowerCase().trim()
-    if (!keyword) return
-    // 这里只是标记 filtered view，不修改 wishList 本身
-    // 简化处理：直接在 wxml 中通过 wx:if 控制
+    const kw = (this.data.keyword || '').toLowerCase().trim()
+    let list = this.data.wishList
+    if (kw) {
+      list = list.filter(item =>
+        (item.name && item.name.toLowerCase().indexOf(kw) > -1) ||
+        (item.brand && item.brand.toLowerCase().indexOf(kw) > -1)
+      )
+    }
+    this.setData({ filteredWishList: list })
   },
 
-  // 切换心愿完成状态
+  // 切换心愿完成状态（写后端持久化：已完成/取消完成）
   onToggleDone(e) {
     const id = e.currentTarget.dataset.id
-    const url = app.globalData.baseUrl + '/api/wish/done/' + id
+    const target = this.data.wishList.find(x => x.id === id)
+    if (!target) return
+    const newDone = !target.isDone
     wx.request({
-      url,
+      url: app.globalData.baseUrl + '/api/wish/update',
       method: 'PUT',
+      header: { 'Content-Type': 'application/json' },
+      data: { id, isDone: newDone ? 1 : 0 },
       success: (res) => {
         if (res.data && res.data.code === 200) {
-          // 本地更新状态
-          const list = this.data.wishList.map(item => {
-            if (item.id === id) {
-              const newDone = !item.isDone
-              return {
-                ...item,
-                isDone: newDone,
-                doneTimeText: newDone ? this.formatTime(new Date().toISOString()) : item.doneTimeText
-              }
-            }
-            return item
-          })
-          this.setData({ wishList: list })
-          app.toast(res.data.data === '已完成' || this.data.wishList.find(x => x.id === id)?.isDone ? '已完成 ✨' : '已取消', 'success')
-          // 简化：服务端返回的可能只是 ok，重新拉取一次更稳
+          app.toast(newDone ? '已完成 ✨' : '已取消', 'success')
           this.fetchWishes()
         } else {
           app.toast(res.data && res.data.msg ? res.data.msg : '操作失败')
@@ -98,6 +95,16 @@ Page({
   onTapItem(e) {
     const id = e.currentTarget.dataset.id
     wx.navigateTo({ url: '/pages/wish-edit/wish-edit?id=' + id })
+  },
+
+  // 复制心愿链接到剪贴板
+  onCopyLink(e) {
+    const link = e.currentTarget.dataset.link
+    if (!link) return
+    wx.setClipboardData({
+      data: link,
+      success: () => app.toast('链接已复制', 'success')
+    })
   },
 
   formatTime(timeStr) {

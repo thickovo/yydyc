@@ -1,5 +1,5 @@
 page {
-  background: #FFF5F5;
+  background: #FFF7F9;
   padding: 24rpx;
   padding-bottom: 60rpx;
 }
@@ -41,7 +41,7 @@ page {
 
 .input-price {
   font-weight: 600;
-  color: #E85A7A;
+  color: #E05A86;
 }
 
 .form-item textarea {
@@ -55,14 +55,21 @@ page {
   box-sizing: border-box;
 }
 
-/* 图片上传 */
+/* 图片上传：紧凑左图右输入 */
+.upload-row {
+  display: flex;
+  gap: 28rpx;
+  align-items: stretch;
+}
+
 .image-upload {
   position: relative;
-  width: 100%;
+  width: 220rpx;
   aspect-ratio: 150 / 180;
-  border-radius: 24rpx;
-  background: #FFF5F7;
-  border: 2rpx dashed #FFB6C1;
+  flex-shrink: 0;
+  border-radius: 20rpx;
+  background: #FFF7F9;
+  border: 2rpx dashed #FFD3DE;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -71,39 +78,53 @@ page {
 
 .image-upload.has-image {
   border-style: solid;
-  border-color: #FFB6C1;
+  border-color: #FFD3DE;
+}
+
+.upload-side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.upload-side .input {
+  width: 100%;
+  height: 88rpx;
+  line-height: 88rpx;
+  padding: 0;
+  border-bottom: 2rpx solid #F0E0E4;
+  font-size: 28rpx;
+  color: #4A2A2A;
+  box-sizing: border-box;
 }
 
 .upload-placeholder {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12rpx;
+  gap: 10rpx;
 }
 
 .upload-icon {
-  width: 96rpx;
-  height: 96rpx;
+  width: 64rpx;
+  height: 64rpx;
   border-radius: 50%;
   background: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 64rpx;
+  font-size: 44rpx;
   font-weight: 200;
-  color: #FF6B8A;
-  box-shadow: 0 4rpx 12rpx rgba(255, 107, 138, 0.2);
+  color: #E05A86;
+  box-shadow: 0 4rpx 12rpx rgba(255, 155, 181, 0.2);
 }
 
 .upload-text {
-  font-size: 28rpx;
-  color: #FF6B8A;
-  font-weight: 500;
-}
-
-.upload-hint {
   font-size: 22rpx;
-  color: #BBB;
+  color: #E05A86;
+  font-weight: 500;
 }
 
 .upload-preview {
@@ -152,12 +173,33 @@ page {
 
 .save-btn {
   width: 100%;
-  background: linear-gradient(135deg, #FFB6C1, #FF6B8A) !important;
+  background: linear-gradient(135deg, #FFB6C1, #FF9BB5) !important;
   color: #FFFFFF !important;
   font-size: 32rpx;
   font-weight: bold;
   padding: 24rpx 0;
   border: none;
   border-radius: 48rpx;
-  box-shadow: 0 6rpx 24rpx rgba(255, 107, 138, 0.3);
+  box-shadow: 0 6rpx 24rpx rgba(255, 155, 181, 0.3);
+}
+
+/* ===== DressNest 主题层 ===== */
+.page, .form, .detail-page, .loading {
+  position: relative;
+  z-index: 2;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(16rpx);
+  border: 2rpx solid rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 0 8rpx 26rpx rgba(255, 155, 181, 0.14) !important;
+  border-radius: 32rpx;
+}
+.form-section {
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(16rpx);
+  border: 2rpx solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8rpx 26rpx rgba(255, 155, 181, 0.14);
+  border-radius: 32rpx;
 }

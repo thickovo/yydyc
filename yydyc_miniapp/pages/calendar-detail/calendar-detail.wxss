@@ -1,5 +1,5 @@
 page {
-  background: #FFF5F5;
+  background: #FFF7F9;
   min-height: 100vh;
   padding-bottom: 160rpx;
 }
@@ -10,11 +10,11 @@ page {
 
 /* ============ 汇总卡 ============ */
 .summary-card {
-  background: linear-gradient(135deg, #FFB6C1 0%, #FF8FA9 100%);
+  background: linear-gradient(135deg, #FFB6C1 0%, #FF9BB5 100%);
   border-radius: 28rpx;
   padding: 36rpx 32rpx;
   margin-bottom: 32rpx;
-  box-shadow: 0 8rpx 24rpx rgba(255, 107, 138, 0.25);
+  box-shadow: 0 8rpx 24rpx rgba(255, 155, 181, 0.25);
   color: #FFFFFF;
 }
 
@@ -49,11 +49,25 @@ page {
 
 /* ============ 区域标题 ============ */
 .section-title {
-  font-size: 28rpx;
-  font-weight: bold;
-  color: #4A2A2A;
-  margin-bottom: 20rpx;
-  padding-left: 8rpx;
+  font-size: 30rpx;
+  font-weight: 800;
+  color: #E05A86;
+  margin-bottom: 22rpx;
+  padding-left: 18rpx;
+  position: relative;
+  letter-spacing: 2rpx;
+}
+
+.section-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6rpx;
+  height: 26rpx;
+  border-radius: 4rpx;
+  background: linear-gradient(180deg, #FFB6C1, #FF9BB5);
 }
 
 .loading-tip, .empty-tip {
@@ -131,8 +145,8 @@ page {
 .item-tag {
   display: inline-block;
   font-size: 20rpx;
-  color: #FF6B8A;
-  background: #FFE4E8;
+  color: #E05A86;
+  background: #FFEDF2;
   padding: 2rpx 12rpx;
   border-radius: 8rpx;
   align-self: flex-start;
@@ -142,6 +156,27 @@ page {
 .item-amount {
   font-size: 30rpx;
   font-weight: bold;
-  color: #E85A7A;
+  color: #E05A86;
   flex-shrink: 0;
+}
+
+/* ===== DressNest 主题层 ===== */
+.page, .form, .detail-page, .loading {
+  position: relative;
+  z-index: 2;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(16rpx);
+  border: 2rpx solid rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 0 8rpx 26rpx rgba(255, 155, 181, 0.14) !important;
+  border-radius: 32rpx;
+}
+.summary-card, .item-card {
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(16rpx);
+  border: 2rpx solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8rpx 26rpx rgba(255, 155, 181, 0.14);
+  border-radius: 32rpx;
 }

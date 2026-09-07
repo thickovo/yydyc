@@ -6,7 +6,19 @@
     data-index="{{index}}"
     bindtap="onSwitch"
   >
-    <text class="tab-icon">{{item.icon}}</text>
+    <!-- 樱花图标 -->
+    <view class="tab-icon-wrap">
+      <view class="tab-sakura">
+        <view class="tab-sakura-petal" style="transform: rotate({{item.rotations[0]}}deg) translateY(-12rpx);"></view>
+        <view class="tab-sakura-petal" style="transform: rotate({{item.rotations[1]}}deg) translateY(-12rpx);"></view>
+        <view class="tab-sakura-petal" style="transform: rotate({{item.rotations[2]}}deg) translateY(-12rpx);"></view>
+        <view class="tab-sakura-petal" style="transform: rotate({{item.rotations[3]}}deg) translateY(-12rpx);"></view>
+        <view class="tab-sakura-petal" style="transform: rotate({{item.rotations[4]}}deg) translateY(-12rpx);"></view>
+        <view class="tab-sakura-center">
+          <text class="tab-glyph">{{item.glyph}}</text>
+        </view>
+      </view>
+    </view>
     <text class="tab-text" style="color: {{selected === index ? selectedColor : color}};">{{item.text}}</text>
   </view>
 </view>

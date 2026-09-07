@@ -1,3 +1,6 @@
+<image class="page-bg" src="/images/bg/calendar-bg.jpg" mode="aspectFill"></image>
+<view class="page-bg-overlay"></view>
+
 <view class="page">
   <!-- 总支出卡片 -->
   <view class="total-card">
@@ -27,7 +30,7 @@
     <view class="trend-chart">
       <view class="trend-bars">
         <view class="trend-bar-col" wx:for="{{trend}}" wx:key="month">
-          <view class="trend-bar-fill" style="height: {{trendWidth(item.amount)}}%;"></view>
+          <view class="trend-bar-fill" style="height: {{item.heightPct}}%;"></view>
           <view class="trend-bar-label">{{item.month}}月</view>
         </view>
       </view>
@@ -38,7 +41,7 @@
   <view class="card" wx:if="{{brandStat.length > 0}}">
     <view class="card-title">品牌占比</view>
     <view class="pie-row">
-      <view class="pie-chart" style="{{getPieStyle()}}">
+      <view class="pie-chart" style="{{pieStyle}}">
         <view class="pie-center">
           <view class="pie-total">¥{{totalSpent}}</view>
           <view class="pie-total-label">总支出</view>
@@ -67,7 +70,41 @@
 
     <view wx:if="{{loading}}" class="loading-tip">加载中...</view>
 
-    <view wx:elif="{{bills.length === 0}}" class="empty-tip">暂无账单记录</view>
+    <view wx:elif="{{bills.length === 0}}" class="sakura-empty-block">
+      <view class="sakura-empty-illust">
+        <view class="sub-sakura sub-1">
+          <view class="sakura size-sm">
+            <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(0deg) translateY(-15rpx);"></view>
+            <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(72deg) translateY(-15rpx);"></view>
+            <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(144deg) translateY(-15rpx);"></view>
+            <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(216deg) translateY(-15rpx);"></view>
+            <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(288deg) translateY(-15rpx);"></view>
+            <view class="sakura-center"></view>
+          </view>
+        </view>
+        <view class="main-sakura">
+          <view class="sakura size-md">
+            <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(0deg) translateY(-30rpx);"></view>
+            <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(72deg) translateY(-30rpx);"></view>
+            <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(144deg) translateY(-30rpx);"></view>
+            <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(216deg) translateY(-30rpx);"></view>
+            <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(288deg) translateY(-30rpx);"></view>
+            <view class="sakura-center"></view>
+          </view>
+        </view>
+        <view class="sub-sakura sub-2">
+          <view class="sakura size-sm">
+            <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(0deg) translateY(-15rpx);"></view>
+            <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(72deg) translateY(-15rpx);"></view>
+            <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(144deg) translateY(-15rpx);"></view>
+            <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(216deg) translateY(-15rpx);"></view>
+            <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(288deg) translateY(-15rpx);"></view>
+            <view class="sakura-center"></view>
+          </view>
+        </view>
+      </view>
+      <view class="sakura-empty-text">还没有账单记录{{'\n'}}添加裙子后会自动统计</view>
+    </view>
 
     <view wx:else class="bill-list">
       <view class="bill-item" wx:for="{{bills}}" wx:key="id" data-id="{{item.id}}" bindtap="onTapBill">

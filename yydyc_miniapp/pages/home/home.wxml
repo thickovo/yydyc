@@ -1,97 +1,136 @@
-<!-- 顶部 -->
-<view class="top-bar">
-  <view class="top-left">
-    <text class="title">✨ 云裳记</text>
-  </view>
-  <view class="bell" bindtap="goToCalendar">
-    <text class="bell-icon">🔔</text>
-    <view wx:if="{{hasPending}}" class="badge"></view>
-  </view>
-</view>
+<!-- 背景图（必用） -->
+<image class="page-bg home-bg" src="/images/bg/home-bg.jpg" mode="top"></image>
+<view class="page-bg-overlay home-overlay"></view>
 
-<!-- 横幅 -->
-<view class="banner">
-  <view class="banner-left">
-    <text class="banner-text">细数衣衫</text>
-    <text class="banner-text">记取人间细碎美好 🎀</text>
-  </view>
-  <image class="banner-img" src="/images/shouye.jpg" mode="aspectFill"></image>
-</view>
-
-<!-- 骨架屏 -->
-<view class="stats stats-skeleton" wx:if="{{loading}}">
-  <view class="stat-item">
-    <view class="skeleton skeleton-line skeleton-block" style="width: 80rpx; height: 60rpx;"></view>
-    <view class="skeleton skeleton-line" style="width: 90rpx; height: 24rpx;"></view>
-  </view>
-  <view class="stat-item">
-    <view class="skeleton skeleton-line skeleton-block" style="width: 80rpx; height: 60rpx;"></view>
-    <view class="skeleton skeleton-line" style="width: 90rpx; height: 24rpx;"></view>
-  </view>
-  <view class="stat-item">
-    <view class="skeleton skeleton-line skeleton-block" style="width: 80rpx; height: 60rpx;"></view>
-    <view class="skeleton skeleton-line" style="width: 90rpx; height: 24rpx;"></view>
-  </view>
-</view>
-
-<!-- 统计卡片 -->
-<view class="stats" wx:else>
-  <view class="stat-item">
-    <text class="stat-number">{{totalCount}}</text>
-    <text class="stat-label">全部裙子</text>
-    <view class="stat-icon-bg">👗</view>
-  </view>
-  <view class="stat-item">
-    <text class="stat-number pending">{{pendingCount}}</text>
-    <text class="stat-label">待补尾款</text>
-    <view class="stat-icon-bg">⏰</view>
-  </view>
-  <view class="stat-item">
-    <text class="stat-number paid">{{paidCount}}</text>
-    <text class="stat-label">已结清</text>
-    <view class="stat-icon-bg">✅</view>
-  </view>
-</view>
-
-<!-- 滚动提示条 -->
-<view wx:if="{{pendingList.length > 0}}" class="scroll-bar">
-  <view class="scroll-inner">
-    <text class="scroll-text">{{scrollText}}</text>
-  </view>
-</view>
-
-<!-- 功能入口 -->
-<view class="section-title">
-  <text class="section-title-text">小功能</text>
-</view>
-
-<view class="grid">
-  <view class="grid-item" bindtap="goToCloset">
-    <view class="grid-icon-wrap grid-icon-closet">
-      <text class="grid-icon">🧺</text>
+<view class="page">
+  <!-- 顶部：DressNest 艺术字 Logo + 小铃铛 -->
+  <view class="top-bar">
+    <view class="brand">
+      <image class="brand-logo" src="/images/dressnest-logo.png" mode="aspectFit"></image>
+      <view class="brand-sub">Th1ckovo · 把心爱都收藏 ♪</view>
     </view>
-    <text class="grid-label">我的衣橱</text>
-    <text class="grid-desc">管理所有裙子</text>
-  </view>
-  <view class="grid-item" bindtap="goToWish">
-    <view class="grid-icon-wrap grid-icon-wish">
-      <text class="grid-icon">📝</text>
+    <view class="bell ripple" bindtap="goToCalendar">
+      <view class="bell-body"></view>
+      <view wx:if="{{hasPending}}" class="badge"></view>
     </view>
-    <text class="grid-label">心愿单</text>
-    <text class="grid-desc">想入手的裙子</text>
   </view>
-  <view class="grid-item" bindtap="goToCalendar">
-    <view class="grid-icon-wrap grid-icon-calendar">
-      <text class="grid-icon">📅</text>
+
+  <!-- 骨架屏 -->
+  <view class="stats stats-skeleton glass-card" wx:if="{{loading}}">
+    <view class="stat-item">
+      <view class="skeleton skeleton-line skeleton-block" style="width: 80rpx; height: 60rpx;"></view>
+      <view class="skeleton skeleton-line" style="width: 90rpx; height: 24rpx;"></view>
     </view>
-    <text class="grid-label">记账日历</text>
-    <text class="grid-desc">重要日期不遗漏</text>
+    <view class="stat-item">
+      <view class="skeleton skeleton-line skeleton-block" style="width: 80rpx; height: 60rpx;"></view>
+      <view class="skeleton skeleton-line" style="width: 90rpx; height: 24rpx;"></view>
+    </view>
+    <view class="stat-item">
+      <view class="skeleton skeleton-line skeleton-block" style="width: 80rpx; height: 60rpx;"></view>
+      <view class="skeleton skeleton-line" style="width: 90rpx; height: 24rpx;"></view>
+    </view>
   </view>
-  <view class="grid-item" bindtap="goToAccount">
-    <view class="grid-icon-wrap grid-icon-account">
-      <text class="grid-icon">💰</text>
+
+  <!-- 统计卡片 -->
+  <view class="stats glass-card" wx:else>
+    <view class="stat-item">
+      <view class="stat-icon-wrap">
+        <view class="stat-icon-hanger"></view>
+      </view>
+      <text class="stat-number">{{totalCount}}</text>
+      <text class="stat-label">全部收纳</text>
     </view>
-    <text class="grid-label">小账本</text>
-    <text class="grid-desc">花销一目了然</text>
+    <view class="stat-divider"></view>
+    <view class="stat-item">
+      <view class="stat-icon-wrap">
+        <view class="stat-icon-clock"></view>
+      </view>
+      <text class="stat-number pending">{{pendingCount}}</text>
+      <text class="stat-label">待补尾款</text>
+    </view>
+    <view class="stat-divider"></view>
+    <view class="stat-item">
+      <view class="stat-icon-wrap">
+        <view class="stat-icon-ribbon"></view>
+      </view>
+      <text class="stat-number paid">{{paidCount}}</text>
+      <text class="stat-label">已结清</text>
+    </view>
+  </view>
+
+  <!-- 滚动提示条 -->
+  <view wx:if="{{pendingList.length > 0}}" class="scroll-bar glass-card">
+    <view class="scroll-bow">
+      <view class="scroll-bow-loop scroll-bow-l"></view>
+      <view class="scroll-bow-loop scroll-bow-r"></view>
+      <view class="scroll-bow-knot"></view>
+    </view>
+    <view class="scroll-inner">
+      <text class="scroll-text">{{scrollText}}</text>
+    </view>
+  </view>
+
+  <!-- 功能入口 -->
+  <view class="section-title">
+    <view class="section-deco"></view>
+    <text class="section-title-text">小功能</text>
+    <view class="section-deco"></view>
+  </view>
+
+  <view class="grid">
+    <view class="grid-item glass-card ripple" bindtap="goToCloset">
+      <view class="grid-icon-wrap grid-icon-closet">
+        <view class="grid-icon-wardrobe"></view>
+      </view>
+      <view class="grid-text">
+        <text class="grid-label">我的衣橱</text>
+        <text class="grid-desc">管理所有裙子</text>
+      </view>
+      <view class="grid-arrow">›</view>
+    </view>
+    <view class="grid-item glass-card ripple" bindtap="goToWish">
+      <view class="grid-icon-wrap grid-icon-wish">
+        <view class="grid-icon-letter"></view>
+      </view>
+      <view class="grid-text">
+        <text class="grid-label">心愿单</text>
+        <text class="grid-desc">想入手的裙子</text>
+      </view>
+      <view class="grid-arrow">›</view>
+    </view>
+    <view class="grid-item glass-card ripple" bindtap="goToCalendar">
+      <view class="grid-icon-wrap grid-icon-calendar">
+        <view class="grid-icon-calendar2"></view>
+      </view>
+      <view class="grid-text">
+        <text class="grid-label">记账日历</text>
+        <text class="grid-desc">重要日期不遗漏</text>
+      </view>
+      <view class="grid-arrow">›</view>
+    </view>
+    <view class="grid-item glass-card ripple" bindtap="goToAccount">
+      <view class="grid-icon-wrap grid-icon-account">
+        <view class="grid-icon-purse"></view>
+      </view>
+      <view class="grid-text">
+        <text class="grid-label">小账本</text>
+        <text class="grid-desc">花销一目了然</text>
+      </view>
+      <view class="grid-arrow">›</view>
+    </view>
+  </view>
+
+  <!-- 更多功能：网格外独立按钮 -->
+  <view class="more-btn ripple" bindtap="goMore">
+    <view class="more-bow"></view>
+    <text>更多功能</text>
+    <view class="more-bow"></view>
+  </view>
+
+  <!-- 底部小心心装饰 -->
+  <view class="footer-deco">
+    <text class="footer-heart">♡</text>
+    <text class="footer-text">DressNest · Th1ckovo</text>
+    <text class="footer-heart">♡</text>
   </view>
 </view>

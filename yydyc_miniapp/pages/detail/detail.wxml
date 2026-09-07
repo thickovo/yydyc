@@ -1,4 +1,29 @@
-<view wx:if="{{skirt}}" class="detail-page">
+<image class="page-bg" src="/images/bg/detail-bg.jpg" mode="aspectFill"></image>
+<view class="page-bg-overlay"></view>
+
+<block wx:if="{{skirt}}">
+  <view class="detail-page">
+  <!-- 图片轮播 -->
+  <view class="hero-photo">
+    <swiper
+      wx:if="{{swiperImages.length > 0}}"
+      class="hero-swiper"
+      indicator-dots="{{swiperImages.length > 1}}"
+      indicator-color="rgba(255,255,255,0.35)"
+      indicator-active-color="#FFFFFF"
+      current="{{current}}"
+      bindchange="onSwiperChange"
+      circular
+    >
+      <swiper-item wx:for="{{swiperImages}}" wx:key="*this">
+        <image class="hero-swiper-img" src="{{item}}" mode="aspectFill"></image>
+      </swiper-item>
+    </swiper>
+    <view wx:else class="hero-photo-placeholder">
+      <view class="placeholder-hanger"></view>
+    </view>
+  </view>
+
   <!-- 顶部信息卡 -->
   <view class="hero-card">
     <view class="hero-top">
@@ -76,12 +101,45 @@
     <view class="bottom-btn edit-btn" bindtap="goToEdit">
       <text class="bottom-btn-text">编辑</text>
     </view>
+    <view class="bottom-btn sold-btn {{skirt.isSold ? 'active' : ''}}" bindtap="toggleSold">
+      <text class="bottom-btn-text">{{skirt.isSold ? '取消出掉' : '标记已出掉'}}</text>
+    </view>
+    <view class="bottom-btn photo-btn" bindtap="openImageManage">
+      <text class="bottom-btn-text">管理图片</text>
+    </view>
     <view class="bottom-btn delete-btn" bindtap="deleteSkirt">
       <text class="bottom-btn-text">删除</text>
     </view>
   </view>
 </view>
+</block>
 
 <view wx:else class="loading">
   <text class="loading-text">加载中...</text>
+</view>
+
+<!-- 图片管理抽屉 -->
+<view class="drawer-mask {{showImageManage ? 'show' : ''}}" catchtap="closeImageManage"></view>
+<view class="drawer {{showImageManage ? 'show' : ''}}">
+  <view class="drawer-handle"></view>
+  <view class="drawer-title">✿ 管理图片</view>
+  <view class="drawer-body">
+    <view class="img-grid" wx:if="{{images.length > 0}}">
+      <view class="img-cell" wx:for="{{images}}" wx:key="id">
+        <image class="img-cell-img" src="{{item.displayUrl}}" mode="aspectFill"></image>
+        <view class="img-cover-badge" wx:if="{{item.isCover}}">封面</view>
+        <view class="img-cell-actions">
+          <view class="img-cell-btn cover" wx:if="{{!item.isCover}}" catchtap="setCover" data-id="{{item.id}}">设封面</view>
+          <view class="img-cell-btn del" catchtap="deleteImage" data-id="{{item.id}}">删除</view>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="cabinet-empty-hint">还没有多图，点击下方按钮添加～</view>
+    <view class="img-add-btn ripple" bindtap="onPickImage">
+      <text class="img-add-btn-text">{{uploading ? '上传中...' : '+ 添加图片'}}</text>
+    </view>
+  </view>
+  <view class="drawer-actions">
+    <view class="drawer-btn primary ripple" bindtap="closeImageManage">完成</view>
+  </view>
 </view>

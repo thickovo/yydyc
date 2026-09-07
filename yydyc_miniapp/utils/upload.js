@@ -61,6 +61,7 @@ function chooseImage() {
 function uploadFile(filePath) {
   return new Promise((resolve, reject) => {
     const baseUrl = getBaseUrl()
+    console.log('[upload.js] 准备上传, baseUrl =', baseUrl, 'filePath =', filePath)
     wx.uploadFile({
       url: baseUrl + '/api/image/upload',
       filePath: filePath,
@@ -70,10 +71,28 @@ function uploadFile(filePath) {
         console.log('[upload.js] 原始 res.data 类型 =', typeof res.data)
         console.log('[upload.js] 原始 res.data =', res.data)
 
+        // 情况 1：HTTP 状态码非 2xx，后端可能返回了 HTML 错误页或空字符串
+        if (res.statusCode < 200 || res.statusCode >= 300) {
+          const preview = typeof res.data === 'string'
+            ? res.data.substring(0, 200)
+            : JSON.stringify(res.data)
+          console.error('[upload.js] HTTP 状态码异常:', res.statusCode, '响应:', preview)
+          reject(new Error('upload_http_error: status=' + res.statusCode + ' body=' + preview))
+          return
+        }
+
         let payload = res.data
         if (typeof payload === 'string') {
+          // 空响应或非 JSON 内容
+          if (!payload) {
+            console.error('[upload.js] 后端返回空响应')
+            reject(new Error('upload_empty_response'))
+            return
+          }
           try { payload = JSON.parse(payload) } catch (e) {
-            console.warn('[upload.js] JSON.parse 失败, 原始内容:', payload)
+            console.error('[upload.js] JSON.parse 失败, 原始内容:', payload)
+            reject(new Error('upload_invalid_json: ' + payload.substring(0, 100)))
+            return
           }
         }
         console.log('[upload.js] 解析后 payload =', JSON.stringify(payload))
@@ -92,7 +111,11 @@ function uploadFile(filePath) {
           reject(new Error('upload_failed: code=' + code + ' msg=' + reason))
         }
       },
-      fail: (err) => reject(err)
+      fail: (err) => {
+        // 网络层失败：超时、DNS、跨域等
+        console.error('[upload.js] wx.uploadFile 网络失败:', err)
+        reject(new Error('upload_network_error: ' + (err.errMsg || JSON.stringify(err))))
+      }
     })
   })
 }

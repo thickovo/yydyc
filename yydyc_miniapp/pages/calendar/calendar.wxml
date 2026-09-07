@@ -1,3 +1,6 @@
+<image class="page-bg" src="/images/bg/calendar-bg.jpg" mode="aspectFill"></image>
+<view class="page-bg-overlay"></view>
+
 <view class="page">
   <!-- 月份切换 -->
   <view class="header">

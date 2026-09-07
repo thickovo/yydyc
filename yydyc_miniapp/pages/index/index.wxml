@@ -1,12 +1,62 @@
 <view class="splash">
+  <!-- 首页背景图 -->
+  <image class="splash-bg" src="/images/bg/home-bg.jpg" mode="aspectFill"></image>
+  <view class="splash-veil"></view>
+
+  <!-- 樱花飘落背景 -->
+  <view class="sakura-falling">
+    <view class="petal-1" style="left: 15%; top: -80rpx; animation-delay: 0s;">
+      <view class="sakura size-sm">
+        <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(0deg) translateY(-20rpx);"></view>
+        <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(72deg) translateY(-20rpx);"></view>
+        <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(144deg) translateY(-20rpx);"></view>
+        <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(216deg) translateY(-20rpx);"></view>
+        <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(288deg) translateY(-20rpx);"></view>
+        <view class="sakura-center"></view>
+      </view>
+    </view>
+    <view class="petal-2" style="left: 55%; top: -120rpx; animation-delay: 2s;">
+      <view class="sakura size-sm">
+        <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(0deg) translateY(-20rpx);"></view>
+        <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(72deg) translateY(-20rpx);"></view>
+        <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(144deg) translateY(-20rpx);"></view>
+        <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(216deg) translateY(-20rpx);"></view>
+        <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(288deg) translateY(-20rpx);"></view>
+        <view class="sakura-center"></view>
+      </view>
+    </view>
+    <view class="petal-3" style="left: 80%; top: -60rpx; animation-delay: 4s;">
+      <view class="sakura size-sm">
+        <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(0deg) translateY(-20rpx);"></view>
+        <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(72deg) translateY(-20rpx);"></view>
+        <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(144deg) translateY(-20rpx);"></view>
+        <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(216deg) translateY(-20rpx);"></view>
+        <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(288deg) translateY(-20rpx);"></view>
+        <view class="sakura-center"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 品牌区 -->
   <view class="brand-block">
-    <view class="brand-logo">🎀</view>
-    <view class="brand-name">云裳记</view>
-    <view class="brand-slogan">细数衣衫</view>
-    <view class="brand-slogan">记取人间细碎美好</view>
+    <image class="brand-logo" src="/images/dressnest-logo.png" mode="aspectFit"></image>
+    <view class="brand-slogan">细数衣衫 · 记取人间细碎美好</view>
+    <view class="brand-author">by Th1ckovo</view>
   </view>
 
   <view class="loader">
-    <view class="loader-spinner"></view>
+    <view class="loader-bow">
+      <view class="bow-loop bow-l"></view>
+      <view class="bow-loop bow-r"></view>
+      <view class="bow-knot"></view>
+    </view>
+  </view>
+
+  <!-- 底部装饰，减少空白感 -->
+  <view class="splash-footer">
+    <view class="splash-petal petal-a"></view>
+    <view class="splash-petal petal-b"></view>
+    <view class="splash-petal petal-c"></view>
+    <text class="splash-version">DressNest v1.0</text>
   </view>
 </view>

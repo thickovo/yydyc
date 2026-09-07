@@ -1,35 +1,149 @@
 .tab-bar {
   position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 110rpx;
-  background: #FFFFFF;
+  bottom: calc(20rpx + env(safe-area-inset-bottom));
+  left: 28rpx;
+  right: 28rpx;
+  min-height: 108rpx;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(24rpx);
   display: flex;
-  padding-bottom: env(safe-area-inset-bottom);
-  box-shadow: 0 -4rpx 16rpx rgba(255, 182, 193, 0.12);
+  border-radius: 54rpx;
+  padding-bottom: 0;
+  box-shadow: 0 12rpx 40rpx rgba(255, 155, 181, 0.20);
+  border: 2rpx solid rgba(255, 255, 255, 0.95);
   z-index: 999;
 }
 
 .tab-item {
+  position: relative;
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 4rpx;
+  gap: 3rpx;
+  padding: 14rpx 0 10rpx;
+  transition: transform 0.25s ease;
 }
 
 .tab-item.active {
-  transform: scale(1.05);
+  transform: translateY(-4rpx);
 }
 
-.tab-icon {
-  font-size: 40rpx;
+/* 选中时背后的樱粉光晕 */
+.tab-item::before {
+  content: '';
+  position: absolute;
+  width: 120rpx;
+  height: 76rpx;
+  top: 8rpx;
+  left: 50%;
+  border-radius: 38rpx;
+  background: rgba(255, 237, 242, 0.95);
+  opacity: 0;
+  transform: translateX(-50%) scale(0.6);
+  transition: opacity 0.3s ease, transform 0.4s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+
+.tab-item.active::before {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+.tab-icon-wrap {
+  position: relative;
+  width: 44rpx;
+  height: 44rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4rpx;
+  z-index: 1;
+}
+
+.tab-sakura {
+  position: relative;
+  width: 44rpx;
+  height: 44rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.4s cubic-bezier(0.3, 1.8, 0.5, 1);
+}
+
+.tab-item.active .tab-sakura {
+  transform: scale(1.15) rotate(18deg);
+  animation: tabPop 0.5s cubic-bezier(0.3, 1.8, 0.5, 1);
+}
+
+@keyframes tabPop {
+  0%   { transform: scale(0.7); }
+  60%  { transform: scale(1.3) rotate(-8deg); }
+  100% { transform: scale(1.15) rotate(18deg); }
+}
+
+.tab-sakura-petal {
+  position: absolute;
+  width: 13rpx;
+  height: 17rpx;
+  background: #E8DDE2;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  top: 50%;
+  left: 50%;
+  margin: 0 0 0 -6.5rpx;
+  transform-origin: 50% 100%;
+  transition: background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.tab-item.active .tab-sakura-petal {
+  background: #FF9BB5;
+  box-shadow: 0 1rpx 4rpx rgba(255, 155, 181, 0.45);
+}
+
+.tab-sakura-center {
+  position: absolute;
+  width: 22rpx;
+  height: 22rpx;
+  background: #FFFFFF;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1rpx 4rpx rgba(150, 90, 110, 0.12);
+  z-index: 5;
+}
+
+.tab-item.active .tab-sakura-center {
+  background: linear-gradient(135deg, #FFFFFF, #FFF3F6);
+  box-shadow: 0 1rpx 4rpx rgba(255, 155, 181, 0.35);
+}
+
+.tab-glyph {
+  font-size: 16rpx;
+  font-weight: bold;
+  color: #B39AA7;
   line-height: 1;
 }
 
+.tab-item.active .tab-glyph {
+  color: #E05A86;
+}
+
 .tab-text {
-  font-size: 22rpx;
+  font-size: 20rpx;
   font-weight: 500;
+  color: #B39AA7;
+  letter-spacing: 1rpx;
+  transition: color 0.25s ease;
+  white-space: nowrap;
+  line-height: 1.2;
+  z-index: 1;
+}
+
+.tab-item.active .tab-text {
+  color: #E05A86;
+  font-weight: 600;
 }

@@ -1,11 +1,13 @@
 page {
-  background: #FFF5F5;
+  background: #FFF7F9;
   min-height: 100vh;
   padding-bottom: 160rpx;
 }
 
 .page {
-  padding: 28rpx 24rpx 0;
+  /* padding-top 要避开状态栏 + 导航栏总高度（~88-100rpx），留点安全余量避免月份左右键与
+     导航栏"记账日历"标题重叠 */
+  padding: 56rpx 24rpx 0;
 }
 
 /* ============ 头部 ============ */
@@ -32,8 +34,8 @@ page {
   justify-content: center;
   font-size: 36rpx;
   font-weight: 300;
-  color: #FF6B8A;
-  box-shadow: 0 4rpx 12rpx rgba(255, 107, 138, 0.15);
+  color: #E05A86;
+  box-shadow: 0 4rpx 12rpx rgba(255, 155, 181, 0.15);
 }
 
 .month-btn:active {
@@ -42,29 +44,32 @@ page {
 
 .month-label {
   font-size: 36rpx;
-  font-weight: bold;
-  color: #4A2A2A;
+  font-weight: 800;
+  color: #5B3A48;
   min-width: 200rpx;
   text-align: center;
+  letter-spacing: 2rpx;
 }
 
 .today-btn {
-  background: linear-gradient(135deg, #FFB6C1, #FF6B8A);
-  color: #FFFFFF;
+  background: #FFF0F4;
+  color: #E05A86;
   font-size: 24rpx;
+  font-weight: 500;
   padding: 12rpx 28rpx;
-  border-radius: 32rpx;
-  box-shadow: 0 4rpx 12rpx rgba(255, 107, 138, 0.25);
+  border-radius: 999rpx;
+  border: 2rpx solid #FFDCE7;
 }
 
 .today-btn:active {
   transform: scale(0.96);
+  background: #FFE4EC;
 }
 
 /* ============ 日历卡片 ============ */
 .calendar-card {
   background: #FFFFFF;
-  border-radius: 28rpx;
+  border-radius: 32rpx;
   padding: 24rpx 16rpx 16rpx;
   box-shadow: 0 6rpx 20rpx rgba(255, 182, 193, 0.12);
 }
@@ -112,21 +117,21 @@ page {
 }
 
 .day-today {
-  background: linear-gradient(135deg, #FFE4EC, #FFD0DC);
+  background: linear-gradient(135deg, #FFEDF2, #FFD0DC);
   border-radius: 16rpx;
 }
 
 .day-today .day-num {
   color: #FFFFFF;
   font-weight: bold;
-  background: linear-gradient(135deg, #FFB6C1, #FF6B8A);
+  background: linear-gradient(135deg, #FFB6C1, #FF9BB5);
   width: 48rpx;
   height: 48rpx;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4rpx 10rpx rgba(255, 107, 138, 0.35);
+  box-shadow: 0 4rpx 10rpx rgba(255, 155, 181, 0.35);
 }
 
 .day-num {
@@ -137,7 +142,7 @@ page {
 
 .day-amount {
   font-size: 18rpx;
-  color: #E85A7A;
+  color: #E05A86;
   font-weight: 600;
   line-height: 1;
 }
@@ -176,9 +181,30 @@ page {
 }
 
 .legend-dot-data {
-  background: #E85A7A;
+  background: #E05A86;
 }
 
 .legend-dot-today {
-  background: linear-gradient(135deg, #FFB6C1, #FF6B8A);
+  background: linear-gradient(135deg, #FFB6C1, #FF9BB5);
+}
+
+/* ===== DressNest 主题层 ===== */
+.page, .form, .detail-page, .loading {
+  position: relative;
+  z-index: 2;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(16rpx);
+  border: 2rpx solid rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 0 8rpx 26rpx rgba(255, 155, 181, 0.14) !important;
+  border-radius: 32rpx;
+}
+.calendar-card {
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(16rpx);
+  border: 2rpx solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8rpx 26rpx rgba(255, 155, 181, 0.14);
+  border-radius: 32rpx;
 }

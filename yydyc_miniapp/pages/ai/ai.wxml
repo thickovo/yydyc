@@ -1,20 +1,47 @@
+<!-- 背景图 -->
+<image class="page-bg" src="/images/bg/ai-bg.jpg" mode="aspectFill"></image>
+<view class="page-bg-overlay"></view>
+
 <scroll-view class="chat-list" scroll-y scroll-top="{{scrollTop}}" scroll-with-animation>
   <view class="chat-inner">
     <view wx:if="{{messages.length === 0}}" class="welcome">
-      <view class="welcome-icon">💬</view>
-      <view class="welcome-text">你好呀，我是云裳记的 AI 助手{{'\n'}}想聊点什么都可以告诉我～</view>
+      <view class="welcome-card glass-card">
+        <view class="welcome-icon">
+          <view class="welcome-bow">
+            <view class="wb-loop wb-l"></view>
+            <view class="wb-loop wb-r"></view>
+            <view class="wb-knot"></view>
+          </view>
+        </view>
+        <view class="welcome-title">你好呀，我是 DressNest 的小助手</view>
+        <view class="welcome-text">搭配建议、闲聊解闷都可以找我哦～</view>
+      </view>
     </view>
 
     <block wx:for="{{messages}}" wx:key="time">
       <view class="msg msg-{{item.role}}">
-        <view wx:if="{{item.role === 'ai'}}" class="avatar avatar-ai">🤖</view>
+        <view wx:if="{{item.role === 'ai'}}" class="avatar avatar-ai">
+          <view class="ai-bow">
+            <view class="ab-loop ab-l"></view>
+            <view class="ab-loop ab-r"></view>
+            <view class="ab-knot"></view>
+          </view>
+        </view>
         <view class="msg-bubble">{{item.content}}</view>
-        <view wx:if="{{item.role === 'user'}}" class="avatar avatar-user">🧸</view>
+        <view wx:if="{{item.role === 'user'}}" class="avatar avatar-user">
+          <view class="user-heart"></view>
+        </view>
       </view>
     </block>
 
     <view wx:if="{{sending}}" class="msg msg-ai">
-      <view class="avatar avatar-ai">🤖</view>
+      <view class="avatar avatar-ai">
+        <view class="ai-bow">
+          <view class="ab-loop ab-l"></view>
+          <view class="ab-loop ab-r"></view>
+          <view class="ab-knot"></view>
+        </view>
+      </view>
       <view class="msg-bubble msg-loading">
         <view class="dot"></view><view class="dot"></view><view class="dot"></view>
       </view>
@@ -22,9 +49,7 @@
   </view>
 </scroll-view>
 
-<view class="hint-bar">
-  <text class="hint-text">🤖 AI 助手正在开发中，当前仅支持闲聊对话。如需数据查询功能，请耐心等待后续版本。</text>
-</view>
+<view class="hint-tag">Agent 开发中 · 闲聊解闷请随意～</view>
 
 <view class="input-bar">
   <input
@@ -36,7 +61,7 @@
     confirm-type="send"
     hold-keyboard
   />
-  <view class="send-btn {{sending ? 'disabled' : ''}}" bindtap="onSend">
+  <view class="send-btn ripple {{sending ? 'disabled' : ''}}" bindtap="onSend">
     <view class="send-arrow"></view>
   </view>
 </view>

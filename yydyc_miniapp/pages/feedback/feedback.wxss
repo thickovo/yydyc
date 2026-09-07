@@ -1,5 +1,5 @@
 page {
-  background: #FFF5F5;
+  background: #FFF7F9;
   min-height: 100vh;
 }
 
@@ -63,15 +63,36 @@ page {
 
 .submit-btn {
   margin-top: 60rpx;
-  background: linear-gradient(135deg, #FFB6C1, #FF6B8A);
+  background: linear-gradient(135deg, #FFB6C1, #FF9BB5);
   color: #FFFFFF;
   font-size: 30rpx;
   font-weight: 600;
   border-radius: 40rpx;
   padding: 24rpx 0;
-  box-shadow: 0 6rpx 18rpx rgba(255, 107, 138, 0.3);
+  box-shadow: 0 6rpx 18rpx rgba(255, 155, 181, 0.3);
 }
 
 .submit-btn[disabled] {
   opacity: 0.6;
+}
+
+/* ===== DressNest 主题层 ===== */
+.page, .form, .detail-page, .loading {
+  position: relative;
+  z-index: 2;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(16rpx);
+  border: 2rpx solid rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 0 8rpx 26rpx rgba(255, 155, 181, 0.14) !important;
+  border-radius: 32rpx;
+}
+.form-card {
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(16rpx);
+  border: 2rpx solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8rpx 26rpx rgba(255, 155, 181, 0.14);
+  border-radius: 32rpx;
 }

@@ -1,8 +1,10 @@
+<image class="page-bg" src="/images/bg/form-bg.jpg" mode="aspectFill"></image>
+<view class="page-bg-overlay"></view>
+
 <view class="form">
-  <!-- 图片上传 -->
+  <!-- 图片上传 + 名称：紧凑左图右输入 -->
   <view class="form-section">
-    <view class="form-item">
-      <text class="label">商品图片</text>
+    <view class="upload-row">
       <view class="image-upload {{displayImageUrl ? 'has-image' : ''}}" bindtap="onPickImage">
         <block wx:if="{{displayImageUrl}}">
           <image
@@ -12,7 +14,7 @@
             binderror="onImageError"
           ></image>
           <view class="upload-mask">
-            <text class="upload-mask-text">{{uploading ? '上传中...' : '点击重新上传'}}</text>
+            <text class="upload-mask-text">{{uploading ? '上传中...' : '换一张'}}</text>
           </view>
           <view class="image-remove" catchtap="onRemoveImage">
             <text class="image-remove-text">×</text>
@@ -21,10 +23,13 @@
         <block wx:else>
           <view class="upload-placeholder">
             <text class="upload-icon">+</text>
-            <text class="upload-text">{{uploading ? '上传中...' : '点击上传图片'}}</text>
-            <text class="upload-hint">支持 jpg / png，不超过 5MB</text>
+            <text class="upload-text">{{uploading ? '上传中...' : '上传图片'}}</text>
           </view>
         </block>
+      </view>
+      <view class="upload-side">
+        <text class="label">名称 *</text>
+        <input class="input" placeholder="请输入商品名称" bindinput="handleInput" data-field="name" value="{{name}}" />
       </view>
     </view>
   </view>
@@ -43,11 +48,6 @@
 
   <!-- 基本信息 -->
   <view class="form-section">
-    <view class="form-item">
-      <text class="label">名称 *</text>
-      <input class="input" placeholder="请输入商品名称" bindinput="handleInput" data-field="name" value="{{name}}" />
-    </view>
-
     <view class="form-item">
       <text class="label">品牌</text>
       <input class="input" placeholder="请输入品牌名" bindinput="handleInput" data-field="brand" value="{{brand}}" />
@@ -72,6 +72,14 @@
       <picker mode="selector" range="{{sizeOptions}}" bindchange="handleSizeChange">
         <view class="picker-display">{{size || '请选择尺码'}}</view>
       </picker>
+    </view>
+
+    <view class="form-item">
+      <text class="label">柜子</text>
+      <picker mode="selector" range="{{cabinetOptions}}" value="{{cabinetIndex}}" bindchange="handleCabinetChange">
+        <view class="picker-display {{cabinetIndex > 0 ? '' : 'placeholder'}}">{{cabinetOptions[cabinetIndex] || '未分类'}}</view>
+      </picker>
+      <view class="cabinet-tip" wx:if="{{cabinetOptions.length === 1}}">还没有柜子，可先去「我的衣橱」添加</view>
     </view>
 
     <view class="form-item">

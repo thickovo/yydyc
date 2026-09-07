@@ -44,6 +44,9 @@ public class Wardrobe {
     private String purchaseLink;
     private String note;
     private Integer status;
+    // 同 saleStart/finalStart：前端「未分类」时需要把 cabinetId 写回 null，
+    // 默认 NOT_NULL 策略会跳过 null → 必须显式 ALWAYS
+    @TableField(updateStrategy = FieldStrategy.ALWAYS)
     @JsonSerialize(using = ToStringSerializer.class)
     private Long cabinetId;
     @TableField(exist = false)

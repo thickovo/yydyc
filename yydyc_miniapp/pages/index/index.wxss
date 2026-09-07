@@ -10,12 +10,35 @@ page {
   position: relative;
   width: 100%;
   height: 100vh;
-  background: linear-gradient(135deg, #FFE4EC 0%, #FFB6C1 45%, #FF8FA9 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 80rpx;
+  overflow: hidden;
+}
+
+/* 背景图 + 樱粉薄纱 */
+.splash-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+.splash-veil {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background: linear-gradient(180deg,
+    rgba(255, 247, 249, 0.20) 0%,
+    rgba(255, 220, 232, 0.40) 40%,
+    rgba(255, 247, 249, 0.25) 100%);
 }
 
 .brand-block {
@@ -23,54 +46,141 @@ page {
   flex-direction: column;
   align-items: center;
   gap: 18rpx;
-  animation: fadeIn 1.2s ease-out both;
+  animation: fadeIn 1.4s ease-out both;
+  z-index: 10;
+  position: relative;
+  padding: 0 40rpx;
 }
 
 .brand-logo {
-  font-size: 140rpx;
-  line-height: 1;
-  margin-bottom: 12rpx;
-  filter: drop-shadow(0 8rpx 24rpx rgba(255, 107, 138, 0.3));
+  width: 620rpx;
+  height: 150rpx;
+  filter: drop-shadow(0 8rpx 24rpx rgba(224, 90, 134, 0.35));
 }
 
-.brand-name {
-  font-size: 64rpx;
-  font-weight: bold;
-  color: #FFFFFF;
-  letter-spacing: 12rpx;
-  text-shadow: 0 6rpx 24rpx rgba(232, 90, 122, 0.4);
+.brand-divider {
+  width: 80rpx;
+  height: 3rpx;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 2rpx;
+  margin: 8rpx 0;
 }
 
 .brand-slogan {
   font-size: 28rpx;
   color: #FFFFFF;
   letter-spacing: 4rpx;
-  opacity: 0.92;
+  opacity: 0.95;
+  font-weight: 500;
+  text-shadow: 0 2rpx 10rpx rgba(224, 90, 134, 0.45);
 }
 
+.brand-author {
+  font-size: 26rpx;
+  color: #FFFFFF;
+  letter-spacing: 3rpx;
+  opacity: 0.95;
+  font-weight: 500;
+  text-shadow: 0 2rpx 8rpx rgba(224, 90, 134, 0.35);
+  margin-top: 4rpx;
+}
+
+/* ===== 加载动画：旋转蝴蝶结 ===== */
 .loader {
   position: absolute;
   bottom: 160rpx;
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 10;
 }
 
-.loader-spinner {
-  width: 60rpx;
-  height: 60rpx;
-  border: 6rpx solid rgba(255, 255, 255, 0.4);
-  border-top-color: #FFFFFF;
+.loader-bow {
+  width: 56rpx;
+  height: 44rpx;
+  position: relative;
+  animation: bowSpin 2.2s ease-in-out infinite;
+  filter: drop-shadow(0 4rpx 10rpx rgba(224, 90, 134, 0.35));
+}
+
+.bow-loop {
+  position: absolute;
+  top: 0;
+  width: 30rpx;
+  height: 44rpx;
+  background: #FFFFFF;
   border-radius: 50%;
-  animation: spin 0.9s linear infinite;
 }
 
-@keyframes spin {
-  0%   { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.bow-l { left: 0; transform: rotate(-25deg); transform-origin: 100% 50%; }
+.bow-r { right: 0; transform: rotate(25deg); transform-origin: 0 50%; }
+
+.bow-knot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12rpx;
+  height: 14rpx;
+  background: #FFFFFF;
+  border-radius: 4rpx;
+  z-index: 2;
+}
+
+@keyframes bowSpin {
+  0%   { transform: rotate(0deg) scale(1); }
+  50%  { transform: rotate(180deg) scale(1.1); }
+  100% { transform: rotate(360deg) scale(1); }
 }
 
 @keyframes fadeIn {
-  0%   { opacity: 0; transform: translateY(20rpx); }
+  0%   { opacity: 0; transform: translateY(30rpx); }
   100% { opacity: 1; transform: translateY(0); }
+}
+
+/* 底部漂浮樱花装饰 */
+.splash-footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 60rpx;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14rpx;
+  opacity: 0.8;
+}
+
+.splash-footer .splash-version {
+  font-size: 26rpx;
+  color: #FFFFFF;
+  letter-spacing: 3rpx;
+  text-shadow: 0 2rpx 6rpx rgba(224, 90, 134, 0.4);
+}
+
+.splash-petal {
+  width: 24rpx;
+  height: 24rpx;
+  position: relative;
+  transform: rotate(45deg);
+  animation: petalFloat 2.4s ease-in-out infinite;
+}
+
+.splash-petal::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50% 0 50% 50%;
+  background: linear-gradient(135deg, #FFFFFF 0%, #FFB6C1 100%);
+  box-shadow: 0 2rpx 6rpx rgba(255, 155, 181, 0.25);
+}
+
+.splash-petal.petal-a { animation-delay: 0s; }
+.splash-petal.petal-b { animation-delay: 0.8s; margin-left: 42rpx; }
+.splash-petal.petal-c { animation-delay: 1.6s; margin-left: -42rpx; }
+
+@keyframes petalFloat {
+  0%, 100% { transform: translateY(0) rotate(45deg); opacity: 0.95; }
+  50%      { transform: translateY(-16rpx) rotate(65deg); opacity: 0.55; }
 }

@@ -2,6 +2,8 @@ package com.gao.yydyc.controller;
 
 import com.gao.yydyc.common.Result;
 import com.gao.yydyc.config.ImageConfig;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
+@Tag(name = "图片管理", description = "图片上传接口")
 @Slf4j
 @RestController
 @RequestMapping("/api/image")
@@ -20,6 +23,7 @@ public class ImageController {
     @Autowired
     private ImageConfig imageConfig;
 
+    @Operation(summary = "上传图片", description = "上传商品图片，返回相对路径")
     @PostMapping("/upload")
     public Result<String> imageUpload(@RequestParam("file") MultipartFile file)
     throws IOException {

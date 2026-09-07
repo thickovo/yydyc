@@ -1,29 +1,51 @@
 page {
-  background: #FFF5F5;
+  background: #FFF7F9;
   min-height: 100vh;
-  padding-bottom: 160rpx;
 }
 
 .page {
-  padding: 32rpx 28rpx;
+  position: relative;
+  z-index: 2;
+  padding: 24rpx 28rpx 200rpx;
 }
 
 /* ============ 头部 ============ */
-.header {
+.page-head {
+  text-align: center;
   margin-bottom: 24rpx;
+  padding: 8rpx 4rpx;
 }
 
-.header-title {
-  display: block;
-  font-size: 40rpx;
-  font-weight: bold;
-  color: #4A2A2A;
+.page-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16rpx;
   margin-bottom: 8rpx;
 }
 
-.header-desc {
-  font-size: 26rpx;
-  color: #999;
+.page-title {
+  font-size: 40rpx;
+  font-weight: 800;
+  color: #5B3A48;
+  letter-spacing: 4rpx;
+}
+
+.title-deco {
+  width: 40rpx;
+  height: 4rpx;
+  border-radius: 2rpx;
+  background: linear-gradient(90deg, rgba(255, 194, 214, 0), #FFB6C1);
+}
+
+.title-deco:last-child {
+  background: linear-gradient(90deg, #FFB6C1, rgba(255, 194, 214, 0));
+}
+
+.page-sub {
+  font-size: 24rpx;
+  color: #B39AA7;
+  letter-spacing: 2rpx;
 }
 
 /* ============ 搜索栏 ============ */
@@ -37,22 +59,40 @@ page {
   flex: 1;
   display: flex;
   align-items: center;
-  background: #FFFFFF;
-  border-radius: 24rpx;
-  padding: 16rpx 22rpx;
-  box-shadow: 0 4rpx 12rpx rgba(255, 182, 193, 0.1);
+  background: rgba(255, 255, 255, 0.88);
+  border: 2rpx solid rgba(255, 255, 255, 0.95);
+  border-radius: 44rpx;
+  padding: 18rpx 28rpx;
+  box-shadow: 0 6rpx 20rpx rgba(255, 155, 181, 0.12);
+  backdrop-filter: blur(16rpx);
 }
 
 .search-icon {
-  font-size: 28rpx;
-  margin-right: 12rpx;
-  opacity: 0.5;
+  width: 22rpx;
+  height: 22rpx;
+  border: 3rpx solid #D8A9BC;
+  border-radius: 50%;
+  margin-right: 16rpx;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.search-icon::after {
+  content: '';
+  position: absolute;
+  bottom: -7rpx;
+  right: -5rpx;
+  width: 8rpx;
+  height: 3rpx;
+  background: #D8A9BC;
+  border-radius: 2rpx;
+  transform: rotate(45deg);
 }
 
 .search-input {
   flex: 1;
   font-size: 26rpx;
-  color: #4A2A2A;
+  color: #5B3A48;
   height: 40rpx;
 }
 
@@ -61,64 +101,88 @@ page {
   display: flex;
   align-items: stretch;
   gap: 20rpx;
-  background: #FFFFFF;
-  border-radius: 24rpx;
-  padding: 22rpx;
-  margin-bottom: 20rpx;
-  box-shadow: 0 4rpx 14rpx rgba(255, 182, 193, 0.12);
+  background: rgba(255, 255, 255, 0.9);
+  border: 2rpx solid rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16rpx);
+  border-radius: 32rpx;
+  padding: 24rpx;
+  margin-bottom: 22rpx;
+  box-shadow: 0 8rpx 26rpx rgba(255, 155, 181, 0.14);
   transition: opacity 0.3s;
 }
 
 .card-done {
-  opacity: 0.55;
+  opacity: 0.6;
 }
 
 .card-done .name {
   text-decoration: line-through;
-  color: #999;
+  color: #B5A0AA;
 }
 
-.card-check {
-  width: 44rpx;
-  height: 44rpx;
+/* ============ 弹性勾选（果冻圆钮） ============ */
+.wish-check {
+  width: 52rpx;
+  height: 52rpx;
   border-radius: 50%;
+  background: #FFF3F6;
   border: 3rpx solid #FFB6C1;
-  background: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  margin-top: 6rpx;
-  transition: all 0.2s;
+  margin-top: 4rpx;
+  transition: background 0.35s ease, border-color 0.35s ease, transform 0.4s cubic-bezier(0.3, 1.8, 0.5, 1);
 }
 
-.card-check.checked {
-  background: linear-gradient(135deg, #FFB6C1, #FF6B8A);
-  border-color: #FF6B8A;
-  box-shadow: 0 4rpx 12rpx rgba(255, 107, 138, 0.4);
+.wish-check.checked {
+  background: var(--grad-rose);
+  border-color: #E05A86;
+  box-shadow: 0 6rpx 16rpx rgba(255, 155, 181, 0.45);
+  transform: scale(1.08);
 }
 
-.card-check:active {
+.wish-check:active {
+  transform: scale(0.82);
+}
+
+.wish-check.checked:active {
   transform: scale(0.9);
 }
 
+.wish-check-knob {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .check-tick {
-  color: #FFFFFF;
-  font-size: 26rpx;
-  font-weight: bold;
-  line-height: 1;
+  width: 10rpx;
+  height: 18rpx;
+  border-right: 4rpx solid #FFFFFF;
+  border-bottom: 4rpx solid #FFFFFF;
+  transform: rotate(45deg);
+  margin-top: -4rpx;
+  animation: tickPop 0.45s cubic-bezier(0.3, 1.8, 0.5, 1);
+}
+
+@keyframes tickPop {
+  0%   { transform: rotate(45deg) scale(0); }
+  70%  { transform: rotate(45deg) scale(1.4); }
+  100% { transform: rotate(45deg) scale(1); }
 }
 
 .card-image {
   width: 150rpx;
   height: 180rpx;
-  border-radius: 22rpx;
-  background: #F5EEF0;
+  border-radius: 26rpx;
+  background: linear-gradient(135deg, #FFEDF2, #F3E8FA);
   flex-shrink: 0;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: inset 0 0 0 2rpx rgba(255, 255, 255, 0.8);
 }
 
 .card-image image {
@@ -127,8 +191,32 @@ page {
 }
 
 .image-placeholder {
-  font-size: 50rpx;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+.placeholder-heart {
+  position: relative;
+  width: 40rpx;
+  height: 36rpx;
+}
+
+.placeholder-heart::before,
+.placeholder-heart::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 22rpx;
+  height: 36rpx;
+  background: linear-gradient(135deg, #FFB6C1, #FF9BB5);
+  border-radius: 22rpx 22rpx 0 0;
+}
+
+.placeholder-heart::before { left: 0; transform: rotate(-45deg); transform-origin: 100% 100%; }
+.placeholder-heart::after { right: 0; transform: rotate(45deg); transform-origin: 0 100%; }
 
 .card-content {
   flex: 1;
@@ -140,18 +228,27 @@ page {
   min-width: 0;
 }
 
+.name-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12rpx;
+}
+
 .name {
   font-size: 30rpx;
-  font-weight: bold;
-  color: #4A2A2A;
+  font-weight: 700;
+  color: #5B3A48;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  flex: 1;
 }
 
 .brand {
-  font-size: 24rpx;
-  color: #BBB;
+  font-size: 22rpx;
+  color: #B39AA7;
+  flex-shrink: 0;
 }
 
 .price-row {
@@ -161,17 +258,27 @@ page {
 }
 
 .price {
-  font-size: 28rpx;
-  color: #E85A7A;
-  font-weight: bold;
+  font-size: 26rpx;
+  color: #E05A86;
+  font-weight: 700;
 }
 
 .link {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
   font-size: 22rpx;
-  color: #FF6B8A;
-  background: #FFE4E8;
-  padding: 4rpx 14rpx;
-  border-radius: 12rpx;
+  color: #E05A86;
+  background: #FFE4EC;
+  padding: 6rpx 18rpx;
+  border-radius: 20rpx;
+}
+
+.link-dot {
+  width: 8rpx;
+  height: 8rpx;
+  border-radius: 50%;
+  background: #E05A86;
 }
 
 .meta-row {
@@ -181,15 +288,16 @@ page {
 
 .meta-text {
   font-size: 22rpx;
-  color: #999;
+  color: #B39AA7;
 }
 
 .note {
   font-size: 24rpx;
-  color: #888;
-  background: #FFF5F7;
-  padding: 8rpx 14rpx;
-  border-radius: 12rpx;
+  color: #A98E9C;
+  background: #FFF3F6;
+  border-left: 5rpx solid #FFB6C1;
+  padding: 8rpx 16rpx;
+  border-radius: 14rpx;
   line-height: 1.5;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -198,43 +306,43 @@ page {
   -webkit-box-orient: vertical;
 }
 
-/* ============ 空状态 ============ */
-.empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 120rpx 0;
-  gap: 24rpx;
-}
-
-.empty-text {
-  font-size: 28rpx;
-  color: #BBB;
-  text-align: center;
-  line-height: 1.6;
-  white-space: pre-line;
-}
-
-/* ============ 添加按钮 ============ */
+/* ============ 添加悬浮按钮 ============ */
 .add-fab {
   position: fixed;
-  right: 36rpx;
-  bottom: 160rpx;
-  width: 110rpx;
-  height: 110rpx;
+  right: 40rpx;
+  bottom: 180rpx;
+  width: 116rpx;
+  height: 116rpx;
   border-radius: 50%;
-  background: linear-gradient(135deg, #FFB6C1, #FF6B8A);
-  color: #FFFFFF;
-  font-size: 60rpx;
-  font-weight: 200;
+  background: var(--grad-rose);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8rpx 24rpx rgba(255, 107, 138, 0.35);
+  box-shadow: 0 12rpx 32rpx rgba(255, 155, 181, 0.45);
   z-index: 100;
+  transition: transform 0.2s cubic-bezier(0.3, 1.6, 0.5, 1);
 }
 
 .add-fab:active {
-  transform: scale(0.95);
+  transform: scale(0.88);
 }
+
+.add-fab-plus {
+  width: 34rpx;
+  height: 34rpx;
+  position: relative;
+}
+
+.add-fab-plus::before,
+.add-fab-plus::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #FFFFFF;
+  border-radius: 3rpx;
+}
+
+.add-fab-plus::before { width: 30rpx; height: 5rpx; }
+.add-fab-plus::after { width: 5rpx; height: 30rpx; }

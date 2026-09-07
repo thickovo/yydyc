@@ -14,12 +14,14 @@ Page({
   },
 
   onShow() {
-    this.buildCalendar()
+    app.getUserId().then(() => this.buildCalendar())
   },
 
   onPullDownRefresh() {
-    this.buildCalendar()
-    setTimeout(() => wx.stopPullDownRefresh(), 500)
+    app.getUserId().then(() => {
+      this.buildCalendar()
+      setTimeout(() => wx.stopPullDownRefresh(), 500)
+    })
   },
 
   buildCalendar() {

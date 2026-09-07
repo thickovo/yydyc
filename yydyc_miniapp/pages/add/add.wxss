@@ -1,5 +1,5 @@
 page {
-  background: #FFF5F5;
+  background: #FFF7F9;
   padding: 24rpx;
   padding-bottom: 60rpx;
   overflow-x: hidden;
@@ -50,7 +50,7 @@ page {
 
 .input-price {
   font-weight: 600;
-  color: #E85A7A;
+  color: #E05A86;
 }
 
 .picker-display {
@@ -68,14 +68,27 @@ page {
   color: #CCC;
 }
 
-/* ===== 图片上传：与列表卡片 image 同比例 150:180 ===== */
+.cabinet-tip {
+  font-size: 22rpx;
+  color: #B39AA7;
+  margin-top: 8rpx;
+}
+
+/* ===== 图片上传：紧凑左图右输入（与列表卡片 image 同比例 150:180） ===== */
+.upload-row {
+  display: flex;
+  gap: 28rpx;
+  align-items: stretch;
+}
+
 .image-upload {
   position: relative;
-  width: 100%;
+  width: 220rpx;
   aspect-ratio: 150 / 180;
-  border-radius: 24rpx;
-  background: #FFF5F7;
-  border: 2rpx dashed #FFB6C1;
+  flex-shrink: 0;
+  border-radius: 20rpx;
+  background: #FFF7F9;
+  border: 2rpx dashed #FFD3DE;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -90,39 +103,53 @@ page {
 
 .image-upload.has-image {
   border-style: solid;
-  border-color: #FFB6C1;
+  border-color: #FFD3DE;
+}
+
+.upload-side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+
+.upload-side .input {
+  width: 100%;
+  height: 88rpx;
+  line-height: 88rpx;
+  padding: 0;
+  border-bottom: 2rpx solid #F0E0E4;
+  font-size: 28rpx;
+  color: #4A2A2A;
+  box-sizing: border-box;
 }
 
 .upload-placeholder {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12rpx;
+  gap: 10rpx;
 }
 
 .upload-icon {
-  width: 96rpx;
-  height: 96rpx;
+  width: 64rpx;
+  height: 64rpx;
   border-radius: 50%;
   background: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 64rpx;
+  font-size: 44rpx;
   font-weight: 200;
-  color: #FF6B8A;
-  box-shadow: 0 4rpx 12rpx rgba(255, 107, 138, 0.2);
+  color: #E05A86;
+  box-shadow: 0 4rpx 12rpx rgba(255, 155, 181, 0.2);
 }
 
 .upload-text {
-  font-size: 28rpx;
-  color: #FF6B8A;
-  font-weight: 500;
-}
-
-.upload-hint {
   font-size: 22rpx;
-  color: #BBB;
+  color: #E05A86;
+  font-weight: 500;
 }
 
 .upload-preview {
@@ -190,9 +217,9 @@ page {
 }
 
 .color-dot.active {
-  border: 5rpx solid #FF6B8A;
+  border: 5rpx solid #FF9BB5;
   transform: scale(1.15);
-  box-shadow: 0 0 24rpx rgba(255, 107, 138, 0.5);
+  box-shadow: 0 0 24rpx rgba(255, 155, 181, 0.5);
 }
 
 /* ===== 模式切换 & 提醒 ===== */
@@ -215,8 +242,8 @@ page {
 
 .switch-option.active {
   color: #FFFFFF;
-  background: linear-gradient(135deg, #FFB6C1, #FF6B8A);
-  box-shadow: 0 4rpx 12rpx rgba(255, 107, 138, 0.3);
+  background: linear-gradient(135deg, #FFB6C1, #FF9BB5);
+  box-shadow: 0 4rpx 12rpx rgba(255, 155, 181, 0.3);
 }
 
 /* ===== 小物标签 ===== */
@@ -239,9 +266,9 @@ page {
 
 .accessory-tag.active {
   color: #FFFFFF;
-  background: #FF6B8A;
-  border-color: #FF6B8A;
-  box-shadow: 0 2rpx 8rpx rgba(255, 107, 138, 0.3);
+  background: #FF9BB5;
+  border-color: #E05A86;
+  box-shadow: 0 2rpx 8rpx rgba(255, 155, 181, 0.3);
 }
 
 .custom-accessory {
@@ -262,11 +289,11 @@ page {
 }
 
 .add-custom-btn {
-  background: linear-gradient(135deg, #FFB6C1, #FF6B8A);
+  background: linear-gradient(135deg, #FFB6C1, #FF9BB5);
   border-radius: 28rpx;
   padding: 14rpx 28rpx;
   flex-shrink: 0;
-  box-shadow: 0 4rpx 10rpx rgba(255, 107, 138, 0.25);
+  box-shadow: 0 4rpx 10rpx rgba(255, 155, 181, 0.25);
 }
 
 .add-custom-btn:active {
@@ -282,8 +309,8 @@ page {
 
 /* ===== 现货提示 ===== */
 .stock-tip {
-  background: #FFF5F5;
-  border-left: 6rpx solid #FF6B8A;
+  background: #FFF7F9;
+  border-left: 6rpx solid #FF9BB5;
   padding: 16rpx 20rpx;
   border-radius: 12rpx;
   font-size: 24rpx;
@@ -314,16 +341,37 @@ page {
 
 .save-btn {
   width: 100%;
-  background: linear-gradient(135deg, #FFB6C1, #FF6B8A) !important;
+  background: linear-gradient(135deg, #FFB6C1, #FF9BB5) !important;
   color: #FFFFFF !important;
   font-size: 32rpx;
   font-weight: bold;
   padding: 24rpx 0;
   border: none;
   border-radius: 48rpx;
-  box-shadow: 0 6rpx 24rpx rgba(255, 107, 138, 0.3);
+  box-shadow: 0 6rpx 24rpx rgba(255, 155, 181, 0.3);
 }
 
 .save-btn:active {
   transform: scale(0.97);
+}
+
+/* ===== DressNest 主题层 ===== */
+.page, .form, .detail-page, .loading {
+  position: relative;
+  z-index: 2;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(16rpx);
+  border: 2rpx solid rgba(255, 255, 255, 0.95) !important;
+  box-shadow: 0 8rpx 26rpx rgba(255, 155, 181, 0.14) !important;
+  border-radius: 32rpx;
+}
+.form-section {
+  background: rgba(255, 255, 255, 0.92) !important;
+  backdrop-filter: blur(16rpx);
+  border: 2rpx solid rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8rpx 26rpx rgba(255, 155, 181, 0.14);
+  border-radius: 32rpx;
 }

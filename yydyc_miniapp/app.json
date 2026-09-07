@@ -16,15 +16,15 @@
     "pages/calendar-detail/calendar-detail"
   ],
   "window": {
-    "navigationBarTextStyle": "white",
-    "navigationBarTitleText": "云裳记",
-    "navigationBarBackgroundColor": "#FF6B8A",
-    "backgroundColor": "#FFF5F5"
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "DressNest",
+    "navigationBarBackgroundColor": "#FFF0F4",
+    "backgroundColor": "#FFF7F9"
   },
   "tabBar": {
     "custom": true,
-    "color": "#999999",
-    "selectedColor": "#FF6B8A",
+    "color": "#C9B4BD",
+    "selectedColor": "#F76C9C",
     "backgroundColor": "#FFFFFF",
     "borderStyle": "white",
     "list": [

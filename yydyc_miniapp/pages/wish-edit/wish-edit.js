@@ -19,7 +19,7 @@ Page({
     if (options.id) {
       this.setData({ id: options.id, isEdit: true })
       wx.setNavigationBarTitle({ title: '编辑心愿' })
-      this.fetchDetail(options.id)
+      app.getUserId().then(() => this.fetchDetail(options.id))
     } else {
       wx.setNavigationBarTitle({ title: '添加心愿' })
     }
@@ -33,7 +33,8 @@ Page({
       url: baseUrl + '/api/wish/list?userId=' + userId,
       method: 'GET',
       success: (res) => {
-        const list = (res.data && res.data.data) || []
+        // 响应解析加防护：后端错误时 res.data 可能没有 data 字段
+        const list = (res && res.data && res.data.data) || []
         const item = list.find(w => String(w.id) === String(id))
         if (item) {
           this.setData({
@@ -46,6 +47,9 @@ Page({
             purchaseLink: item.purchaseLink || ''
           })
         }
+      },
+      fail: () => {
+        wx.showToast({ title: '数据加载失败', icon: 'none' })
       }
     })
   },

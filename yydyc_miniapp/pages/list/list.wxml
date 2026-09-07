@@ -1,95 +1,227 @@
-<!-- 搜索栏 -->
-<view class="search-bar">
-  <view class="search-input-wrap">
-    <text class="search-icon">🔍</text>
-    <input class="search-input" placeholder="搜索商品名称或品牌" value="{{keyword}}" bindinput="onKeywordInput" />
-  </view>
-  <view class="filter-toggle" bindtap="toggleFilter">
-    <text class="filter-toggle-text">筛选</text>
-  </view>
-</view>
+<!-- 背景图 -->
+<image class="page-bg" src="/images/bg/list-bg.jpg" mode="aspectFill"></image>
+<view class="page-bg-overlay"></view>
 
-<!-- 筛选栏 -->
-<view class="filter-bar" wx:if="{{showFilter}}">
-  <view class="filter-row">
-    <view class="filter-item">
-      <text class="filter-label">类别</text>
-      <picker mode="selector" range="{{categoryOptions}}" bindchange="onCategoryChange">
-        <view class="filter-value">{{category || '全部'}}</view>
-      </picker>
+<view class="page">
+  <!-- 页头 -->
+  <view class="page-head">
+    <view class="page-title-row">
+      <view class="title-deco"></view>
+      <text class="page-title">我的衣橱</text>
+      <view class="title-deco"></view>
     </view>
-    <view class="filter-item">
-      <text class="filter-label">类型</text>
-      <picker mode="selector" range="{{typeOptions}}" bindchange="onTypeChange">
-        <view class="filter-value">{{type || '全部'}}</view>
-      </picker>
+    <text class="page-sub">挂在窝里的每一件小心爱</text>
+  </view>
+
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input-wrap">
+      <view class="search-icon"></view>
+      <input class="search-input" placeholder="搜索商品名称或品牌" value="{{keyword}}" bindinput="onKeywordInput" />
     </view>
-    <view class="filter-item">
-      <text class="filter-label">颜色</text>
-      <picker mode="selector" range="{{colorLabels}}" bindchange="onColorChange">
-        <view class="filter-value">{{colorLabels[colorOptions.indexOf(color)] || '全部'}}</view>
-      </picker>
-    </view>
-    <view class="filter-item">
-      <text class="filter-label">状态</text>
-      <picker mode="selector" range="{{statusOptions}}" bindchange="onStatusChange">
-        <view class="filter-value">{{statusOptions[statusKeys.indexOf(status)] || '全部'}}</view>
-      </picker>
+    <view class="filter-toggle ripple" bindtap="toggleFilter" aria-label="筛选">
+      <view class="filter-toggle-icon"></view>
+      <text class="filter-toggle-text">筛选</text>
     </view>
   </view>
-  <view class="filter-clear" wx:if="{{keyword || category || type || color || status}}" bindtap="clearFilter">
-    <text class="filter-clear-text">清除筛选</text>
+
+  <!-- 添加按钮（水波） -->
+  <view class="add-btn ripple" bindtap="goToAdd">
+    <view class="add-btn-plus"></view>
+    <text class="add-btn-text">添加裙子</text>
   </view>
-</view>
 
-<!-- 添加按钮 -->
-<view class="add-btn" bindtap="goToAdd">
-  <text class="add-btn-text">+ 添加裙子</text>
-</view>
-
-<!-- 骨架屏 -->
-<view class="list" wx:if="{{loading}}">
-  <view class="card" wx:for="{{[1,2,3,4]}}" wx:key="*this">
-    <view class="skeleton" style="width: 150rpx; height: 180rpx; border-radius: 22rpx;"></view>
-    <view class="card-content">
-      <view class="skeleton skeleton-line" style="width: 60%; height: 32rpx;"></view>
-      <view class="skeleton skeleton-line" style="width: 80%; height: 24rpx; margin-top: 12rpx;"></view>
-      <view class="skeleton skeleton-line" style="width: 40%; height: 28rpx; margin-top: 12rpx;"></view>
-    </view>
-  </view>
-</view>
-
-<!-- 列表 -->
-<view class="list" wx:elif="{{filteredSkirts.length > 0}}">
-  <view class="card" wx:for="{{filteredSkirts}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
-    <view class="card-image">
-      <image wx:if="{{item.displayImageUrl}}" src="{{item.displayImageUrl}}" mode="aspectFill"></image>
-      <view wx:else class="image-placeholder">👗</view>
-    </view>
-    <view class="card-content">
-      <view class="card-header">
-        <text class="name">{{item.name}}</text>
-        <text class="brand">{{item.brand}}</text>
+  <!-- 柜子筛选 -->
+  <view class="cabinet-bar">
+    <picker mode="selector" range="{{cabinetOptions}}" value="{{cabinetIndex}}" bindchange="onCabinetFilterChange">
+      <view class="cabinet-picker">
+        <text class="cabinet-picker-label">柜子</text>
+        <text class="cabinet-picker-value">{{cabinetOptions[cabinetIndex] || '全部'}}</text>
+        <text class="cabinet-picker-arrow">▾</text>
       </view>
-      <view class="card-body">
-        <view wx:if="{{item.color}}" class="color-tag" style="background: {{item.color}};"></view>
-        <text class="price">¥{{item.totalPrice}}</text>
-        <text class="type-tag" wx:if="{{item.type}}">{{item.type}}</text>
-      </view>
-      <view class="card-footer">
-        <text class="status-tag {{item.statusClass}}">{{item.statusText}}</text>
+    </picker>
+    <view class="cabinet-manage ripple" bindtap="openCabinetManage">
+      <text class="cabinet-manage-text">管理柜子</text>
+    </view>
+  </view>
+
+  <!-- 骨架屏 -->
+  <view class="list" wx:if="{{loading}}">
+    <view class="card" wx:for="{{[1,2,3,4]}}" wx:key="*this">
+      <view class="skeleton" style="width: 150rpx; height: 180rpx; border-radius: 24rpx;"></view>
+      <view class="card-content">
+        <view class="skeleton skeleton-line" style="width: 60%; height: 32rpx;"></view>
+        <view class="skeleton skeleton-line" style="width: 80%; height: 24rpx; margin-top: 12rpx;"></view>
+        <view class="skeleton skeleton-line" style="width: 40%; height: 28rpx; margin-top: 12rpx;"></view>
       </view>
     </view>
   </view>
+
+  <!-- 列表 -->
+  <view class="list" wx:elif="{{filteredSkirts.length > 0}}">
+    <view class="card" wx:for="{{filteredSkirts}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
+      <view class="card-image">
+        <image wx:if="{{item.displayImageUrl}}" src="{{item.displayImageUrl}}" mode="aspectFill"></image>
+        <view wx:else class="image-placeholder">
+          <view class="placeholder-hanger"></view>
+        </view>
+      </view>
+      <view class="card-content">
+        <view class="card-header">
+          <text class="name">{{item.name}}</text>
+          <text class="brand">{{item.brand}}</text>
+        </view>
+        <view class="card-body">
+          <view wx:if="{{item.color}}" class="color-tag" style="background: {{item.color}};"></view>
+          <text class="price">¥{{item.totalPrice}}</text>
+          <text class="type-tag" wx:if="{{item.type}}">{{item.type}}</text>
+        </view>
+        <view class="card-footer">
+          <text class="status-tag {{item.statusClass}}">{{item.statusText}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态：搜索/筛选无结果 -->
+  <view class="sakura-empty-block" wx:if="{{allSkirts.length > 0 && filteredSkirts.length === 0}}">
+    <view class="sakura-empty-illust">
+      <view class="sub-sakura sub-1">
+        <view class="sakura size-sm">
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(0deg) translateY(-15rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(72deg) translateY(-15rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(144deg) translateY(-15rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(216deg) translateY(-15rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(288deg) translateY(-15rpx);"></view>
+          <view class="sakura-center"></view>
+        </view>
+      </view>
+      <view class="main-sakura">
+        <view class="sakura size-md">
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(0deg) translateY(-30rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(72deg) translateY(-30rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(144deg) translateY(-30rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(216deg) translateY(-30rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(288deg) translateY(-30rpx);"></view>
+          <view class="sakura-center"></view>
+        </view>
+      </view>
+      <view class="sub-sakura sub-2">
+        <view class="sakura size-sm">
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(0deg) translateY(-15rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(72deg) translateY(-15rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(144deg) translateY(-15rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(216deg) translateY(-15rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(288deg) translateY(-15rpx);"></view>
+          <view class="sakura-center"></view>
+        </view>
+      </view>
+    </view>
+    <view class="sakura-empty-text">没有找到匹配的小裙子</view>
+  </view>
+
+  <!-- 空状态：完全空 -->
+  <view class="sakura-empty-block" wx:if="{{allSkirts.length === 0}}">
+    <view class="sakura-empty-illust">
+      <view class="sub-sakura sub-1">
+        <view class="sakura size-sm">
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(0deg) translateY(-15rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(72deg) translateY(-15rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(144deg) translateY(-15rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(216deg) translateY(-15rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(288deg) translateY(-15rpx);"></view>
+          <view class="sakura-center"></view>
+        </view>
+      </view>
+      <view class="main-sakura">
+        <view class="sakura size-md">
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(0deg) translateY(-30rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(72deg) translateY(-30rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(144deg) translateY(-30rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(216deg) translateY(-30rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(288deg) translateY(-30rpx);"></view>
+          <view class="sakura-center"></view>
+        </view>
+      </view>
+      <view class="sub-sakura sub-2">
+        <view class="sakura size-sm">
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(0deg) translateY(-15rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(72deg) translateY(-15rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(144deg) translateY(-15rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(216deg) translateY(-15rpx);"></view>
+          <view class="sakura-petal" style="transform: translate(-50%, -100%) rotate(288deg) translateY(-15rpx);"></view>
+          <view class="sakura-center"></view>
+        </view>
+      </view>
+    </view>
+    <view class="sakura-empty-text">衣橱还是空空的 ✨{{'\n'}}点击下方按钮，记录你的第一条裙子吧</view>
+    <view class="sakura-empty-action ripple" bindtap="goToAdd">去添加</view>
+  </view>
 </view>
 
-<!-- 空状态：搜索/筛选无结果 -->
-<view class="empty-state" wx:if="{{allSkirts.length > 0 && filteredSkirts.length === 0}}">
-  <view class="empty-text">没有找到匹配的裙子</view>
+<!-- 筛选底部抽屉 -->
+<view class="drawer-mask {{showFilter ? 'show' : ''}}" catchtap="toggleFilter"></view>
+<view class="drawer {{showFilter ? 'show' : ''}}">
+  <view class="drawer-handle"></view>
+  <view class="drawer-title">✿ 筛选小裙子</view>
+  <view class="drawer-body">
+    <view class="drawer-grid">
+      <view class="drawer-item">
+        <text class="drawer-label">类别</text>
+        <picker mode="selector" range="{{categoryOptions}}" bindchange="onCategoryChange">
+          <view class="drawer-value">{{category || '全部'}}</view>
+        </picker>
+      </view>
+      <view class="drawer-item">
+        <text class="drawer-label">类型</text>
+        <picker mode="selector" range="{{typeOptions}}" bindchange="onTypeChange">
+          <view class="drawer-value">{{type || '全部'}}</view>
+        </picker>
+      </view>
+      <view class="drawer-item">
+        <text class="drawer-label">颜色</text>
+        <picker mode="selector" range="{{colorLabels}}" value="{{colorIndex}}" bindchange="onColorChange">
+          <view class="drawer-value">{{colorLabel || '全部'}}</view>
+        </picker>
+      </view>
+      <view class="drawer-item">
+        <text class="drawer-label">状态</text>
+        <picker mode="selector" range="{{statusOptions}}" value="{{statusIndex}}" bindchange="onStatusChange">
+          <view class="drawer-value">{{statusLabel || '全部'}}</view>
+        </picker>
+      </view>
+    </view>
+  </view>
+  <view class="drawer-actions">
+    <view class="drawer-btn ghost ripple" bindtap="clearFilter">重置</view>
+    <view class="drawer-btn primary ripple" bindtap="toggleFilter">完成</view>
+  </view>
 </view>
 
-<!-- 空状态：完全空 -->
-<view class="empty-state" wx:if="{{allSkirts.length === 0}}">
-  <view class="empty-text">还没有裙子哦 ✨{{'\n'}}点击下方按钮，记录你的第一条裙子吧</view>
-  <view class="empty-btn" bindtap="goToAdd">去添加</view>
+<!-- 柜子管理抽屉 -->
+<view class="drawer-mask {{showCabinetManage ? 'show' : ''}}" catchtap="closeCabinetManage"></view>
+<view class="drawer {{showCabinetManage ? 'show' : ''}}">
+  <view class="drawer-handle"></view>
+  <view class="drawer-title">✿ 管理柜子</view>
+  <view class="drawer-body">
+    <view class="cabinet-add-row">
+      <input class="cabinet-add-input" placeholder="输入柜子名称，如：主格" bindinput="onCabinetNameInput" value="{{cabinetName}}" />
+      <view class="cabinet-add-btn ripple" bindtap="addCabinet">
+        <text class="cabinet-add-btn-text">添加</text>
+      </view>
+    </view>
+    <view class="cabinet-list" wx:if="{{cabinets.length > 0}}">
+      <view class="cabinet-row" wx:for="{{cabinets}}" wx:key="id">
+        <text class="cabinet-row-name">{{item.name}}</text>
+        <view class="cabinet-row-actions">
+          <view class="cabinet-row-btn rename" bindtap="renameCabinet" data-id="{{item.id}}" data-name="{{item.name}}">改名</view>
+          <view class="cabinet-row-btn del" bindtap="deleteCabinet" data-id="{{item.id}}">删除</view>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="cabinet-empty-hint">还没有柜子，先添加一个吧～</view>
+  </view>
+  <view class="drawer-actions">
+    <view class="drawer-btn primary ripple" bindtap="closeCabinetManage">完成</view>
+  </view>
 </view>

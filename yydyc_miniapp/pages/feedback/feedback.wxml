@@ -1,7 +1,10 @@
+<image class="page-bg" src="/images/bg/form-bg.jpg" mode="aspectFill"></image>
+<view class="page-bg-overlay"></view>
+
 <view class="page">
   <view class="header">
     <text class="header-title">💌 意见反馈</text>
-    <text class="header-desc">你的建议会让云裳记变得更好</text>
+    <text class="header-desc">你的建议会让 DressNest 变得更好</text>
   </view>
 
   <view class="form-card">

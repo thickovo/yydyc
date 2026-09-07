@@ -1,25 +1,60 @@
-/**app.wxss**/
+/**app.wxss — DressNest 全局设计系统（JK × Lolita Pink）**/
 
 page {
   /* 字体降级：youyou 加载失败时自动降级到系统默认字体 */
   font-family: 'youyou', -apple-system, BlinkMacSystemFont, 'PingFang SC',
                'Helvetica Neue', Helvetica, 'Segoe UI', Roboto, 'Microsoft Yahei',
                sans-serif;
-  color: #4A2A2A;
-  background: #FFF5F5;
+  color: #5B3A48;
+  background: #FFF7F9;
   overflow-x: hidden;
   max-width: 100vw;
   box-sizing: border-box;
 }
 
+/* ============= 全局配色：Lolita 樱粉系 ============= */
 page {
-  --pink-primary: #FF6B8A;
-  --pink-light: #FFB6C1;
-  --pink-bg: #FFF5F5;
-  --pink-border: #F0E0E4;
-  --pink-deep: #E85A7A;
-  --text-primary: #4A2A2A;
-  --text-secondary: #999;
+  /* 背景层 */
+  --bg-page:      #FFF7F9;
+  --bg-card:      #FFFFFF;
+
+  /* 樱花粉阶 */
+  --sakura-100:   #FFF7F9;
+  --sakura-200:   #FFEDF2;
+  --sakura-300:   #FFDCE7;
+  --sakura-400:   #FFB6C1;
+  --sakura-500:   #FF9BB5;
+  --sakura-600:   #FF9BB5;
+  --sakura-700:   #E05A86;
+
+  /* 辅助淡彩 */
+  --color-pink-soft:   #FFEDF2;
+  --color-blue-soft:   #E3F0FA;
+  --color-yellow-soft: #FFF3D8;
+  --color-mauve-soft:  #F3E8FA;
+
+  /* 文本 */
+  --text-primary:   #5B3A48;
+  --text-secondary: #A98E9C;
+  --text-tertiary:  #B39AA7;
+
+  /* 描边 / 阴影 */
+  --border-line: #FFE0EA;
+  --shadow-soft: 0 8rpx 28rpx rgba(255, 155, 181, 0.14);
+  --shadow-btn:  0 8rpx 24rpx rgba(255, 155, 181, 0.32);
+
+  /* 渐变 */
+  --grad-pink: linear-gradient(135deg, #FFD3DE 0%, #FFB6C1 100%);
+  --grad-rose: linear-gradient(135deg, #FFB6C1 0%, #FF9BB5 100%);
+
+  /* 兼容旧变量名 */
+  --accent-pink:      #FFB6C1;
+  --accent-pink-deep: #FF9BB5;
+  --pink-primary: #FF9BB5;
+  --pink-light:   #FFB6C1;
+  --pink-bg:      #FFF7F9;
+  --pink-border:  #FFE0EA;
+  --pink-deep:    #E05A86;
 }
 
 button {
@@ -44,6 +79,230 @@ view, text {
   word-wrap: break-word;
 }
 
+/* ============= 页面背景图（各页 wxml 顶部放置） ============= */
+/* 默认降透明度：插画线条只作淡淡纹理，不与前景内容争抢 */
+.page-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* 首页保留完整插画（顶部露出区） */
+.page-bg.home-bg {
+  opacity: 1;
+}
+
+.page-bg-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg,
+    rgba(255, 247, 249, 0.12) 0%,
+    rgba(255, 247, 249, 0.38) 30%,
+    rgba(255, 247, 249, 0.72) 58%,
+    rgba(255, 247, 249, 0.92) 100%);
+}
+
+/* ============= 玻璃拟态卡片（全局统一圆角 16px = 32rpx） ============= */
+.glass-card {
+  background: rgba(255, 255, 255, 0.88);
+  border: 2rpx solid rgba(255, 255, 255, 0.9);
+  box-shadow: var(--shadow-soft);
+  backdrop-filter: blur(20rpx);
+  border-radius: 32rpx;
+}
+
+/* ============= 水波按钮（点击涟漪扩散） ============= */
+.ripple {
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.ripple::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 160%;
+  padding-top: 160%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.35) 45%, rgba(255, 255, 255, 0) 70%);
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ripple:active::after {
+  animation: rippleWave 0.65s ease-out forwards;
+}
+
+@keyframes rippleWave {
+  0%   { transform: translate(-50%, -50%) scale(0);   opacity: 0.9; }
+  70%  { opacity: 0.35; }
+  100% { transform: translate(-50%, -50%) scale(1.6); opacity: 0; }
+}
+
+/* ============= 弹性开关（果冻回弹） ============= */
+.jelly-switch {
+  width: 104rpx;
+  height: 58rpx;
+  border-radius: 29rpx;
+  background: linear-gradient(135deg, #F6E7ED 0%, #EFDCE4 100%);
+  box-shadow: inset 0 3rpx 8rpx rgba(180, 120, 140, 0.18);
+  position: relative;
+  transition: background 0.35s ease;
+  flex-shrink: 0;
+}
+
+.jelly-switch.on {
+  background: var(--grad-rose);
+  box-shadow: inset 0 3rpx 8rpx rgba(214, 74, 120, 0.25), 0 4rpx 14rpx rgba(255, 155, 181, 0.4);
+}
+
+.jelly-knob {
+  position: absolute;
+  top: 4rpx;
+  left: 5rpx;
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
+  background: #FFFFFF;
+  box-shadow: 0 3rpx 10rpx rgba(150, 90, 110, 0.28);
+  transition: left 0.5s cubic-bezier(0.3, 1.6, 0.5, 1),
+              width 0.22s ease,
+              border-radius 0.22s ease;
+}
+
+.jelly-switch.on .jelly-knob {
+  left: 49rpx;
+}
+
+/* 按下时果冻压扁拉伸 */
+.jelly-switch:active .jelly-knob {
+  width: 62rpx;
+  border-radius: 30rpx;
+}
+
+.jelly-switch.on:active .jelly-knob {
+  width: 62rpx;
+  margin-left: -12rpx;
+}
+
+/* 开关上的小樱花心 */
+.jelly-knob::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 14rpx;
+  height: 14rpx;
+  transform: translate(-50%, -50%) rotate(45deg);
+  border-radius: 50% 0 50% 50%;
+  background: var(--sakura-300);
+  opacity: 0.9;
+}
+
+.jelly-switch.on .jelly-knob::after {
+  background: var(--sakura-500);
+}
+
+/* ============= 底部抽屉 ============= */
+.drawer-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(91, 50, 62, 0.35);
+  z-index: 1200;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.drawer-mask.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.drawer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, #FFFDFE 0%, #FFF3F6 100%);
+  border-radius: 48rpx 48rpx 0 0;
+  z-index: 1201;
+  padding-bottom: calc(24rpx + env(safe-area-inset-bottom));
+  transform: translateY(105%);
+  visibility: hidden;
+  transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1), visibility 0.42s;
+  box-shadow: 0 -12rpx 48rpx rgba(224, 90, 134, 0.18);
+  max-height: 82vh;
+  overflow-y: auto;
+}
+
+.drawer.show {
+  transform: translateY(0);
+  visibility: visible;
+}
+
+.drawer-handle {
+  width: 76rpx;
+  height: 8rpx;
+  border-radius: 4rpx;
+  background: var(--sakura-300);
+  margin: 20rpx auto 6rpx;
+}
+
+.drawer-title {
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: var(--text-primary);
+  padding: 14rpx 0 8rpx;
+}
+
+.drawer-body {
+  padding: 16rpx 36rpx 8rpx;
+}
+
+.drawer-actions {
+  display: flex;
+  gap: 20rpx;
+  padding: 24rpx 36rpx 8rpx;
+}
+
+.drawer-btn {
+  flex: 1;
+  text-align: center;
+  padding: 22rpx 0;
+  border-radius: 44rpx;
+  font-size: 29rpx;
+  font-weight: 600;
+}
+
+.drawer-btn.primary {
+  background: var(--grad-rose);
+  color: #FFFFFF;
+  box-shadow: var(--shadow-btn);
+}
+
+.drawer-btn.ghost {
+  background: var(--sakura-200);
+  color: var(--sakura-700);
+}
+
 /* ============= 通用 loading ============= */
 .loading-mask {
   position: fixed;
@@ -54,15 +313,15 @@ view, text {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 245, 245, 0.6);
+  background: rgba(255, 247, 249, 0.6);
   z-index: 1000;
 }
 
 .loading-spinner {
   width: 60rpx;
   height: 60rpx;
-  border: 6rpx solid #FFE4E8;
-  border-top-color: #FF6B8A;
+  border: 6rpx solid var(--sakura-200);
+  border-top-color: var(--sakura-600);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -74,7 +333,7 @@ view, text {
 
 /* ============= 骨架屏 ============= */
 .skeleton {
-  background: linear-gradient(90deg, #F5EEF0 25%, #FBF5F7 50%, #F5EEF0 75%);
+  background: linear-gradient(90deg, #FAE8EE 25%, #FFF6F8 50%, #FAE8EE 75%);
   background-size: 200% 100%;
   animation: skeletonShimmer 1.4s infinite;
   border-radius: 16rpx;
@@ -85,18 +344,9 @@ view, text {
   100% { background-position: -200% 0; }
 }
 
-.skeleton-block {
-  margin-bottom: 20rpx;
-}
-
-.skeleton-line {
-  height: 28rpx;
-  margin-bottom: 16rpx;
-}
-
-.skeleton-circle {
-  border-radius: 50%;
-}
+.skeleton-block { margin-bottom: 20rpx; }
+.skeleton-line  { height: 28rpx; margin-bottom: 16rpx; }
+.skeleton-circle { border-radius: 50%; }
 
 /* ============= 空状态 ============= */
 .empty-state {
@@ -118,22 +368,198 @@ view, text {
 
 .empty-text {
   font-size: 28rpx;
-  color: #BBB;
+  color: var(--text-tertiary);
   text-align: center;
   line-height: 1.6;
 }
 
 .empty-btn {
   margin-top: 16rpx;
-  background: linear-gradient(135deg, #FFB6C1, #FF6B8A);
+  background: var(--grad-rose);
   color: #FFFFFF;
   font-size: 28rpx;
   font-weight: 600;
   padding: 18rpx 60rpx;
   border-radius: 40rpx;
-  box-shadow: 0 6rpx 18rpx rgba(255, 107, 138, 0.3);
+  box-shadow: var(--shadow-btn);
 }
 
 .empty-btn:active {
   transform: scale(0.96);
+}
+
+/* ============= 樱花瓣装饰（CSS 画的 5 瓣花）============= */
+.sakura {
+  position: relative;
+  width: 80rpx;
+  height: 80rpx;
+  display: inline-block;
+}
+
+.sakura-petal {
+  position: absolute;
+  width: 36rpx;
+  height: 50rpx;
+  background: linear-gradient(180deg, #FFEDF2 0%, #FFB6C1 60%, #FF97B8 100%);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  top: 50%;
+  left: 50%;
+  margin: -25rpx 0 0 -18rpx;
+  transform-origin: 50% 100%;
+  box-shadow: inset 0 0 6rpx rgba(255, 255, 255, 0.5);
+}
+
+.sakura-petal::after {
+  content: '';
+  position: absolute;
+  top: 8rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2rpx;
+  height: 70%;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 2rpx;
+}
+
+.sakura-center {
+  position: absolute;
+  width: 18rpx;
+  height: 18rpx;
+  background: radial-gradient(circle, #FFFFFF 30%, #FFEDF2 100%);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 6rpx rgba(255, 194, 214, 0.9);
+  z-index: 5;
+}
+
+/* 不同尺寸樱花 */
+.sakura.size-sm { width: 48rpx; height: 48rpx; }
+.sakura.size-sm .sakura-petal { width: 22rpx; height: 30rpx; margin: -15rpx 0 0 -11rpx; }
+.sakura.size-sm .sakura-center { width: 12rpx; height: 12rpx; }
+
+.sakura.size-md { width: 80rpx; height: 80rpx; }
+
+.sakura.size-lg { width: 160rpx; height: 160rpx; }
+.sakura.size-lg .sakura-petal { width: 70rpx; height: 100rpx; margin: -50rpx 0 0 -35rpx; }
+.sakura.size-lg .sakura-center { width: 36rpx; height: 36rpx; }
+
+.sakura.size-xl { width: 240rpx; height: 240rpx; }
+.sakura.size-xl .sakura-petal { width: 100rpx; height: 150rpx; margin: -75rpx 0 0 -50rpx; }
+.sakura.size-xl .sakura-center { width: 56rpx; height: 56rpx; }
+
+/* 飘落动画 */
+@keyframes sakuraFall {
+  0%   { transform: translate3d(0, -10vh, 0) rotate(0deg); opacity: 0; }
+  10%  { opacity: 0.85; }
+  90%  { opacity: 0.85; }
+  100% { transform: translate3d(-30vw, 110vh, 0) rotate(720deg); opacity: 0; }
+}
+
+@keyframes sakuraFallAlt {
+  0%   { transform: translate3d(0, -10vh, 0) rotate(0deg); opacity: 0; }
+  10%  { opacity: 0.7; }
+  90%  { opacity: 0.7; }
+  100% { transform: translate3d(30vw, 110vh, 0) rotate(-720deg); opacity: 0; }
+}
+
+@keyframes sakuraSway {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  50%      { transform: translateX(20rpx) rotate(15deg); }
+}
+
+.sakura-falling {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.sakura-falling .petal-1 { position: absolute; animation: sakuraFall 12s linear infinite; }
+.sakura-falling .petal-2 { position: absolute; animation: sakuraFallAlt 14s linear infinite; }
+.sakura-falling .petal-3 { position: absolute; animation: sakuraFall 16s linear infinite; }
+
+/* 樱花空状态插画 */
+.sakura-empty-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32rpx;
+  padding: 100rpx 0;
+}
+
+.sakura-empty-illust {
+  position: relative;
+  width: 320rpx;
+  height: 320rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sakura-empty-illust .main-sakura {
+  position: absolute;
+  width: 200rpx;
+  height: 200rpx;
+  filter: drop-shadow(0 6rpx 18rpx rgba(255, 155, 181, 0.22));
+  animation: sakuraSway 5s ease-in-out infinite;
+}
+
+.sakura-empty-illust .sub-sakura {
+  position: absolute;
+  width: 70rpx;
+  height: 70rpx;
+  opacity: 0.75;
+  filter: drop-shadow(0 2rpx 6rpx rgba(255, 155, 181, 0.18));
+}
+
+.sakura-empty-illust .sub-1 {
+  top: 8rpx;
+  left: 16rpx;
+  animation: sakuraSway 4s ease-in-out infinite;
+}
+
+.sakura-empty-illust .sub-2 {
+  bottom: 16rpx;
+  right: 16rpx;
+  animation: sakuraSway 5s ease-in-out infinite reverse;
+}
+
+.sakura-empty-text {
+  font-size: 28rpx;
+  color: var(--text-tertiary);
+  text-align: center;
+  line-height: 1.7;
+  white-space: pre-line;
+}
+
+.sakura-empty-action {
+  background: var(--grad-rose);
+  color: #FFFFFF;
+  font-size: 28rpx;
+  font-weight: 600;
+  padding: 18rpx 60rpx;
+  border-radius: 40rpx;
+  box-shadow: var(--shadow-btn);
+}
+
+.sakura-empty-action:active {
+  transform: scale(0.96);
+}
+
+.sakura-corner {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 200rpx;
+  height: 200rpx;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
 }
