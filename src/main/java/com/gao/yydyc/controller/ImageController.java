@@ -43,9 +43,10 @@ public class ImageController {
         if (!ImageConstant.ALLOWED_SUFFIXES.contains(suffix)) {
             return Result.error("只支持jpg/jpeg/png格式");
         }
+        log.info("storagePath: {}", imageConfig.getStoragePath());
         String newFileName = UUID.randomUUID()
                 .toString() + "." + suffix;
-        String imageFile = imageConfig.getStoragePath() + newFileName;
+        String imageFile = "D:/yydyc-images/" + newFileName;
         File localFile = new File(imageFile);
         if (!localFile.getParentFile().exists()) {
             localFile.mkdirs();

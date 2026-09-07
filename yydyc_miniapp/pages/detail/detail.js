@@ -9,6 +9,8 @@ Page({
     // 多图管理
     images: [],
     swiperImages: [],
+    // 轮播图加载失败的 URL 集合 { [url]: true }，用于显示占位
+    failedImages: {},
     current: 0,
     showImageManage: false,
     uploading: false
@@ -77,19 +79,39 @@ Page({
           ? data.accessories.split(',').filter(s => s.trim())
           : [];
 
-        // 多图：skirt_image 表；老数据没有多图时用衣柜主图兜底
+        // 多图：skirt_image 表；老数据没有多图时用 wardrobe.imageUrl 兜底
+        // 兼容两种后端返回：
+        //   1) data.images = [{imageUrl, isCover}, ...] （多图模式，新接口）
+        //   2) data.imageUrl = "/images/xxx.jpg"        （单图模式，老接口或刚加的裙子）
         const baseUrl = app.globalData.baseUrl;
-        const imageList = (data.images || []).map(img => ({
-          id: String(img.id),
-          imageUrl: img.imageUrl || '',
-          displayUrl: resolveImageUrl(img.imageUrl, baseUrl),
-          isCover: Number(img.isCover || 0) === 1
-        }));
-        const sourceImages = imageList.length > 0
-          ? imageList
-          : (data.imageUrl
-              ? [{ id: '', imageUrl: data.imageUrl, displayUrl: resolveImageUrl(data.imageUrl, baseUrl), isCover: true }]
-              : []);
+
+        // 构造 images 数组（用于「管理图片」抽屉），保证总有内容可显示
+        let imageList = (Array.isArray(data.images) ? data.images : []).map(img => ({
+          id: img && img.id != null ? String(img.id) : '',
+          imageUrl: (img && img.imageUrl) || '',
+          displayUrl: resolveImageUrl(img && img.imageUrl, baseUrl),
+          isCover: Number((img && img.isCover) || 0) === 1
+        })).filter(item => item.imageUrl);  // 过滤掉空 URL
+
+        // 如果后端只返了 imageUrl 没返 images，补一条主图进 images（保证抽屉里也能看到/管理）
+        if (imageList.length === 0 && data.imageUrl) {
+          imageList = [{
+            id: '',
+            imageUrl: data.imageUrl,
+            displayUrl: resolveImageUrl(data.imageUrl, baseUrl),
+            isCover: true
+          }];
+        }
+
+        // swiper 用的展示 URL 列表（来自 images 数组），保留顺序
+        const swiperImages = imageList.map(i => i.displayUrl).filter(Boolean);
+
+        // 调试日志：方便诊断"图片不显示"是哪一环出错
+        console.log('[detail.fetchDetail] data.imageUrl =', data.imageUrl)
+        console.log('[detail.fetchDetail] data.images =', data.images)
+        console.log('[detail.fetchDetail] baseUrl =', baseUrl)
+        console.log('[detail.fetchDetail] imageList =', imageList)
+        console.log('[detail.fetchDetail] swiperImages =', swiperImages)
 
         this.setData({
           skirt: {
@@ -102,7 +124,8 @@ Page({
             accessoriesArray: accessoriesArray
           },
           images: imageList,
-          swiperImages: sourceImages.map(i => i.displayUrl),
+          swiperImages: swiperImages,
+          failedImages: {},
           current: 0
         });
         // 详情设置的封面同步成列表页卡片展示图
@@ -116,6 +139,13 @@ Page({
 
   onSwiperChange(e) {
     this.setData({ current: e.detail.current });
+  },
+
+  // 轮播图加载失败：标记该 URL 为失败，wxml 里会显示占位
+  onHeroImageError(e) {
+    const url = e.currentTarget.dataset.url
+    console.error('[detail] hero image load failed:', url, e.detail)
+    this.setData({ [`failedImages.${url}`]: true })
   },
 
   // 详情页「管理图片」设定的封面 = 列表页显示的主图（同步 wardrobe.imageUrl）

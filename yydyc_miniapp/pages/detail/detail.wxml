@@ -16,7 +16,18 @@
       circular
     >
       <swiper-item wx:for="{{swiperImages}}" wx:key="*this">
-        <image class="hero-swiper-img" src="{{item}}" mode="aspectFill"></image>
+        <block wx:if="{{!failedImages[item]}}">
+          <image
+            class="hero-swiper-img"
+            src="{{item}}"
+            mode="aspectFit"
+            binderror="onHeroImageError"
+            data-url="{{item}}"
+          ></image>
+        </block>
+        <view wx:else class="hero-swiper-failed">
+          <view class="placeholder-hanger"></view>
+        </view>
       </swiper-item>
     </swiper>
     <view wx:else class="hero-photo-placeholder">
@@ -57,7 +68,11 @@
         <view class="color-dot" style="background: {{skirt.color}};"></view>
       </view>
     </view>
-    <view class="info-row accessories-row" wx:if="{{skirt.accessories}}">
+    <view class="info-row" wx:if="{{skirt.type}}">
+      <text class="info-label">类型</text>
+      <text class="info-value">{{skirt.type}}</text>
+    </view>
+    <view class="info-row accessories-row" wx:if="{{skirt.accessoriesArray && skirt.accessoriesArray.length > 0}}">
       <text class="info-label">小物</text>
       <view class="accessories-tags">
         <text class="accessory-item" wx:for="{{skirt.accessoriesArray}}" wx:key="*this">{{item}}</text>

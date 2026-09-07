@@ -9,7 +9,7 @@ App({
     //   'dev'    → 本机开发（localhost）
     //   'lan'    → 局域网调试（手机和电脑同 WiFi，扫开发者工具预览码）
     //   'tunnel' → 内网穿透（手机走 4G/任意网络扫码，用公网域名访问后端）
-    const ENV = 'tunnel'
+    const ENV = 'lan'
 
     this.globalData.env = ENV
     this.globalData.baseUrl = this.globalData.baseUrlMap[ENV]
