@@ -1,0 +1,65 @@
+version: '3.8'
+
+services:
+  # MySQL 数据库
+  mysql:
+    image: mysql:8.0
+    container_name: yydyc-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: skirt_cabinet
+      MYSQL_CHARACTER_SET_SERVER: utf8mb4
+      MYSQL_COLLATION_SERVER: utf8mb4_unicode_ci
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    networks:
+      - yydyc-network
+
+  # Redis 缓存
+  redis:
+    image: redis:7-alpine
+    container_name: yydyc-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - yydyc-network
+
+  # 应用服务
+  app:
+    build: .
+    container_name: yydyc-app
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      DB_PASSWORD: "${DB_PASSWORD}"
+      REDIS_HOST: redis
+      WECHAT_APPID: "${WECHAT_APPID}"
+      WECHAT_SECRET: "${WECHAT_SECRET}"
+      WECHAT_TEMPLATE_ID: "${WECHAT_TEMPLATE_ID}"
+      SILICONFLOW_API_KEY: "${SILICONFLOW_API_KEY}"
+    volumes:
+      - d:/yydyc-images:/app/images
+    depends_on:
+      - mysql
+      - redis
+    networks:
+      - yydyc-network
+
+# 数据卷
+volumes:
+  mysql_data:
+  redis_data:
+
+# 网络
+networks:
+  yydyc-network:
+    driver: bridge
