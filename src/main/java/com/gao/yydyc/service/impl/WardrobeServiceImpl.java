@@ -1,6 +1,7 @@
 package com.gao.yydyc.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.gao.yydyc.annotation.CacheableWithNull;
 import com.gao.yydyc.constant.SkirtStatusEnum;
 import com.gao.yydyc.dto.CategoryStatisticsVO;
 import com.gao.yydyc.dto.MonthSummaryVO;
@@ -36,6 +37,7 @@ public class WardrobeServiceImpl extends ServiceImpl<WardrobeMapper, Wardrobe> i
     }
 
     @Override
+    @CacheableWithNull(value = "statistics", key = "#userId + '_overview'", ttl = 1800, nullTtl = 60)
     public OverviewStatisticsVO getOverviewStatistics(String userId) {
         return wardrobeMapper.getOverviewStatistics(userId);
     }
